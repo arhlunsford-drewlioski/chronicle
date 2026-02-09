@@ -609,6 +609,57 @@ const BACKGROUNDS = [
     { name: 'Wayfarer', skillProfs: ['Insight', 'Stealth'], toolProf: "Thieves' Tools", feat: 'Lucky', desc: 'You grew up on the streets, surviving by wit.', source: 'PHB 2024' },
 ];
 
+// ═══════════════════════════════════════════════════════════════════
+//  FEAT DESCRIPTIONS
+// ═══════════════════════════════════════════════════════════════════
+const FEATS = {
+    'Alert': {
+        desc: "You can't be surprised. Other creatures don't gain advantage on attack rolls against you as a result of being unseen.",
+        source: 'PHB 2024'
+    },
+    'Crafter': {
+        desc: "You gain proficiency with three Artisan's Tools of your choice. When you buy a nonmagical item, you receive a 20% discount.",
+        source: 'PHB 2024'
+    },
+    'Healer': {
+        desc: "When you use a Healer's Kit to stabilize a creature, it regains 1 HP. As an action, spend one use to restore 1d6+4 HP plus additional HP equal to the creature's maximum number of Hit Dice.",
+        source: 'PHB 2024'
+    },
+    'Lucky': {
+        desc: 'You have 3 Luck Points. Spend 1 to roll an extra d20 when making an attack roll, ability check, or saving throw. You can also spend 1 when an attack roll is made against you. Regain all Luck Points on a long rest.',
+        source: 'PHB 2024'
+    },
+    'Magic Initiate (Cleric)': {
+        desc: 'You learn two cantrips and one 1st-level spell from the Cleric spell list. You can cast the 1st-level spell once per long rest. Your spellcasting ability is Wisdom.',
+        source: 'PHB 2024'
+    },
+    'Magic Initiate (Druid)': {
+        desc: 'You learn two cantrips and one 1st-level spell from the Druid spell list. You can cast the 1st-level spell once per long rest. Your spellcasting ability is Wisdom.',
+        source: 'PHB 2024'
+    },
+    'Magic Initiate (Wizard)': {
+        desc: 'You learn two cantrips and one 1st-level spell from the Wizard spell list. You can cast the 1st-level spell once per long rest. Your spellcasting ability is Intelligence.',
+        source: 'PHB 2024'
+    },
+    'Musician': {
+        desc: "You gain proficiency with three Musical Instruments of your choice. After a short or long rest, you can perform for 10 minutes to give allies temporary inspiration.",
+        source: 'PHB 2024'
+    },
+    'Skilled': {
+        desc: 'You gain proficiency in three skills of your choice.',
+        source: 'PHB 2024'
+    },
+    'Tavern Brawler': {
+        desc: 'You gain proficiency with improvised weapons. Your unarmed strike damage increases by one die size. When you hit with an unarmed strike, you can use a bonus action to grapple the target.',
+        source: 'PHB 2024'
+    },
+    'Tough': {
+        desc: "Your HP maximum increases by an amount equal to twice your level. Whenever you gain a level, your HP maximum increases by 2.",
+        source: 'PHB 2024'
+    }
+};
+
+
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 //  CONSTANTS
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -811,7 +862,14 @@ function selectBackground(i){
     state.background=BACKGROUNDS[i];
     document.querySelectorAll('#background-cards .selection-card').forEach((c,j)=>c.classList.toggle('selected',j===i));
     const bg=BACKGROUNDS[i];
+    const featInfo = FEATS[bg.feat] || { desc: bg.feat, source: 'PHB 2024' };
+    
     document.getElementById('background-info').innerHTML=`<div class="info-panel"><h3>${bg.name}</h3>
+        <div class="trait"><strong>Skill Proficiencies:</strong> ${bg.skillProfs.join(', ')}</div>
+        <div class="trait"><strong>Tool Proficiency:</strong> ${bg.toolProf}</div>
+        <div class="trait"><strong>Origin Feat:</strong> ${bg.feat}</div>
+        <div class="trait" style="margin-top:12px;padding:10px;background:rgba(139,69,19,0.05);border-left:3px solid #8B4513;border-radius:4px;"><strong>${bg.feat}:</strong> ${featInfo.desc}</div></div>`;
+}</h3>
         <div class="trait"><strong>Skill Proficiencies:</strong> ${bg.skillProfs.join(', ')}</div>
         <div class="trait"><strong>Tool Proficiency:</strong> ${bg.toolProf}</div>
         <div class="trait"><strong>Origin Feat:</strong> ${bg.feat}</div></div>`;
