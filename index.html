@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D&D Character Sheet</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', Georgia, serif;
+            background: #f5f5f5;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .sheet {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            color: #8B0000;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 32px;
+            letter-spacing: 2px;
+        }
+
+        .character-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .input-group input {
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            background: white;
+        }
+
+        .input-group input:hover {
+            border-color: #8B0000;
+            background: #fff8f8;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #8B0000;
+            cursor: text;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-box {
+            background: #f9f9f9;
+            border: 2px solid #8B0000;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .stat-header {
+            text-align: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .stat-name {
+            font-family: 'Cinzel', serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #8B0000;
+            margin-bottom: 8px;
+            letter-spacing: 1.5px;
+        }
+
+        .stat-value {
+            width: 60px;
+            margin: 0 auto 8px;
+            padding: 12px 8px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            background: white;
+        }
+
+        .stat-value:hover {
+            border-color: #8B0000;
+            background: #fff8f8;
+        }
+
+        .stat-value input {
+            width: 100%;
+            border: none;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            background: transparent;
+            outline: none;
+        }
+
+        .stat-modifier-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .stat-modifier-label {
+            font-family: 'Cinzel', serif;
+            font-size: 9px;
+            font-weight: 600;
+            color: #666;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-modifier {
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            background: #8B0000;
+            width: 45px;
+            height: 50px;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-skills {
+            margin-top: 10px;
+        }
+
+        .stat-skill-item {
+            display: flex;
+            align-items: center;
+            padding: 6px;
+            margin-bottom: 2px;
+            background: white;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .stat-skill-item:hover {
+            background: #f5f5f5;
+        }
+
+        .stat-skill-item.save-item {
+            background: #fff8dc;
+            border-bottom: 2px solid #ddd;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .combat-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #8B0000;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #8B0000;
+            letter-spacing: 1px;
+        }
+
+        .prof-checkbox {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .skill-name {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .skill-bonus {
+            font-weight: bold;
+            font-size: 16px;
+            min-width: 40px;
+            text-align: right;
+        }
+
+        .death-save-checkbox {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
+
+        .exhaustion-slider {
+            width: 100%;
+            max-width: 300px;
+            margin: 15px auto;
+        }
+
+        .exhaustion-track {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .exhaustion-box {
+            flex: 1;
+            height: 30px;
+            background: #f0f0f0;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .exhaustion-box.filled {
+            background: #8B0000;
+            border-color: #660000;
+        }
+
+        .exhaustion-box:hover {
+            border-color: #8B0000;
+        }
+
+        .exhaustion-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .hp-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 8px;
+        }
+
+        .hp-button {
+            width: 30px;
+            height: 30px;
+            background: #8B0000;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hp-button:hover {
+            background: #660000;
+        }
+
+        .hp-button:active {
+            transform: scale(0.95);
+        }
+
+        /* Remove number input spinners */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        .editable-stat {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .editable-stat:hover {
+            background: #fff8f8;
+            transform: scale(1.05);
+        }
+
+        .combat-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .combat-box {
+            background: #f9f9f9;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .combat-label {
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            color: #666;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .combat-value {
+            width: 80px;
+            margin: 0 auto;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .save-button {
+            width: 100%;
+            padding: 12px;
+            background: #8B0000;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .save-button:hover {
+            background: #660000;
+        }
+
+        .saves-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sheet">
+        <h1>D&D Character Sheet</h1>
+        
+        <!-- Character Info -->
+        <div class="character-info">
+            <div class="input-group">
+                <label>Character Name</label>
+                <input type="text" id="charName" placeholder="Enter name">
+            </div>
+            <div class="input-group">
+                <label>Species</label>
+                <input type="text" id="species" placeholder="e.g., Human">
+            </div>
+            <div class="input-group">
+                <label>Class</label>
+                <input type="text" id="class" placeholder="e.g., Fighter">
+            </div>
+            <div class="input-group">
+                <label>Subclass</label>
+                <input type="text" id="subclass" placeholder="e.g., Champion">
+            </div>
+            <div class="input-group">
+                <label>Level</label>
+                <input type="number" id="level" value="1" min="1" max="20">
+            </div>
+            <div class="input-group">
+                <label>Background</label>
+                <input type="text" id="background" placeholder="e.g., Soldier">
+            </div>
+            <div class="input-group">
+                <label>Alignment</label>
+                <input type="text" id="alignment" placeholder="e.g., Lawful Good">
+            </div>
+            <div class="input-group">
+                <label>Experience Points</label>
+                <input type="number" id="xp" value="0" min="0">
+            </div>
+        </div>
+
+        <!-- HP Section -->
+        <div style="margin-top: 20px; margin-bottom: 30px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                <div class="combat-box">
+                    <div class="combat-label">CURRENT HP</div>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        <input type="number" class="combat-value" id="current-hp" value="10" min="0" 
+                               style="max-width: 80px; font-size: 20px;">
+                    </div>
+                    <div class="hp-control">
+                        <button class="hp-button" onclick="adjustHP('current', -1)">−</button>
+                        <button class="hp-button" onclick="adjustHP('current', 1)">+</button>
+                    </div>
+                </div>
+                <div class="combat-box">
+                    <div class="combat-label">MAX HP</div>
+                    <div class="combat-value editable-stat" id="max-hp-display" onclick="makeStatEditable('max-hp')" style="cursor: pointer;">10</div>
+                    <input type="number" id="max-hp" value="10" min="1" style="display: none;">
+                </div>
+                <div class="combat-box">
+                    <div class="combat-label">TEMP HP</div>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        <input type="number" class="combat-value" id="temp-hp" value="0" min="0" 
+                               style="max-width: 80px; font-size: 20px;">
+                    </div>
+                    <div class="hp-control">
+                        <button class="hp-button" onclick="adjustHP('temp', -1)">−</button>
+                        <button class="hp-button" onclick="adjustHP('temp', 1)">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ability Scores with Skills -->
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-header">
+                    <div class="stat-name">STRENGTH</div>
+                    <div class="stat-value" onclick="makeEditable(this, 'str')" id="str-display">10</div>
+                    <input type="number" id="str" value="10" min="1" max="30" style="display: none;">
+                    <div class="stat-modifier-container">
+                        <div class="stat-modifier-label">MODIFIER</div>
+                        <div class="stat-modifier" id="str-mod">+0</div>
+                    </div>
+                </div>
+                <div class="stat-skills">
+                    <div class="stat-skill-item save-item">
+                        <input type="checkbox" class="prof-checkbox" data-save="str" onchange="updateSaves()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Save</span>
+                        <span class="skill-bonus" id="save-str">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="3" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Athletics</span>
+                        <span class="skill-bonus" id="skill-3">+0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-box">
+                <div class="stat-header">
+                    <div class="stat-name">DEXTERITY</div>
+                    <div class="stat-value" onclick="makeEditable(this, 'dex')" id="dex-display">10</div>
+                    <input type="number" id="dex" value="10" min="1" max="30" style="display: none;">
+                    <div class="stat-modifier-container">
+                        <div class="stat-modifier-label">MODIFIER</div>
+                        <div class="stat-modifier" id="dex-mod">+0</div>
+                    </div>
+                </div>
+                <div class="stat-skills">
+                    <div class="stat-skill-item save-item">
+                        <input type="checkbox" class="prof-checkbox" data-save="dex" onchange="updateSaves()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Save</span>
+                        <span class="skill-bonus" id="save-dex">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="0" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Acrobatics</span>
+                        <span class="skill-bonus" id="skill-0">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="15" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Sleight of Hand</span>
+                        <span class="skill-bonus" id="skill-15">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="16" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Stealth</span>
+                        <span class="skill-bonus" id="skill-16">+0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-box">
+                <div class="stat-header">
+                    <div class="stat-name">CONSTITUTION</div>
+                    <div class="stat-value" onclick="makeEditable(this, 'con')" id="con-display">10</div>
+                    <input type="number" id="con" value="10" min="1" max="30" style="display: none;">
+                    <div class="stat-modifier-container">
+                        <div class="stat-modifier-label">MODIFIER</div>
+                        <div class="stat-modifier" id="con-mod">+0</div>
+                    </div>
+                </div>
+                <div class="stat-skills">
+                    <div class="stat-skill-item save-item">
+                        <input type="checkbox" class="prof-checkbox" data-save="con" onchange="updateSaves()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Save</span>
+                        <span class="skill-bonus" id="save-con">+0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-box">
+                <div class="stat-header">
+                    <div class="stat-name">INTELLIGENCE</div>
+                    <div class="stat-value" onclick="makeEditable(this, 'int')" id="int-display">10</div>
+                    <input type="number" id="int" value="10" min="1" max="30" style="display: none;">
+                    <div class="stat-modifier-container">
+                        <div class="stat-modifier-label">MODIFIER</div>
+                        <div class="stat-modifier" id="int-mod">+0</div>
+                    </div>
+                </div>
+                <div class="stat-skills">
+                    <div class="stat-skill-item save-item">
+                        <input type="checkbox" class="prof-checkbox" data-save="int" onchange="updateSaves()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Save</span>
+                        <span class="skill-bonus" id="save-int">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="2" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Arcana</span>
+                        <span class="skill-bonus" id="skill-2">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="5" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">History</span>
+                        <span class="skill-bonus" id="skill-5">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="8" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Investigation</span>
+                        <span class="skill-bonus" id="skill-8">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="10" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Nature</span>
+                        <span class="skill-bonus" id="skill-10">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="14" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Religion</span>
+                        <span class="skill-bonus" id="skill-14">+0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-box">
+                <div class="stat-header">
+                    <div class="stat-name">WISDOM</div>
+                    <div class="stat-value" onclick="makeEditable(this, 'wis')" id="wis-display">10</div>
+                    <input type="number" id="wis" value="10" min="1" max="30" style="display: none;">
+                    <div class="stat-modifier-container">
+                        <div class="stat-modifier-label">MODIFIER</div>
+                        <div class="stat-modifier" id="wis-mod">+0</div>
+                    </div>
+                </div>
+                <div class="stat-skills">
+                    <div class="stat-skill-item save-item">
+                        <input type="checkbox" class="prof-checkbox" data-save="wis" onchange="updateSaves()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Save</span>
+                        <span class="skill-bonus" id="save-wis">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="1" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Animal Handling</span>
+                        <span class="skill-bonus" id="skill-1">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="6" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Insight</span>
+                        <span class="skill-bonus" id="skill-6">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="9" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Medicine</span>
+                        <span class="skill-bonus" id="skill-9">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="11" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Perception</span>
+                        <span class="skill-bonus" id="skill-11">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="17" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Survival</span>
+                        <span class="skill-bonus" id="skill-17">+0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-box">
+                <div class="stat-header">
+                    <div class="stat-name">CHARISMA</div>
+                    <div class="stat-value" onclick="makeEditable(this, 'cha')" id="cha-display">10</div>
+                    <input type="number" id="cha" value="10" min="1" max="30" style="display: none;">
+                    <div class="stat-modifier-container">
+                        <div class="stat-modifier-label">MODIFIER</div>
+                        <div class="stat-modifier" id="cha-mod">+0</div>
+                    </div>
+                </div>
+                <div class="stat-skills">
+                    <div class="stat-skill-item save-item">
+                        <input type="checkbox" class="prof-checkbox" data-save="cha" onchange="updateSaves()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Save</span>
+                        <span class="skill-bonus" id="save-cha">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="4" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Deception</span>
+                        <span class="skill-bonus" id="skill-4">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="7" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Intimidation</span>
+                        <span class="skill-bonus" id="skill-7">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="12" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Performance</span>
+                        <span class="skill-bonus" id="skill-12">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="13" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Persuasion</span>
+                        <span class="skill-bonus" id="skill-13">+0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Combat Stats -->
+        <div class="combat-section">
+            <div class="combat-stats">
+                <div class="combat-box">
+                    <div class="combat-label">PROFICIENCY BONUS</div>
+                    <div class="combat-value" id="prof-bonus">+2</div>
+                </div>
+                <div class="combat-box">
+                    <div class="combat-label">ARMOR CLASS</div>
+                    <div class="combat-value editable-stat" id="ac" onclick="makeStatEditable('ac')">10</div>
+                    <input type="hidden" id="ac-override" value="">
+                </div>
+                <div class="combat-box">
+                    <div class="combat-label">INITIATIVE</div>
+                    <div class="combat-value editable-stat" id="initiative" onclick="makeStatEditable('initiative')">+0</div>
+                    <input type="hidden" id="initiative-override" value="">
+                </div>
+                <div class="combat-box">
+                    <div class="combat-label">SPEED</div>
+                    <div class="combat-value editable-stat" id="speed" onclick="makeStatEditable('speed')">30</div>
+                    <input type="hidden" id="speed-override" value="">
+                </div>
+                <div class="combat-box">
+                    <div class="combat-label">SIZE</div>
+                    <select id="size" style="width: 100%; padding: 8px; font-size: 16px; text-align: center; border: 2px solid #ddd; border-radius: 4px;">
+                        <option>Tiny</option>
+                        <option>Small</option>
+                        <option selected>Medium</option>
+                        <option>Large</option>
+                        <option>Huge</option>
+                        <option>Gargantuan</option>
+                    </select>
+                </div>
+                <div class="combat-box">
+                    <div class="combat-label">PASSIVE PERCEPTION</div>
+                    <div class="combat-value editable-stat" id="passive-perception" onclick="makeStatEditable('passive-perception')">10</div>
+                    <input type="hidden" id="passive-perception-override" value="">
+                </div>
+            </div>
+
+            <!-- Hit Dice -->
+            <div style="margin-top: 20px;">
+                <div class="combat-box" style="max-width: 400px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                        <div class="combat-label">HIT DICE TYPE</div>
+                        <input type="text" id="hit-dice-type" value="1d8" style="width: 80px; padding: 6px; text-align: center; border: 2px solid #ddd; border-radius: 4px;">
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 15px;">
+                        <button onclick="spendHitDice()" style="padding: 8px 16px; background: #8B0000; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 600;">Spend</button>
+                        <div style="font-size: 24px; font-weight: bold;">
+                            <span id="current-hit-dice">1</span> / <span id="max-hit-dice">1</span>
+                        </div>
+                        <button onclick="restoreHitDice()" style="padding: 8px 16px; background: #2d5016; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 600;">Restore</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Death Saves -->
+            <div style="margin-top: 20px;">
+                <div class="combat-box" style="max-width: 400px;">
+                    <div style="margin-bottom: 15px;">
+                        <div style="font-weight: 600; margin-bottom: 8px; color: #2d5016; font-family: 'Cinzel', serif; font-size: 12px;">SUCCESSES</div>
+                        <div style="display: flex; gap: 15px; justify-content: center; align-items: center;">
+                            <input type="checkbox" class="death-save-checkbox" data-type="success" data-index="0">
+                            <input type="checkbox" class="death-save-checkbox" data-type="success" data-index="1">
+                            <input type="checkbox" class="death-save-checkbox" data-type="success" data-index="2">
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-weight: 600; margin-bottom: 8px; color: #8B0000; font-family: 'Cinzel', serif; font-size: 12px;">FAILURES</div>
+                        <div style="display: flex; gap: 15px; justify-content: center; align-items: center;">
+                            <input type="checkbox" class="death-save-checkbox" data-type="failure" data-index="0">
+                            <input type="checkbox" class="death-save-checkbox" data-type="failure" data-index="1">
+                            <input type="checkbox" class="death-save-checkbox" data-type="failure" data-index="2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inspiration & Exhaustion -->
+            <div style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                <div class="combat-box" style="padding: 10px;">
+                    <label style="display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;">
+                        <input type="checkbox" id="inspiration" style="width: 16px; height: 16px; cursor: pointer;">
+                        <span style="font-size: 13px; font-weight: 600; font-family: 'Cinzel', serif; letter-spacing: 0.5px;">HEROIC INSPIRATION</span>
+                    </label>
+                </div>
+                <div class="combat-box">
+                    <div class="combat-label">EXHAUSTION LEVEL</div>
+                    <div class="exhaustion-slider">
+                        <div class="exhaustion-track" id="exhaustion-track">
+                            <div class="exhaustion-box" onclick="setExhaustion(1)"></div>
+                            <div class="exhaustion-box" onclick="setExhaustion(2)"></div>
+                            <div class="exhaustion-box" onclick="setExhaustion(3)"></div>
+                            <div class="exhaustion-box" onclick="setExhaustion(4)"></div>
+                            <div class="exhaustion-box" onclick="setExhaustion(5)"></div>
+                            <div class="exhaustion-box" onclick="setExhaustion(6)"></div>
+                            <div class="exhaustion-box" onclick="setExhaustion(7)"></div>
+                            <div class="exhaustion-box" onclick="setExhaustion(8)"></div>
+                            <div class="exhaustion-box" onclick="setExhaustion(9)"></div>
+                            <div class="exhaustion-box" onclick="setExhaustion(10)"></div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 10px; color: #666; font-weight: 600; margin-top: 5px;">
+                            <span>0</span>
+                            <span>1</span>
+                            <span>2</span>
+                            <span>3</span>
+                            <span>4</span>
+                            <span>5</span>
+                            <span>6</span>
+                            <span>7</span>
+                            <span>8</span>
+                            <span>9</span>
+                            <span>10</span>
+                        </div>
+                        <div style="text-align: center; margin-top: 8px;">
+                            <span style="font-weight: 700; color: #8B0000; font-size: 14px;">Level: <span id="exhaustion-level">0</span></span>
+                            <span style="font-size: 11px; color: #666; margin-left: 10px;">(10 = Death)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Proficiencies & Training -->
+        <div style="margin-top: 30px;">
+            <div class="section-title">Equipment Training & Proficiencies</div>
+            
+            <!-- Armor Proficiencies -->
+            <div style="margin-bottom: 20px;">
+                <div style="font-weight: 600; margin-bottom: 10px; color: #8B0000; font-family: 'Cinzel', serif;">Armor</div>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <label style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" id="prof-light-armor">
+                        <span>Light Armor</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" id="prof-medium-armor">
+                        <span>Medium Armor</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" id="prof-heavy-armor">
+                        <span>Heavy Armor</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" id="prof-shields">
+                        <span>Shields</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Weapons -->
+            <div style="margin-bottom: 20px;">
+                <div style="font-weight: 600; margin-bottom: 10px; color: #8B0000; font-family: 'Cinzel', serif;">Weapons</div>
+                <textarea id="weapon-profs" placeholder="e.g., Simple weapons, Martial weapons, Longsword, Rapier..." 
+                          style="width: 100%; min-height: 60px; padding: 10px; border: 2px solid #ddd; border-radius: 4px; font-family: 'Crimson Text', Georgia, serif; font-size: 14px;"></textarea>
+            </div>
+
+            <!-- Tools -->
+            <div style="margin-bottom: 20px;">
+                <div style="font-weight: 600; margin-bottom: 10px; color: #8B0000; font-family: 'Cinzel', serif;">Tools</div>
+                <textarea id="tool-profs" placeholder="e.g., Thieves' tools, Smith's tools, Disguise kit..." 
+                          style="width: 100%; min-height: 60px; padding: 10px; border: 2px solid #ddd; border-radius: 4px; font-family: 'Crimson Text', Georgia, serif; font-size: 14px;"></textarea>
+            </div>
+
+            <!-- Languages -->
+            <div style="margin-bottom: 20px;">
+                <div style="font-weight: 600; margin-bottom: 10px; color: #8B0000; font-family: 'Cinzel', serif;">Languages</div>
+                <textarea id="languages" placeholder="e.g., Common, Elvish, Dwarvish, Draconic..." 
+                          style="width: 100%; min-height: 60px; padding: 10px; border: 2px solid #ddd; border-radius: 4px; font-family: 'Crimson Text', Georgia, serif; font-size: 14px;"></textarea>
+            </div>
+        </div>
+
+        <button class="save-button" onclick="saveCharacter()">Save Character</button>
+    </div>
+
+    <script>
+        const skills = [
+            { name: 'Acrobatics', ability: 'dex' },
+            { name: 'Animal Handling', ability: 'wis' },
+            { name: 'Arcana', ability: 'int' },
+            { name: 'Athletics', ability: 'str' },
+            { name: 'Deception', ability: 'cha' },
+            { name: 'History', ability: 'int' },
+            { name: 'Insight', ability: 'wis' },
+            { name: 'Intimidation', ability: 'cha' },
+            { name: 'Investigation', ability: 'int' },
+            { name: 'Medicine', ability: 'wis' },
+            { name: 'Nature', ability: 'int' },
+            { name: 'Perception', ability: 'wis' },
+            { name: 'Performance', ability: 'cha' },
+            { name: 'Persuasion', ability: 'cha' },
+            { name: 'Religion', ability: 'int' },
+            { name: 'Sleight of Hand', ability: 'dex' },
+            { name: 'Stealth', ability: 'dex' },
+            { name: 'Survival', ability: 'wis' }
+        ];
+
+        let currentExhaustion = 0;
+
+        function adjustHP(type, amount) {
+            const input = document.getElementById(type === 'current' ? 'current-hp' : 'temp-hp');
+            let value = parseInt(input.value) || 0;
+            value = Math.max(0, value + amount);
+            
+            if (type === 'current') {
+                const maxHP = parseInt(document.getElementById('max-hp').value) || 10;
+                value = Math.min(value, maxHP);
+            }
+            
+            input.value = value;
+        }
+
+        function makeStatEditable(statId) {
+            const displayElement = document.getElementById(statId);
+            const isMaxHP = statId === 'max-hp';
+            const inputId = isMaxHP ? 'max-hp' : `${statId}-override`;
+            
+            if (isMaxHP) {
+                const hiddenInput = document.getElementById('max-hp');
+                const currentValue = hiddenInput.value;
+                
+                displayElement.innerHTML = `<input type="number" value="${currentValue}" min="1" 
+                    style="width: 80px; border: none; text-align: center; font-size: 24px; font-weight: bold; background: transparent; outline: none;"
+                    onblur="finishStatEdit('${statId}')" 
+                    onkeypress="if(event.key==='Enter') this.blur();"
+                    id="${statId}-temp">`;
+            } else {
+                const overrideInput = document.getElementById(inputId);
+                const currentValue = overrideInput.value || displayElement.textContent;
+                
+                displayElement.innerHTML = `<input type="text" value="${currentValue}" 
+                    style="width: 80px; border: none; text-align: center; font-size: 24px; font-weight: bold; background: transparent; outline: none;"
+                    onblur="finishStatEdit('${statId}')" 
+                    onkeypress="if(event.key==='Enter') this.blur();"
+                    id="${statId}-temp">`;
+            }
+            
+            const tempInput = document.getElementById(`${statId}-temp`);
+            tempInput.focus();
+            tempInput.select();
+        }
+
+        function finishStatEdit(statId) {
+            const tempInput = document.getElementById(`${statId}-temp`);
+            const newValue = tempInput.value.trim();
+            const displayElement = document.getElementById(statId);
+            const isMaxHP = statId === 'max-hp';
+            
+            if (isMaxHP) {
+                const hiddenInput = document.getElementById('max-hp');
+                const maxHPDisplay = document.getElementById('max-hp-display');
+                hiddenInput.value = newValue || 10;
+                maxHPDisplay.textContent = newValue || 10;
+            } else {
+                const overrideInput = document.getElementById(`${statId}-override`);
+                
+                if (newValue === '') {
+                    // Clear override, use auto-calc
+                    overrideInput.value = '';
+                    updateCombatStats();
+                } else {
+                    // Set override
+                    overrideInput.value = newValue;
+                    displayElement.textContent = newValue;
+                }
+            }
+        }
+
+        function makeEditable(displayElement, inputId) {
+            const input = document.getElementById(inputId);
+            const currentValue = input.value;
+            
+            displayElement.innerHTML = `<input type="number" value="${currentValue}" min="1" max="30" 
+                style="width: 100%; border: none; text-align: center; font-size: 24px; font-weight: bold; background: transparent; outline: none;"
+                onblur="finishEdit('${inputId}')" 
+                onkeypress="if(event.key==='Enter') this.blur();"
+                id="${inputId}-temp">`;
+            
+            const tempInput = document.getElementById(`${inputId}-temp`);
+            tempInput.focus();
+            tempInput.select();
+        }
+
+        function finishEdit(inputId) {
+            const tempInput = document.getElementById(`${inputId}-temp`);
+            const newValue = tempInput.value;
+            const hiddenInput = document.getElementById(inputId);
+            const displayElement = document.getElementById(`${inputId}-display`);
+            
+            hiddenInput.value = newValue;
+            displayElement.textContent = newValue;
+            
+            updateModifiers();
+        }
+
+        function setExhaustion(level) {
+            currentExhaustion = level;
+            document.getElementById('exhaustion-level').textContent = level;
+            
+            const boxes = document.querySelectorAll('.exhaustion-box');
+            boxes.forEach((box, index) => {
+                if (index < level) {
+                    box.classList.add('filled');
+                } else {
+                    box.classList.remove('filled');
+                }
+            });
+        }
+
+        function calculateModifier(score) {
+            return Math.floor((score - 10) / 2);
+        }
+
+        function getProficiencyBonus(level) {
+            return Math.ceil(level / 4) + 1;
+        }
+
+        function updateModifiers() {
+            const abilities = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+            abilities.forEach(ability => {
+                const score = parseInt(document.getElementById(ability).value) || 10;
+                const modifier = calculateModifier(score);
+                const modText = modifier >= 0 ? `+${modifier}` : `${modifier}`;
+                document.getElementById(`${ability}-mod`).textContent = modText;
+            });
+
+            updateCombatStats();
+            updateSaves();
+            updateSkills();
+        }
+
+        function updateCombatStats() {
+            const dexMod = calculateModifier(parseInt(document.getElementById('dex').value) || 10);
+            
+            // Initiative - use override or auto-calc
+            const initiativeOverride = document.getElementById('initiative-override').value;
+            if (!initiativeOverride) {
+                const initValue = dexMod >= 0 ? `+${dexMod}` : `${dexMod}`;
+                document.getElementById('initiative').textContent = initValue;
+            }
+
+            // AC - use override or auto-calc (10 + DEX for now)
+            const acOverride = document.getElementById('ac-override').value;
+            if (!acOverride) {
+                const baseAC = 10;
+                const finalAC = baseAC + dexMod;
+                document.getElementById('ac').textContent = finalAC;
+            }
+
+            // Speed - use override or default 30
+            const speedOverride = document.getElementById('speed-override').value;
+            if (!speedOverride) {
+                document.getElementById('speed').textContent = '30';
+            }
+
+            // Passive Perception - use override or auto-calc
+            updatePassivePerception();
+        }
+
+        function updatePassivePerception() {
+            const ppOverride = document.getElementById('passive-perception-override').value;
+            if (!ppOverride) {
+                const profBonus = getProficiencyBonus(parseInt(document.getElementById('level').value) || 1);
+                const wisMod = calculateModifier(parseInt(document.getElementById('wis').value) || 10);
+                const perceptionCheckbox = document.querySelector('input[data-skill="11"]');
+                const isProficient = perceptionCheckbox ? perceptionCheckbox.checked : false;
+                const perceptionBonus = wisMod + (isProficient ? profBonus : 0);
+                const passivePerception = 10 + perceptionBonus;
+                document.getElementById('passive-perception').textContent = passivePerception;
+            }
+        }
+
+        function updateHitDiceMax() {
+            const level = parseInt(document.getElementById('level').value) || 1;
+            document.getElementById('max-hit-dice').textContent = level;
+            
+            // Don't let current exceed max
+            const current = parseInt(document.getElementById('current-hit-dice').textContent);
+            if (current > level) {
+                document.getElementById('current-hit-dice').textContent = level;
+            }
+        }
+
+        function spendHitDice() {
+            const currentElement = document.getElementById('current-hit-dice');
+            let current = parseInt(currentElement.textContent);
+            if (current > 0) {
+                currentElement.textContent = current - 1;
+            }
+        }
+
+        function restoreHitDice() {
+            const currentElement = document.getElementById('current-hit-dice');
+            const max = parseInt(document.getElementById('max-hit-dice').textContent);
+            let current = parseInt(currentElement.textContent);
+            if (current < max) {
+                currentElement.textContent = current + 1;
+            }
+        }
+
+        function updateProficiencyBonus() {
+            const level = parseInt(document.getElementById('level').value) || 1;
+            const profBonus = getProficiencyBonus(level);
+            document.getElementById('prof-bonus').textContent = `+${profBonus}`;
+            updateHitDiceMax();
+            updateSaves();
+            updateSkills();
+        }
+
+        function updateSaves() {
+            const abilities = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+            const profBonus = getProficiencyBonus(parseInt(document.getElementById('level').value) || 1);
+            
+            abilities.forEach(ability => {
+                const score = parseInt(document.getElementById(ability).value) || 10;
+                const modifier = calculateModifier(score);
+                const isProficient = document.querySelector(`input[data-save="${ability}"]`).checked;
+                const total = modifier + (isProficient ? profBonus : 0);
+                const totalText = total >= 0 ? `+${total}` : `${total}`;
+                document.getElementById(`save-${ability}`).textContent = totalText;
+            });
+        }
+
+        function updateSkills() {
+            const profBonus = getProficiencyBonus(parseInt(document.getElementById('level').value) || 1);
+            
+            skills.forEach((skill, index) => {
+                const score = parseInt(document.getElementById(skill.ability).value) || 10;
+                const modifier = calculateModifier(score);
+                const checkbox = document.querySelector(`input[data-skill="${index}"]`);
+                if (checkbox) {
+                    const isProficient = checkbox.checked;
+                    const total = modifier + (isProficient ? profBonus : 0);
+                    const totalText = total >= 0 ? `+${total}` : `${total}`;
+                    const bonusElement = document.getElementById(`skill-${index}`);
+                    if (bonusElement) {
+                        bonusElement.textContent = totalText;
+                    }
+                }
+            });
+
+            // Update passive perception when skills update
+            updatePassivePerception();
+        }
+
+        function saveCharacter() {
+            const character = {
+                name: document.getElementById('charName').value,
+                species: document.getElementById('species').value,
+                class: document.getElementById('class').value,
+                subclass: document.getElementById('subclass').value,
+                background: document.getElementById('background').value,
+                alignment: document.getElementById('alignment').value,
+                level: document.getElementById('level').value,
+                xp: document.getElementById('xp').value,
+                size: document.getElementById('size').value,
+                abilities: {
+                    str: document.getElementById('str').value,
+                    dex: document.getElementById('dex').value,
+                    con: document.getElementById('con').value,
+                    int: document.getElementById('int').value,
+                    wis: document.getElementById('wis').value,
+                    cha: document.getElementById('cha').value
+                },
+                combat: {
+                    currentHP: document.getElementById('current-hp').value,
+                    maxHP: document.getElementById('max-hp').value,
+                    tempHP: document.getElementById('temp-hp').value,
+                    hitDiceType: document.getElementById('hit-dice-type').value,
+                    currentHitDice: document.getElementById('current-hit-dice').textContent,
+                    exhaustion: currentExhaustion,
+                    inspiration: document.getElementById('inspiration').checked,
+                    acOverride: document.getElementById('ac-override').value,
+                    initiativeOverride: document.getElementById('initiative-override').value,
+                    speedOverride: document.getElementById('speed-override').value,
+                    passivePerceptionOverride: document.getElementById('passive-perception-override').value
+                },
+                deathSaves: {
+                    successes: Array.from(document.querySelectorAll('input[data-type="success"]')).map(cb => cb.checked),
+                    failures: Array.from(document.querySelectorAll('input[data-type="failure"]')).map(cb => cb.checked)
+                },
+                proficiencies: {
+                    saves: Array.from(document.querySelectorAll('input[data-save]')).map(cb => ({
+                        ability: cb.dataset.save,
+                        proficient: cb.checked
+                    })),
+                    skills: Array.from(document.querySelectorAll('input[data-skill]')).map(cb => ({
+                        index: cb.dataset.skill,
+                        proficient: cb.checked
+                    })),
+                    armor: {
+                        light: document.getElementById('prof-light-armor').checked,
+                        medium: document.getElementById('prof-medium-armor').checked,
+                        heavy: document.getElementById('prof-heavy-armor').checked,
+                        shields: document.getElementById('prof-shields').checked
+                    },
+                    weapons: document.getElementById('weapon-profs').value,
+                    tools: document.getElementById('tool-profs').value,
+                    languages: document.getElementById('languages').value
+                }
+            };
+
+            localStorage.setItem('dndCharacter', JSON.stringify(character));
+            alert('Character saved!');
+        }
+
+        function loadCharacter() {
+            const saved = localStorage.getItem('dndCharacter');
+            if (!saved) return;
+
+            const character = JSON.parse(saved);
+            
+            document.getElementById('charName').value = character.name || '';
+            document.getElementById('species').value = character.species || character.race || '';
+            document.getElementById('class').value = character.class || '';
+            document.getElementById('subclass').value = character.subclass || '';
+            document.getElementById('background').value = character.background || '';
+            document.getElementById('alignment').value = character.alignment || '';
+            document.getElementById('level').value = character.level || 1;
+            document.getElementById('xp').value = character.xp || 0;
+            document.getElementById('size').value = character.size || 'Medium';
+            
+            // Load ability scores to both hidden input and display
+            Object.keys(character.abilities).forEach(ability => {
+                const value = character.abilities[ability];
+                document.getElementById(ability).value = value;
+                document.getElementById(`${ability}-display`).textContent = value;
+            });
+
+            // Load HP
+            document.getElementById('current-hp').value = character.combat.currentHP || character.combat.hp || 10;
+            const maxHP = character.combat.maxHP || character.combat.hp || 10;
+            document.getElementById('max-hp').value = maxHP;
+            document.getElementById('max-hp-display').textContent = maxHP;
+            document.getElementById('temp-hp').value = character.combat.tempHP || 0;
+            
+            document.getElementById('hit-dice-type').value = character.combat.hitDiceType || character.combat.hitDice || '1d8';
+            document.getElementById('current-hit-dice').textContent = character.combat.currentHitDice || character.level || 1;
+            document.getElementById('inspiration').checked = character.combat.inspiration || false;
+            
+            // Load overrides
+            if (character.combat.acOverride) {
+                document.getElementById('ac-override').value = character.combat.acOverride;
+                document.getElementById('ac').textContent = character.combat.acOverride;
+            }
+            if (character.combat.initiativeOverride) {
+                document.getElementById('initiative-override').value = character.combat.initiativeOverride;
+                document.getElementById('initiative').textContent = character.combat.initiativeOverride;
+            }
+            if (character.combat.speedOverride) {
+                document.getElementById('speed-override').value = character.combat.speedOverride;
+                document.getElementById('speed').textContent = character.combat.speedOverride;
+            }
+            if (character.combat.passivePerceptionOverride) {
+                document.getElementById('passive-perception-override').value = character.combat.passivePerceptionOverride;
+                document.getElementById('passive-perception').textContent = character.combat.passivePerceptionOverride;
+            }
+            
+            // Load exhaustion
+            if (character.combat.exhaustion !== undefined) {
+                setExhaustion(character.combat.exhaustion);
+            }
+
+            if (character.deathSaves) {
+                character.deathSaves.successes.forEach((checked, index) => {
+                    document.querySelector(`input[data-type="success"][data-index="${index}"]`).checked = checked;
+                });
+                character.deathSaves.failures.forEach((checked, index) => {
+                    document.querySelector(`input[data-type="failure"][data-index="${index}"]`).checked = checked;
+                });
+            }
+
+            character.proficiencies.saves.forEach(save => {
+                document.querySelector(`input[data-save="${save.ability}"]`).checked = save.proficient;
+            });
+
+            character.proficiencies.skills.forEach(skill => {
+                document.querySelector(`input[data-skill="${skill.index}"]`).checked = skill.proficient;
+            });
+
+            if (character.proficiencies.armor) {
+                document.getElementById('prof-light-armor').checked = character.proficiencies.armor.light || false;
+                document.getElementById('prof-medium-armor').checked = character.proficiencies.armor.medium || false;
+                document.getElementById('prof-heavy-armor').checked = character.proficiencies.armor.heavy || false;
+                document.getElementById('prof-shields').checked = character.proficiencies.armor.shields || false;
+            }
+
+            if (character.proficiencies.weapons) {
+                document.getElementById('weapon-profs').value = character.proficiencies.weapons;
+            }
+            if (character.proficiencies.tools) {
+                document.getElementById('tool-profs').value = character.proficiencies.tools;
+            }
+            if (character.proficiencies.languages) {
+                document.getElementById('languages').value = character.proficiencies.languages;
+            }
+
+            updateModifiers();
+            updateProficiencyBonus();
+        }
+
+        // Event listeners
+        document.getElementById('level').addEventListener('input', updateProficiencyBonus);
+        document.querySelectorAll('input[data-save]').forEach(cb => {
+            cb.addEventListener('change', updateSaves);
+        });
+
+        // Initialize
+        updateModifiers();
+        updateProficiencyBonus();
+        loadCharacter();
+    </script>
+</body>
+</html>
