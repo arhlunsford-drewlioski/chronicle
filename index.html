@@ -64,6 +64,65 @@
             border-bottom: 3px double #8B4513;
         }
 
+        .top-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .top-actions a, .top-actions button {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-family: 'Cinzel', serif;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid;
+        }
+
+        .btn-builder {
+            background: linear-gradient(135deg, #4a7c59 0%, #2d5016 100%);
+            color: #faf7f2;
+            border-color: #2d5016;
+            box-shadow: 0 2px 4px rgba(45, 80, 22, 0.3);
+        }
+
+        .btn-builder:hover {
+            background: linear-gradient(135deg, #5a8c69 0%, #3d6026 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(45, 80, 22, 0.4);
+        }
+
+        .btn-export {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: #faf7f2;
+            border-color: #1e3a8a;
+            box-shadow: 0 2px 4px rgba(30, 58, 138, 0.3);
+        }
+
+        .btn-export:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(30, 58, 138, 0.4);
+        }
+
+        .btn-import {
+            background: linear-gradient(135deg, #e0d5c5 0%, #d0c5b5 100%);
+            color: #5a1a1a;
+            border-color: #c9a77c;
+        }
+
+        .btn-import:hover {
+            transform: translateY(-1px);
+            background: #d0c5b5;
+        }
+
         .chronicle-logo {
             position: absolute;
             left: 50%;
@@ -392,7 +451,6 @@
             transform: scale(0.95);
         }
 
-        /* Remove number input spinners */
         input[type=number]::-webkit-inner-spin-button,
         input[type=number]::-webkit-outer-spin-button {
             -webkit-appearance: none;
@@ -486,7 +544,6 @@
                 0 4px 8px rgba(139, 69, 19, 0.25);
         }
 
-        /* Collapsible Sections */
         .collapsible-section {
             margin-top: 20px;
         }
@@ -519,7 +576,6 @@
             max-height: 0;
         }
 
-        /* Better mobile touch targets */
         @media (max-width: 768px) {
             .stat-skill-item {
                 padding: 10px;
@@ -531,7 +587,7 @@
             }
 
             input, select, textarea, button {
-                font-size: 16px; /* Prevents zoom on iOS */
+                font-size: 16px;
             }
 
             .hp-button {
@@ -551,6 +607,14 @@
 <body>
     <div class="sheet">
         <h1>D&D Character Sheet</h1>
+
+        <!-- Top Actions -->
+        <div class="top-actions">
+            <a href="builder.html" class="btn-builder">+ New Character</a>
+            <button class="btn-export" onclick="exportCharacter()">Export JSON</button>
+            <button class="btn-import" onclick="document.getElementById('import-file').click()">Import JSON</button>
+            <input type="file" id="import-file" accept=".json" style="display:none" onchange="importCharacter(event)">
+        </div>
         
         <!-- Character Info -->
         <div class="character-info">
@@ -913,16 +977,7 @@
                     <div class="combat-label" style="margin-bottom: 10px;">HEROIC INSPIRATION</div>
                     <div style="text-align: center;">
                         <button id="inspiration-toggle" onclick="toggleInspiration()" 
-                                style="background: linear-gradient(135deg, #e0e0e0 0%, #d0d0d0 100%); 
-                                       border: 2px solid #8B4513; 
-                                       border-radius: 20px; 
-                                       padding: 8px 20px; 
-                                       font-family: 'Cinzel', serif; 
-                                       font-size: 12px; 
-                                       font-weight: 600;
-                                       cursor: pointer;
-                                       transition: all 0.3s;
-                                       box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                style="background: linear-gradient(135deg, #e0e0e0 0%, #d0d0d0 100%); border: 2px solid #8B4513; border-radius: 20px; padding: 8px 20px; font-family: 'Cinzel', serif; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
                             NOT INSPIRED
                         </button>
                         <input type="checkbox" id="inspiration" style="display: none;">
@@ -944,16 +999,7 @@
                             <div class="exhaustion-box" onclick="toggleExhaustion(10)"></div>
                         </div>
                         <div style="display: flex; justify-content: space-between; font-size: 10px; color: #666; font-weight: 600; margin-top: 5px;">
-                            <span>1</span>
-                            <span>2</span>
-                            <span>3</span>
-                            <span>4</span>
-                            <span>5</span>
-                            <span>6</span>
-                            <span>7</span>
-                            <span>8</span>
-                            <span>9</span>
-                            <span>10</span>
+                            <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
                         </div>
                         <div style="text-align: center; margin-top: 8px;">
                             <span style="font-weight: 700; color: #8B4513; font-size: 14px;">Level: <span id="exhaustion-level">None</span></span>
@@ -971,50 +1017,27 @@
                 Equipment Training & Proficiencies
             </div>
             <div class="section-body" id="proficiencies-body">
-            
-            <!-- Armor Proficiencies -->
-            <div style="margin-bottom: 20px;">
-                <div style="font-weight: 600; margin-bottom: 10px; color: #8B0000; font-family: 'Cinzel', serif;">Armor</div>
-                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                    <label style="display: flex; align-items: center; gap: 8px;">
-                        <input type="checkbox" id="prof-light-armor">
-                        <span>Light Armor</span>
-                    </label>
-                    <label style="display: flex; align-items: center; gap: 8px;">
-                        <input type="checkbox" id="prof-medium-armor">
-                        <span>Medium Armor</span>
-                    </label>
-                    <label style="display: flex; align-items: center; gap: 8px;">
-                        <input type="checkbox" id="prof-heavy-armor">
-                        <span>Heavy Armor</span>
-                    </label>
-                    <label style="display: flex; align-items: center; gap: 8px;">
-                        <input type="checkbox" id="prof-shields">
-                        <span>Shields</span>
-                    </label>
+                <div style="margin-bottom: 20px;">
+                    <div style="font-weight: 600; margin-bottom: 10px; color: #8B0000; font-family: 'Cinzel', serif;">Armor</div>
+                    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                        <label style="display: flex; align-items: center; gap: 8px;"><input type="checkbox" id="prof-light-armor"><span>Light Armor</span></label>
+                        <label style="display: flex; align-items: center; gap: 8px;"><input type="checkbox" id="prof-medium-armor"><span>Medium Armor</span></label>
+                        <label style="display: flex; align-items: center; gap: 8px;"><input type="checkbox" id="prof-heavy-armor"><span>Heavy Armor</span></label>
+                        <label style="display: flex; align-items: center; gap: 8px;"><input type="checkbox" id="prof-shields"><span>Shields</span></label>
+                    </div>
                 </div>
-            </div>
-
-            <!-- Weapons -->
-            <div style="margin-bottom: 20px;">
-                <div style="font-weight: 600; margin-bottom: 10px; color: #8B0000; font-family: 'Cinzel', serif;">Weapons</div>
-                <textarea id="weapon-profs" placeholder="e.g., Simple weapons, Martial weapons, Longsword, Rapier..." 
-                          style="width: 100%; min-height: 60px; padding: 10px; border: 2px solid #ddd; border-radius: 4px; font-family: 'Crimson Text', Georgia, serif; font-size: 14px;"></textarea>
-            </div>
-
-            <!-- Tools -->
-            <div style="margin-bottom: 20px;">
-                <div style="font-weight: 600; margin-bottom: 10px; color: #8B0000; font-family: 'Cinzel', serif;">Tools</div>
-                <textarea id="tool-profs" placeholder="e.g., Thieves' tools, Smith's tools, Disguise kit..." 
-                          style="width: 100%; min-height: 60px; padding: 10px; border: 2px solid #ddd; border-radius: 4px; font-family: 'Crimson Text', Georgia, serif; font-size: 14px;"></textarea>
-            </div>
-
-            <!-- Languages -->
-            <div style="margin-bottom: 20px;">
-                <div style="font-weight: 600; margin-bottom: 10px; color: #8B0000; font-family: 'Cinzel', serif;">Languages</div>
-                <textarea id="languages" placeholder="e.g., Common, Elvish, Dwarvish, Draconic..." 
-                          style="width: 100%; min-height: 60px; padding: 10px; border: 2px solid #ddd; border-radius: 4px; font-family: 'Crimson Text', Georgia, serif; font-size: 14px;"></textarea>
-            </div>
+                <div style="margin-bottom: 20px;">
+                    <div style="font-weight: 600; margin-bottom: 10px; color: #8B0000; font-family: 'Cinzel', serif;">Weapons</div>
+                    <textarea id="weapon-profs" placeholder="e.g., Simple weapons, Martial weapons, Longsword, Rapier..." style="width: 100%; min-height: 60px; padding: 10px; border: 2px solid #ddd; border-radius: 4px; font-family: 'Crimson Text', Georgia, serif; font-size: 14px;"></textarea>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <div style="font-weight: 600; margin-bottom: 10px; color: #8B0000; font-family: 'Cinzel', serif;">Tools</div>
+                    <textarea id="tool-profs" placeholder="e.g., Thieves' tools, Smith's tools, Disguise kit..." style="width: 100%; min-height: 60px; padding: 10px; border: 2px solid #ddd; border-radius: 4px; font-family: 'Crimson Text', Georgia, serif; font-size: 14px;"></textarea>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <div style="font-weight: 600; margin-bottom: 10px; color: #8B0000; font-family: 'Cinzel', serif;">Languages</div>
+                    <textarea id="languages" placeholder="e.g., Common, Elvish, Dwarvish, Draconic..." style="width: 100%; min-height: 60px; padding: 10px; border: 2px solid #ddd; border-radius: 4px; font-family: 'Crimson Text', Georgia, serif; font-size: 14px;"></textarea>
+                </div>
             </div>
         </div>
 
@@ -1022,124 +1045,59 @@
         <div style="margin-top: 30px;">
             <div class="section-title">Rest & Recovery</div>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                <button onclick="shortRest()" style="padding: 15px; background: linear-gradient(135deg, #4a7c59 0%, #2d5016 100%); color: #faf7f2; border: 2px solid #2d5016; border-radius: 8px; font-family: 'Cinzel', serif; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.2); transition: all 0.2s;">
-                    SHORT REST
-                </button>
-                <button onclick="longRest()" style="padding: 15px; background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%); color: #faf7f2; border: 2px solid #1e3a8a; border-radius: 8px; font-family: 'Cinzel', serif; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.2); transition: all 0.2s;">
-                    LONG REST
-                </button>
+                <button onclick="shortRest()" style="padding: 15px; background: linear-gradient(135deg, #4a7c59 0%, #2d5016 100%); color: #faf7f2; border: 2px solid #2d5016; border-radius: 8px; font-family: 'Cinzel', serif; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.2); transition: all 0.2s;">SHORT REST</button>
+                <button onclick="longRest()" style="padding: 15px; background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%); color: #faf7f2; border: 2px solid #1e3a8a; border-radius: 8px; font-family: 'Cinzel', serif; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.2); transition: all 0.2s;">LONG REST</button>
             </div>
         </div>
 
         <!-- Coins -->
         <div class="collapsible-section" style="margin-top: 30px;">
             <div class="section-title section-toggle" onclick="toggleSection('coins')">
-                <span class="toggle-icon" id="coins-icon">▼</span>
-                Coins
+                <span class="toggle-icon" id="coins-icon">▼</span> Coins
             </div>
             <div class="section-body" id="coins-body">
-            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;">
-                <div class="combat-box" style="padding: 10px;">
-                    <div style="font-size: 11px; font-weight: 600; margin-bottom: 5px; color: #8B4513;">CP</div>
-                    <input type="number" id="coin-cp" value="0" min="0" style="width: 100%; padding: 5px; text-align: center; border: 2px solid #c9a77c; border-radius: 4px;">
+                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;">
+                    <div class="combat-box" style="padding: 10px;"><div style="font-size: 11px; font-weight: 600; margin-bottom: 5px; color: #8B4513;">CP</div><input type="number" id="coin-cp" value="0" min="0" style="width: 100%; padding: 5px; text-align: center; border: 2px solid #c9a77c; border-radius: 4px;"></div>
+                    <div class="combat-box" style="padding: 10px;"><div style="font-size: 11px; font-weight: 600; margin-bottom: 5px; color: #8B4513;">SP</div><input type="number" id="coin-sp" value="0" min="0" style="width: 100%; padding: 5px; text-align: center; border: 2px solid #c9a77c; border-radius: 4px;"></div>
+                    <div class="combat-box" style="padding: 10px;"><div style="font-size: 11px; font-weight: 600; margin-bottom: 5px; color: #8B4513;">EP</div><input type="number" id="coin-ep" value="0" min="0" style="width: 100%; padding: 5px; text-align: center; border: 2px solid #c9a77c; border-radius: 4px;"></div>
+                    <div class="combat-box" style="padding: 10px;"><div style="font-size: 11px; font-weight: 600; margin-bottom: 5px; color: #8B4513;">GP</div><input type="number" id="coin-gp" value="0" min="0" style="width: 100%; padding: 5px; text-align: center; border: 2px solid #c9a77c; border-radius: 4px;"></div>
+                    <div class="combat-box" style="padding: 10px;"><div style="font-size: 11px; font-weight: 600; margin-bottom: 5px; color: #8B4513;">PP</div><input type="number" id="coin-pp" value="0" min="0" style="width: 100%; padding: 5px; text-align: center; border: 2px solid #c9a77c; border-radius: 4px;"></div>
                 </div>
-                <div class="combat-box" style="padding: 10px;">
-                    <div style="font-size: 11px; font-weight: 600; margin-bottom: 5px; color: #8B4513;">SP</div>
-                    <input type="number" id="coin-sp" value="0" min="0" style="width: 100%; padding: 5px; text-align: center; border: 2px solid #c9a77c; border-radius: 4px;">
-                </div>
-                <div class="combat-box" style="padding: 10px;">
-                    <div style="font-size: 11px; font-weight: 600; margin-bottom: 5px; color: #8B4513;">EP</div>
-                    <input type="number" id="coin-ep" value="0" min="0" style="width: 100%; padding: 5px; text-align: center; border: 2px solid #c9a77c; border-radius: 4px;">
-                </div>
-                <div class="combat-box" style="padding: 10px;">
-                    <div style="font-size: 11px; font-weight: 600; margin-bottom: 5px; color: #8B4513;">GP</div>
-                    <input type="number" id="coin-gp" value="0" min="0" style="width: 100%; padding: 5px; text-align: center; border: 2px solid #c9a77c; border-radius: 4px;">
-                </div>
-                <div class="combat-box" style="padding: 10px;">
-                    <div style="font-size: 11px; font-weight: 600; margin-bottom: 5px; color: #8B4513;">PP</div>
-                    <input type="number" id="coin-pp" value="0" min="0" style="width: 100%; padding: 5px; text-align: center; border: 2px solid #c9a77c; border-radius: 4px;">
-                </div>
-            </div>
             </div>
         </div>
 
         <!-- Conditions -->
         <div class="collapsible-section" style="margin-top: 30px;">
             <div class="section-title section-toggle" onclick="toggleSection('conditions')">
-                <span class="toggle-icon" id="conditions-icon">▼</span>
-                Conditions
+                <span class="toggle-icon" id="conditions-icon">▼</span> Conditions
             </div>
             <div class="section-body" id="conditions-body">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
-                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
-                    <input type="checkbox" class="condition-check" data-condition="blinded">
-                    <span style="font-size: 14px;">Blinded</span>
-                </label>
-                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
-                    <input type="checkbox" class="condition-check" data-condition="charmed">
-                    <span style="font-size: 14px;">Charmed</span>
-                </label>
-                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
-                    <input type="checkbox" class="condition-check" data-condition="deafened">
-                    <span style="font-size: 14px;">Deafened</span>
-                </label>
-                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
-                    <input type="checkbox" class="condition-check" data-condition="frightened">
-                    <span style="font-size: 14px;">Frightened</span>
-                </label>
-                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
-                    <input type="checkbox" class="condition-check" data-condition="grappled">
-                    <span style="font-size: 14px;">Grappled</span>
-                </label>
-                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
-                    <input type="checkbox" class="condition-check" data-condition="incapacitated">
-                    <span style="font-size: 14px;">Incapacitated</span>
-                </label>
-                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
-                    <input type="checkbox" class="condition-check" data-condition="invisible">
-                    <span style="font-size: 14px;">Invisible</span>
-                </label>
-                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
-                    <input type="checkbox" class="condition-check" data-condition="paralyzed">
-                    <span style="font-size: 14px;">Paralyzed</span>
-                </label>
-                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
-                    <input type="checkbox" class="condition-check" data-condition="petrified">
-                    <span style="font-size: 14px;">Petrified</span>
-                </label>
-                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
-                    <input type="checkbox" class="condition-check" data-condition="poisoned">
-                    <span style="font-size: 14px;">Poisoned</span>
-                </label>
-                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
-                    <input type="checkbox" class="condition-check" data-condition="prone">
-                    <span style="font-size: 14px;">Prone</span>
-                </label>
-                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
-                    <input type="checkbox" class="condition-check" data-condition="restrained">
-                    <span style="font-size: 14px;">Restrained</span>
-                </label>
-                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
-                    <input type="checkbox" class="condition-check" data-condition="stunned">
-                    <span style="font-size: 14px;">Stunned</span>
-                </label>
-                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
-                    <input type="checkbox" class="condition-check" data-condition="unconscious">
-                    <span style="font-size: 14px;">Unconscious</span>
-                </label>
-            </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="blinded"><span style="font-size: 14px;">Blinded</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="charmed"><span style="font-size: 14px;">Charmed</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="deafened"><span style="font-size: 14px;">Deafened</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="frightened"><span style="font-size: 14px;">Frightened</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="grappled"><span style="font-size: 14px;">Grappled</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="incapacitated"><span style="font-size: 14px;">Incapacitated</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="invisible"><span style="font-size: 14px;">Invisible</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="paralyzed"><span style="font-size: 14px;">Paralyzed</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="petrified"><span style="font-size: 14px;">Petrified</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="poisoned"><span style="font-size: 14px;">Poisoned</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="prone"><span style="font-size: 14px;">Prone</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="restrained"><span style="font-size: 14px;">Restrained</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="stunned"><span style="font-size: 14px;">Stunned</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="unconscious"><span style="font-size: 14px;">Unconscious</span></label>
+                </div>
             </div>
         </div>
 
         <!-- Notes & Features -->
         <div class="collapsible-section" style="margin-top: 30px;">
             <div class="section-title section-toggle" onclick="toggleSection('notes')">
-                <span class="toggle-icon" id="notes-icon">▼</span>
-                Notes & Features
+                <span class="toggle-icon" id="notes-icon">▼</span> Notes & Features
             </div>
             <div class="section-body" id="notes-body">
-            <textarea id="notes" placeholder="Racial traits, class features, important notes..." 
-                      style="width: 100%; min-height: 150px; padding: 15px; border: 2px solid #8B4513; border-radius: 8px; font-family: 'Crimson Text', Georgia, serif; font-size: 14px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); resize: vertical;"></textarea>
+                <textarea id="notes" placeholder="Racial traits, class features, important notes..." style="width: 100%; min-height: 150px; padding: 15px; border: 2px solid #8B4513; border-radius: 8px; font-family: 'Crimson Text', Georgia, serif; font-size: 14px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); resize: vertical;"></textarea>
             </div>
         </div>
 
@@ -1173,9 +1131,7 @@
         function toggleInspiration() {
             const checkbox = document.getElementById('inspiration');
             const button = document.getElementById('inspiration-toggle');
-            
             checkbox.checked = !checkbox.checked;
-            
             if (checkbox.checked) {
                 button.textContent = 'INSPIRED';
                 button.style.background = 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)';
@@ -1190,23 +1146,10 @@
         }
 
         function toggleExhaustion(level) {
-            // If clicking the current level, turn off exhaustion
-            if (currentExhaustion === level) {
-                currentExhaustion = 0;
-                document.getElementById('exhaustion-level').textContent = 'None';
-            } else {
-                currentExhaustion = level;
-                document.getElementById('exhaustion-level').textContent = level;
-            }
-            
+            if (currentExhaustion === level) { currentExhaustion = 0; document.getElementById('exhaustion-level').textContent = 'None'; }
+            else { currentExhaustion = level; document.getElementById('exhaustion-level').textContent = level; }
             const boxes = document.querySelectorAll('.exhaustion-box');
-            boxes.forEach((box, index) => {
-                if (index < currentExhaustion) {
-                    box.classList.add('filled');
-                } else {
-                    box.classList.remove('filled');
-                }
-            });
+            boxes.forEach((box, index) => { box.classList.toggle('filled', index < currentExhaustion); });
         }
 
         function shortRest() {
@@ -1217,292 +1160,190 @@
 
         function longRest() {
             if (confirm('Take a long rest? This will restore HP, half your hit dice, and reset abilities.')) {
-                // Restore HP to max
                 const maxHP = parseInt(document.getElementById('max-hp').value) || 10;
                 document.getElementById('current-hp').value = maxHP;
-                
-                // Restore hit dice (half, minimum 1)
                 const maxHitDice = parseInt(document.getElementById('max-hit-dice').textContent) || 1;
                 const restoreAmount = Math.max(1, Math.floor(maxHitDice / 2));
                 const currentHitDice = parseInt(document.getElementById('current-hit-dice').textContent) || 0;
-                const newHitDice = Math.min(maxHitDice, currentHitDice + restoreAmount);
-                document.getElementById('current-hit-dice').textContent = newHitDice;
-                
-                // Clear temp HP
+                document.getElementById('current-hit-dice').textContent = Math.min(maxHitDice, currentHitDice + restoreAmount);
                 document.getElementById('temp-hp').value = 0;
-                
-                // Clear death saves
                 document.querySelectorAll('.death-save-checkbox').forEach(cb => cb.checked = false);
-                
-                // Reduce exhaustion by 1 if any
-                if (currentExhaustion > 0) {
-                    toggleExhaustion(currentExhaustion - 1);
-                }
-                
+                if (currentExhaustion > 0) toggleExhaustion(currentExhaustion - 1);
                 alert('Long Rest complete! HP and hit dice restored. Remember to reset spell slots and daily abilities!');
             }
         }
 
         function toggleSection(sectionId) {
-            const body = document.getElementById(`${sectionId}-body`);
-            const icon = document.getElementById(`${sectionId}-icon`);
-            
-            if (body.classList.contains('collapsed')) {
-                body.classList.remove('collapsed');
-                icon.classList.remove('collapsed');
-            } else {
-                body.classList.add('collapsed');
-                icon.classList.add('collapsed');
-            }
+            document.getElementById(`${sectionId}-body`).classList.toggle('collapsed');
+            document.getElementById(`${sectionId}-icon`).classList.toggle('collapsed');
         }
 
         function adjustHP(type, amount) {
             const input = document.getElementById(type === 'current' ? 'current-hp' : 'temp-hp');
-            let value = parseInt(input.value) || 0;
-            value = Math.max(0, value + amount);
-            
-            if (type === 'current') {
-                const maxHP = parseInt(document.getElementById('max-hp').value) || 10;
-                value = Math.min(value, maxHP);
-            }
-            
+            let value = Math.max(0, (parseInt(input.value) || 0) + amount);
+            if (type === 'current') value = Math.min(value, parseInt(document.getElementById('max-hp').value) || 10);
             input.value = value;
         }
 
         function makeStatEditable(statId) {
-            const displayElement = document.getElementById(statId);
+            const displayElement = document.getElementById(statId === 'max-hp' ? 'max-hp-display' : statId);
             const isMaxHP = statId === 'max-hp';
-            const inputId = isMaxHP ? 'max-hp' : `${statId}-override`;
-            
-            if (isMaxHP) {
-                const hiddenInput = document.getElementById('max-hp');
-                const currentValue = hiddenInput.value;
-                
-                displayElement.innerHTML = `<input type="number" value="${currentValue}" min="1" 
-                    style="width: 80px; border: none; text-align: center; font-size: 24px; font-weight: bold; background: transparent; outline: none;"
-                    onblur="finishStatEdit('${statId}')" 
-                    onkeypress="if(event.key==='Enter') this.blur();"
-                    id="${statId}-temp">`;
-            } else {
-                const overrideInput = document.getElementById(inputId);
-                const currentValue = overrideInput.value || displayElement.textContent;
-                
-                displayElement.innerHTML = `<input type="text" value="${currentValue}" 
-                    style="width: 80px; border: none; text-align: center; font-size: 24px; font-weight: bold; background: transparent; outline: none;"
-                    onblur="finishStatEdit('${statId}')" 
-                    onkeypress="if(event.key==='Enter') this.blur();"
-                    id="${statId}-temp">`;
-            }
-            
+            const currentValue = isMaxHP ? document.getElementById('max-hp').value : (document.getElementById(`${statId}-override`).value || displayElement.textContent);
+            const inputType = isMaxHP ? 'number' : 'text';
+            displayElement.innerHTML = `<input type="${inputType}" value="${currentValue}" ${isMaxHP?'min="1"':''} style="width: 80px; border: none; text-align: center; font-size: 24px; font-weight: bold; background: transparent; outline: none;" onblur="finishStatEdit('${statId}')" onkeypress="if(event.key==='Enter') this.blur();" id="${statId}-temp">`;
             const tempInput = document.getElementById(`${statId}-temp`);
-            tempInput.focus();
-            tempInput.select();
+            tempInput.focus(); tempInput.select();
         }
 
         function finishStatEdit(statId) {
             const tempInput = document.getElementById(`${statId}-temp`);
             const newValue = tempInput.value.trim();
-            const displayElement = document.getElementById(statId);
-            const isMaxHP = statId === 'max-hp';
-            
-            if (isMaxHP) {
-                const hiddenInput = document.getElementById('max-hp');
-                const maxHPDisplay = document.getElementById('max-hp-display');
-                hiddenInput.value = newValue || 10;
-                maxHPDisplay.textContent = newValue || 10;
+            if (statId === 'max-hp') {
+                document.getElementById('max-hp').value = newValue || 10;
+                document.getElementById('max-hp-display').textContent = newValue || 10;
             } else {
                 const overrideInput = document.getElementById(`${statId}-override`);
-                
-                if (newValue === '') {
-                    // Clear override, use auto-calc
-                    overrideInput.value = '';
-                    updateCombatStats();
-                } else {
-                    // Set override
-                    overrideInput.value = newValue;
-                    displayElement.textContent = newValue;
-                }
+                if (newValue === '') { overrideInput.value = ''; updateCombatStats(); }
+                else { overrideInput.value = newValue; document.getElementById(statId).textContent = newValue; }
             }
         }
 
         function makeEditable(displayElement, inputId) {
             const input = document.getElementById(inputId);
-            const currentValue = input.value;
-            
-            displayElement.innerHTML = `<input type="number" value="${currentValue}" min="1" max="30" 
-                style="width: 100%; border: none; text-align: center; font-size: 24px; font-weight: bold; background: transparent; outline: none;"
-                onblur="finishEdit('${inputId}')" 
-                onkeypress="if(event.key==='Enter') this.blur();"
-                id="${inputId}-temp">`;
-            
+            displayElement.innerHTML = `<input type="number" value="${input.value}" min="1" max="30" style="width: 100%; border: none; text-align: center; font-size: 24px; font-weight: bold; background: transparent; outline: none;" onblur="finishEdit('${inputId}')" onkeypress="if(event.key==='Enter') this.blur();" id="${inputId}-temp">`;
             const tempInput = document.getElementById(`${inputId}-temp`);
-            tempInput.focus();
-            tempInput.select();
+            tempInput.focus(); tempInput.select();
         }
 
         function finishEdit(inputId) {
             const tempInput = document.getElementById(`${inputId}-temp`);
-            const newValue = tempInput.value;
-            const hiddenInput = document.getElementById(inputId);
-            const displayElement = document.getElementById(`${inputId}-display`);
-            
-            hiddenInput.value = newValue;
-            displayElement.textContent = newValue;
-            
+            document.getElementById(inputId).value = tempInput.value;
+            document.getElementById(`${inputId}-display`).textContent = tempInput.value;
             updateModifiers();
         }
 
         function setExhaustion(level) {
             currentExhaustion = level;
             document.getElementById('exhaustion-level').textContent = level;
-            
-            const boxes = document.querySelectorAll('.exhaustion-box');
-            boxes.forEach((box, index) => {
-                if (index < level) {
-                    box.classList.add('filled');
-                } else {
-                    box.classList.remove('filled');
-                }
-            });
+            document.querySelectorAll('.exhaustion-box').forEach((box, index) => { box.classList.toggle('filled', index < level); });
         }
 
-        function calculateModifier(score) {
-            return Math.floor((score - 10) / 2);
-        }
-
-        function getProficiencyBonus(level) {
-            return Math.ceil(level / 4) + 1;
-        }
+        function calculateModifier(score) { return Math.floor((score - 10) / 2); }
+        function getProficiencyBonus(level) { return Math.ceil(level / 4) + 1; }
 
         function updateModifiers() {
-            const abilities = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
-            abilities.forEach(ability => {
+            ['str', 'dex', 'con', 'int', 'wis', 'cha'].forEach(ability => {
                 const score = parseInt(document.getElementById(ability).value) || 10;
                 const modifier = calculateModifier(score);
-                const modText = modifier >= 0 ? `+${modifier}` : `${modifier}`;
-                document.getElementById(`${ability}-mod`).textContent = modText;
+                document.getElementById(`${ability}-mod`).textContent = modifier >= 0 ? `+${modifier}` : `${modifier}`;
             });
-
-            updateCombatStats();
-            updateSaves();
-            updateSkills();
+            updateCombatStats(); updateSaves(); updateSkills();
         }
 
         function updateCombatStats() {
             const dexMod = calculateModifier(parseInt(document.getElementById('dex').value) || 10);
-            
-            // Initiative - use override or auto-calc
-            const initiativeOverride = document.getElementById('initiative-override').value;
-            if (!initiativeOverride) {
-                const initValue = dexMod >= 0 ? `+${dexMod}` : `${dexMod}`;
-                document.getElementById('initiative').textContent = initValue;
-            }
-
-            // AC - use override or auto-calc (10 + DEX for now)
-            const acOverride = document.getElementById('ac-override').value;
-            if (!acOverride) {
-                const baseAC = 10;
-                const finalAC = baseAC + dexMod;
-                document.getElementById('ac').textContent = finalAC;
-            }
-
-            // Speed - use override or default 30
-            const speedOverride = document.getElementById('speed-override').value;
-            if (!speedOverride) {
-                document.getElementById('speed').textContent = '30';
-            }
-
-            // Passive Perception - use override or auto-calc
+            if (!document.getElementById('initiative-override').value) document.getElementById('initiative').textContent = dexMod >= 0 ? `+${dexMod}` : `${dexMod}`;
+            if (!document.getElementById('ac-override').value) document.getElementById('ac').textContent = 10 + dexMod;
+            if (!document.getElementById('speed-override').value) document.getElementById('speed').textContent = '30';
             updatePassivePerception();
         }
 
         function updatePassivePerception() {
-            const ppOverride = document.getElementById('passive-perception-override').value;
-            if (!ppOverride) {
+            if (!document.getElementById('passive-perception-override').value) {
                 const profBonus = getProficiencyBonus(parseInt(document.getElementById('level').value) || 1);
                 const wisMod = calculateModifier(parseInt(document.getElementById('wis').value) || 10);
                 const perceptionCheckbox = document.querySelector('input[data-skill="11"]');
                 const isProficient = perceptionCheckbox ? perceptionCheckbox.checked : false;
-                const perceptionBonus = wisMod + (isProficient ? profBonus : 0);
-                const passivePerception = 10 + perceptionBonus;
-                document.getElementById('passive-perception').textContent = passivePerception;
+                document.getElementById('passive-perception').textContent = 10 + wisMod + (isProficient ? profBonus : 0);
             }
         }
 
         function updateHitDiceMax() {
             const level = parseInt(document.getElementById('level').value) || 1;
             document.getElementById('max-hit-dice').textContent = level;
-            
-            // Don't let current exceed max
             const current = parseInt(document.getElementById('current-hit-dice').textContent);
-            if (current > level) {
-                document.getElementById('current-hit-dice').textContent = level;
-            }
+            if (current > level) document.getElementById('current-hit-dice').textContent = level;
         }
 
         function spendHitDice() {
-            const currentElement = document.getElementById('current-hit-dice');
-            let current = parseInt(currentElement.textContent);
-            if (current > 0) {
-                currentElement.textContent = current - 1;
-            }
+            const el = document.getElementById('current-hit-dice');
+            let current = parseInt(el.textContent);
+            if (current > 0) el.textContent = current - 1;
         }
 
         function restoreHitDice() {
-            const currentElement = document.getElementById('current-hit-dice');
+            const el = document.getElementById('current-hit-dice');
             const max = parseInt(document.getElementById('max-hit-dice').textContent);
-            let current = parseInt(currentElement.textContent);
-            if (current < max) {
-                currentElement.textContent = current + 1;
-            }
+            let current = parseInt(el.textContent);
+            if (current < max) el.textContent = current + 1;
         }
 
         function updateProficiencyBonus() {
             const level = parseInt(document.getElementById('level').value) || 1;
-            const profBonus = getProficiencyBonus(level);
-            document.getElementById('prof-bonus').textContent = `+${profBonus}`;
-            updateHitDiceMax();
-            updateSaves();
-            updateSkills();
+            document.getElementById('prof-bonus').textContent = `+${getProficiencyBonus(level)}`;
+            updateHitDiceMax(); updateSaves(); updateSkills();
         }
 
         function updateSaves() {
-            const abilities = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
             const profBonus = getProficiencyBonus(parseInt(document.getElementById('level').value) || 1);
-            
-            abilities.forEach(ability => {
-                const score = parseInt(document.getElementById(ability).value) || 10;
-                const modifier = calculateModifier(score);
+            ['str', 'dex', 'con', 'int', 'wis', 'cha'].forEach(ability => {
+                const modifier = calculateModifier(parseInt(document.getElementById(ability).value) || 10);
                 const isProficient = document.querySelector(`input[data-save="${ability}"]`).checked;
                 const total = modifier + (isProficient ? profBonus : 0);
-                const totalText = total >= 0 ? `+${total}` : `${total}`;
-                document.getElementById(`save-${ability}`).textContent = totalText;
+                document.getElementById(`save-${ability}`).textContent = total >= 0 ? `+${total}` : `${total}`;
             });
         }
 
         function updateSkills() {
             const profBonus = getProficiencyBonus(parseInt(document.getElementById('level').value) || 1);
-            
             skills.forEach((skill, index) => {
-                const score = parseInt(document.getElementById(skill.ability).value) || 10;
-                const modifier = calculateModifier(score);
+                const modifier = calculateModifier(parseInt(document.getElementById(skill.ability).value) || 10);
                 const checkbox = document.querySelector(`input[data-skill="${index}"]`);
                 if (checkbox) {
-                    const isProficient = checkbox.checked;
-                    const total = modifier + (isProficient ? profBonus : 0);
-                    const totalText = total >= 0 ? `+${total}` : `${total}`;
+                    const total = modifier + (checkbox.checked ? profBonus : 0);
                     const bonusElement = document.getElementById(`skill-${index}`);
-                    if (bonusElement) {
-                        bonusElement.textContent = totalText;
-                    }
+                    if (bonusElement) bonusElement.textContent = total >= 0 ? `+${total}` : `${total}`;
                 }
             });
-
-            // Update passive perception when skills update
             updatePassivePerception();
         }
 
-        function saveCharacter() {
+        // ── Export / Import ──
+        function exportCharacter() {
+            saveCharacter(true); // save first
+            const data = localStorage.getItem('dndCharacter');
+            if (!data) { alert('No character to export.'); return; }
+            const char = JSON.parse(data);
+            const filename = (char.name || 'character').replace(/[^a-z0-9]/gi, '_').toLowerCase() + '.json';
+            const blob = new Blob([data], { type: 'application/json' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(a.href);
+        }
+
+        function importCharacter(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (!data.name && !data.class) { alert('This doesn\'t look like a valid character file.'); return; }
+                    localStorage.setItem('dndCharacter', JSON.stringify(data));
+                    loadCharacter();
+                    alert(`Imported ${data.name || 'character'} successfully!`);
+                } catch (err) {
+                    alert('Error reading file: ' + err.message);
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = ''; // reset file input
+        }
+
+        // ── Save / Load ──
+        function saveCharacter(silent) {
             const character = {
                 name: document.getElementById('charName').value,
                 species: document.getElementById('species').value,
@@ -1514,12 +1355,9 @@
                 xp: document.getElementById('xp').value,
                 size: document.getElementById('size').value,
                 abilities: {
-                    str: document.getElementById('str').value,
-                    dex: document.getElementById('dex').value,
-                    con: document.getElementById('con').value,
-                    int: document.getElementById('int').value,
-                    wis: document.getElementById('wis').value,
-                    cha: document.getElementById('cha').value
+                    str: document.getElementById('str').value, dex: document.getElementById('dex').value,
+                    con: document.getElementById('con').value, int: document.getElementById('int').value,
+                    wis: document.getElementById('wis').value, cha: document.getElementById('cha').value
                 },
                 combat: {
                     currentHP: document.getElementById('current-hp').value,
@@ -1539,14 +1377,8 @@
                     failures: Array.from(document.querySelectorAll('input[data-type="failure"]')).map(cb => cb.checked)
                 },
                 proficiencies: {
-                    saves: Array.from(document.querySelectorAll('input[data-save]')).map(cb => ({
-                        ability: cb.dataset.save,
-                        proficient: cb.checked
-                    })),
-                    skills: Array.from(document.querySelectorAll('input[data-skill]')).map(cb => ({
-                        index: cb.dataset.skill,
-                        proficient: cb.checked
-                    })),
+                    saves: Array.from(document.querySelectorAll('input[data-save]')).map(cb => ({ ability: cb.dataset.save, proficient: cb.checked })),
+                    skills: Array.from(document.querySelectorAll('input[data-skill]')).map(cb => ({ index: cb.dataset.skill, proficient: cb.checked })),
                     armor: {
                         light: document.getElementById('prof-light-armor').checked,
                         medium: document.getElementById('prof-medium-armor').checked,
@@ -1558,29 +1390,22 @@
                     languages: document.getElementById('languages').value
                 },
                 coins: {
-                    cp: document.getElementById('coin-cp').value,
-                    sp: document.getElementById('coin-sp').value,
-                    ep: document.getElementById('coin-ep').value,
-                    gp: document.getElementById('coin-gp').value,
+                    cp: document.getElementById('coin-cp').value, sp: document.getElementById('coin-sp').value,
+                    ep: document.getElementById('coin-ep').value, gp: document.getElementById('coin-gp').value,
                     pp: document.getElementById('coin-pp').value
                 },
-                conditions: Array.from(document.querySelectorAll('.condition-check')).map(cb => ({
-                    condition: cb.dataset.condition,
-                    active: cb.checked
-                })),
+                conditions: Array.from(document.querySelectorAll('.condition-check')).map(cb => ({ condition: cb.dataset.condition, active: cb.checked })),
                 notes: document.getElementById('notes').value
             };
-
             localStorage.setItem('dndCharacter', JSON.stringify(character));
-            alert('Character saved!');
+            if (!silent) alert('Character saved!');
         }
 
         function loadCharacter() {
             const saved = localStorage.getItem('dndCharacter');
             if (!saved) return;
-
             const character = JSON.parse(saved);
-            
+
             document.getElementById('charName').value = character.name || '';
             document.getElementById('species').value = character.species || character.race || '';
             document.getElementById('class').value = character.class || '';
@@ -1590,67 +1415,36 @@
             document.getElementById('level').value = character.level || 1;
             document.getElementById('xp').value = character.xp || 0;
             document.getElementById('size').value = character.size || 'Medium';
-            
-            // Load ability scores to both hidden input and display
+
             Object.keys(character.abilities).forEach(ability => {
-                const value = character.abilities[ability];
-                document.getElementById(ability).value = value;
-                document.getElementById(`${ability}-display`).textContent = value;
+                document.getElementById(ability).value = character.abilities[ability];
+                document.getElementById(`${ability}-display`).textContent = character.abilities[ability];
             });
 
-            // Load HP
             document.getElementById('current-hp').value = character.combat.currentHP || character.combat.hp || 10;
             const maxHP = character.combat.maxHP || character.combat.hp || 10;
             document.getElementById('max-hp').value = maxHP;
             document.getElementById('max-hp-display').textContent = maxHP;
             document.getElementById('temp-hp').value = character.combat.tempHP || 0;
-            
             document.getElementById('hit-dice-type').value = character.combat.hitDiceType || character.combat.hitDice || '1d8';
             document.getElementById('current-hit-dice').textContent = character.combat.currentHitDice || character.level || 1;
             document.getElementById('inspiration').checked = character.combat.inspiration || false;
-            if (character.combat.inspiration) {
-                toggleInspiration(); // Trigger the visual update
-            }
-            
-            // Load overrides
-            if (character.combat.acOverride) {
-                document.getElementById('ac-override').value = character.combat.acOverride;
-                document.getElementById('ac').textContent = character.combat.acOverride;
-            }
-            if (character.combat.initiativeOverride) {
-                document.getElementById('initiative-override').value = character.combat.initiativeOverride;
-                document.getElementById('initiative').textContent = character.combat.initiativeOverride;
-            }
-            if (character.combat.speedOverride) {
-                document.getElementById('speed-override').value = character.combat.speedOverride;
-                document.getElementById('speed').textContent = character.combat.speedOverride;
-            }
-            if (character.combat.passivePerceptionOverride) {
-                document.getElementById('passive-perception-override').value = character.combat.passivePerceptionOverride;
-                document.getElementById('passive-perception').textContent = character.combat.passivePerceptionOverride;
-            }
-            
-            // Load exhaustion
-            if (character.combat.exhaustion !== undefined && character.combat.exhaustion > 0) {
-                toggleExhaustion(character.combat.exhaustion);
-            }
+            if (character.combat.inspiration) toggleInspiration();
+
+            if (character.combat.acOverride) { document.getElementById('ac-override').value = character.combat.acOverride; document.getElementById('ac').textContent = character.combat.acOverride; }
+            if (character.combat.initiativeOverride) { document.getElementById('initiative-override').value = character.combat.initiativeOverride; document.getElementById('initiative').textContent = character.combat.initiativeOverride; }
+            if (character.combat.speedOverride) { document.getElementById('speed-override').value = character.combat.speedOverride; document.getElementById('speed').textContent = character.combat.speedOverride; }
+            if (character.combat.passivePerceptionOverride) { document.getElementById('passive-perception-override').value = character.combat.passivePerceptionOverride; document.getElementById('passive-perception').textContent = character.combat.passivePerceptionOverride; }
+
+            if (character.combat.exhaustion > 0) toggleExhaustion(character.combat.exhaustion);
 
             if (character.deathSaves) {
-                character.deathSaves.successes.forEach((checked, index) => {
-                    document.querySelector(`input[data-type="success"][data-index="${index}"]`).checked = checked;
-                });
-                character.deathSaves.failures.forEach((checked, index) => {
-                    document.querySelector(`input[data-type="failure"][data-index="${index}"]`).checked = checked;
-                });
+                character.deathSaves.successes.forEach((checked, index) => { document.querySelector(`input[data-type="success"][data-index="${index}"]`).checked = checked; });
+                character.deathSaves.failures.forEach((checked, index) => { document.querySelector(`input[data-type="failure"][data-index="${index}"]`).checked = checked; });
             }
 
-            character.proficiencies.saves.forEach(save => {
-                document.querySelector(`input[data-save="${save.ability}"]`).checked = save.proficient;
-            });
-
-            character.proficiencies.skills.forEach(skill => {
-                document.querySelector(`input[data-skill="${skill.index}"]`).checked = skill.proficient;
-            });
+            character.proficiencies.saves.forEach(save => { document.querySelector(`input[data-save="${save.ability}"]`).checked = save.proficient; });
+            character.proficiencies.skills.forEach(skill => { document.querySelector(`input[data-skill="${skill.index}"]`).checked = skill.proficient; });
 
             if (character.proficiencies.armor) {
                 document.getElementById('prof-light-armor').checked = character.proficiencies.armor.light || false;
@@ -1658,18 +1452,10 @@
                 document.getElementById('prof-heavy-armor').checked = character.proficiencies.armor.heavy || false;
                 document.getElementById('prof-shields').checked = character.proficiencies.armor.shields || false;
             }
+            if (character.proficiencies.weapons) document.getElementById('weapon-profs').value = character.proficiencies.weapons;
+            if (character.proficiencies.tools) document.getElementById('tool-profs').value = character.proficiencies.tools;
+            if (character.proficiencies.languages) document.getElementById('languages').value = character.proficiencies.languages;
 
-            if (character.proficiencies.weapons) {
-                document.getElementById('weapon-profs').value = character.proficiencies.weapons;
-            }
-            if (character.proficiencies.tools) {
-                document.getElementById('tool-profs').value = character.proficiencies.tools;
-            }
-            if (character.proficiencies.languages) {
-                document.getElementById('languages').value = character.proficiencies.languages;
-            }
-
-            // Load coins
             if (character.coins) {
                 document.getElementById('coin-cp').value = character.coins.cp || 0;
                 document.getElementById('coin-sp').value = character.coins.sp || 0;
@@ -1678,7 +1464,6 @@
                 document.getElementById('coin-pp').value = character.coins.pp || 0;
             }
 
-            // Load conditions
             if (character.conditions) {
                 character.conditions.forEach(cond => {
                     const checkbox = document.querySelector(`.condition-check[data-condition="${cond.condition}"]`);
@@ -1686,10 +1471,7 @@
                 });
             }
 
-            // Load notes
-            if (character.notes) {
-                document.getElementById('notes').value = character.notes;
-            }
+            if (character.notes) document.getElementById('notes').value = character.notes;
 
             updateModifiers();
             updateProficiencyBonus();
@@ -1697,9 +1479,6 @@
 
         // Event listeners
         document.getElementById('level').addEventListener('input', updateProficiencyBonus);
-        document.querySelectorAll('input[data-save]').forEach(cb => {
-            cb.addEventListener('change', updateSaves);
-        });
 
         // Initialize
         updateModifiers();
