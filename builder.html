@@ -100,7 +100,7 @@
 
 <script>
 // ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
-//  CHRONICLE Ã¢â‚¬– COMPLETE D&D 5E DATA
+//  CHRONICLE — COMPLETE D&D 5E DATA
 //  Sources: 2024 PHB (default), 2024 DMG, 2024 MM,
 //  XGtE, TCoE, FToD, MotM, MOoT, SCoC, EGtW,
 //  Spelljammer, Deck of Many Things, Tortle Package,
@@ -129,7 +129,7 @@ const SPECIES = [
       traits: ['Darkvision (60 ft.)','Gnomish Cunning: Advantage on INT, WIS, and CHA saving throws.','Gnomish Lineage: Choose Forest Gnome (Minor Illusion + Speak with Small Beasts) or Rock Gnome (Mending + Tinker).'],
       desc: 'Curious and inventive, brimming with arcane energy.' },
     { name: 'Goliath', source: 'PHB 2024', size: 'Medium', speed: 35,
-      traits: ['Giant Ancestry: Choose Cloud (use Misty Step PB/LR), Fire (fire retaliation PB/LR), Frost (cold resistance + cold retaliation), Hill (Bulwark Ã¢â‚¬– resist push/knock prone), Stone (endurance Ã¢â‚¬– reduce damage PB/LR), or Storm (Tempestuous Ã¢â‚¬– bonus action 10ft fly).','Large Form: Powerful Build (count as Large for carry/push/lift). Advantage on checks/saves to avoid grapple or being knocked prone.'],
+      traits: ['Giant Ancestry: Choose Cloud (use Misty Step PB/LR), Fire (fire retaliation PB/LR), Frost (cold resistance + cold retaliation), Hill (Bulwark — resist push/knock prone), Stone (endurance — reduce damage PB/LR), or Storm (Tempestuous — bonus action 10ft fly).','Large Form: Powerful Build (count as Large for carry/push/lift). Advantage on checks/saves to avoid grapple or being knocked prone.'],
       desc: 'Towering and competitive, born of giant-kin.' },
     { name: 'Halfling', source: 'PHB 2024', size: 'Small', speed: 30,
       traits: ['Brave: Advantage on saves vs. Frightened condition.','Halfling Nimbleness: Move through the space of any creature of a size larger than yours.','Luck: When you roll a 1 on a d20 Test, reroll and use new result.','Naturally Stealthy: You can Hide behind a creature at least one size larger than you.'],
@@ -253,7 +253,7 @@ const SPECIES = [
       traits: ['Dexterous Feet: Can use feet as hands with a free object interaction.','Glide: Reduce fall speed, glide horizontally. Reaction to reduce falling damage by 1d6 Ãƒ–” PB.','Hadozee Resilience: As a reaction, reduce non-psychic damage by 1d6 + PB (PB/LR).'],
       desc: 'Simian spacefarers with wing-like membranes for gliding.' },
     { name: 'Plasmoid', source: 'Spelljammer', size: 'Small or Medium', speed: 30,
-      traits: ['Ooze: Creature type is Ooze. Amorphous Ã¢â‚¬– squeeze through 1-inch spaces. Hold Breath 1 hour.','Darkvision (60 ft.)','Natural Resilience: Resistance to Acid and Poison damage. Advantage on saves vs. Poisoned.','Shape Self: Reshape body as an action to form pseudopods. Can have 1 extra pseudopod at a time.'],
+      traits: ['Ooze: Creature type is Ooze. Amorphous — squeeze through 1-inch spaces. Hold Breath 1 hour.','Darkvision (60 ft.)','Natural Resilience: Resistance to Acid and Poison damage. Advantage on saves vs. Poisoned.','Shape Self: Reshape body as an action to form pseudopods. Can have 1 extra pseudopod at a time.'],
       desc: 'Sentient ooze-beings that can reshape their amorphous bodies.' },
     { name: 'Thri-kreen', source: 'Spelljammer', size: 'Small or Medium', speed: 30,
       traits: ['Monstrosity: Creature type is Monstrosity.','Chameleon Carapace: AC = 13 + DEX when not wearing armor. As an action, change color for advantage on Stealth checks, concentration up to 1 hour.','Darkvision (60 ft.)','Secondary Arms: Two secondary arms for light objects, simple tasks, light weapons (no two-handed or heavy).','Sleepless: Don\'t need sleep, can\'t be put to sleep by magic. Long rest = 4 hours of inactivity.','Thri-kreen Telepathy: Telepathy 120 ft., must share a language.'],
@@ -270,7 +270,7 @@ const SPECIES = [
     // Ã¢–â‚¬Ã¢–â‚¬ Strixhaven Ã¢–â‚¬Ã¢–â‚¬
     { name: 'Owlin (Strixhaven)', source: 'SCoC', size: 'Small or Medium', speed: 30,
       traits: ['Darkvision (120 ft.)','Flight: Fly speed equal to walking speed (no medium/heavy armor).','Silent Feathers: Proficiency in Stealth.'],
-      desc: 'Owl-folk of Strixhaven. (Use MotM version Ã¢â‚¬– identical stats.)' },
+      desc: 'Owl-folk of Strixhaven. (Use MotM version — identical stats.)' },
 
     // Ã¢–â‚¬Ã¢–â‚¬ Explorer\'s Guide to Wildemount Ã¢–â‚¬Ã¢–â‚¬
     { name: 'Lotusden Halfling', source: 'EGtW', size: 'Small', speed: 25,
@@ -302,7 +302,7 @@ const SPECIES = [
       traits: ['Arboreal Alertness: Proficiency in Perception.','Amphibious: Breathe air and water.','Poison Skin: Creatures that grapple you or hit you with unarmed/natural weapon take 2d4 Poison damage. You can coat a weapon to add 2d4 Poison on hit (1 minute duration).','Standing Leap: Long jump 25 ft., high jump 15 ft.','Water Dependency: Must submerge in water for 1 hour per day or suffer 1 exhaustion.','Climb speed of 30 ft.'],
       desc: 'Poisonous frog-folk who live in jungle treetops.' },
     { name: 'Loxodon', source: 'MotM', size: 'Medium', speed: 30,
-      traits: ['Natural Armor: AC = 12 + CON modifier when not wearing armor.','Loxodon Serenity: Advantage on saves vs. Charmed and Frightened.','Keen Smell: Advantage on Perception, Investigation, and Survival checks involving smell.','Trunk: Prehensile trunk Ã¢â‚¬– lift up to 5 Ãƒ–” STR lbs., breathe through while grappled, interact with objects.','Powerful Build: Count as Large for carry/push/lift.'],
+      traits: ['Natural Armor: AC = 12 + CON modifier when not wearing armor.','Loxodon Serenity: Advantage on saves vs. Charmed and Frightened.','Keen Smell: Advantage on Perception, Investigation, and Survival checks involving smell.','Trunk: Prehensile trunk — lift up to 5 Ãƒ–” STR lbs., breathe through while grappled, interact with objects.','Powerful Build: Count as Large for carry/push/lift.'],
       desc: 'Elephant-folk known for their calm wisdom and powerful trunks.' },
     { name: 'Simic Hybrid', source: 'MotM', size: 'Medium', speed: 30,
       traits: ['Darkvision (60 ft.)','Animal Enhancement (1st level): Choose Manta Glide (glide 5:1 ratio), Nimble Climber (climb speed = walk), or Underwater Adaptation (swim speed = walk + water breathing).','Animal Enhancement (5th level): Choose Grappling Appendages (1d6 grapple attack), Carapace (+1 AC when not in heavy armor), or Acid Spit (30 ft. ranged, 2d10 acid, PB/LR).'],
@@ -354,7 +354,7 @@ const CLASSES = [
             { name: 'Path of the World Tree', source: 'PHB 2024', desc: 'Draw on the World Tree to teleport allies and create vitality.' },
             { name: 'Path of the Zealot', source: 'PHB 2024', desc: 'Divine fury empowers your rage with radiant or necrotic damage.' },
             { name: 'Path of the Ancestral Guardian', source: 'XGtE', desc: 'Summon ancestral spirits to protect allies and punish foes.' },
-            { name: 'Path of the Storm Herald', source: 'XGtE', desc: 'Channel environmental fury Ã¢â‚¬– desert, sea, or tundra auras.' },
+            { name: 'Path of the Storm Herald', source: 'XGtE', desc: 'Channel environmental fury — desert, sea, or tundra auras.' },
             { name: 'Path of the Beast', source: 'TCoE', desc: 'Transform your body with bestial natural weapons while raging.' },
             { name: 'Path of Wild Magic', source: 'TCoE', desc: 'Your rage unleashes random surges of wild magic.' },
         ]
@@ -375,7 +375,7 @@ const CLASSES = [
             { name: 'College of Valor', source: 'PHB 2024', desc: 'Inspire allies in battle, blending martial prowess with magic.' },
             { name: 'College of Swords', source: 'XGtE', desc: 'Blade flourishes let you fight with style and deadly grace.' },
             { name: 'College of Whispers', source: 'XGtE', desc: 'Use fear, psychic blades, and stolen identities to manipulate.' },
-            { name: 'College of Creation', source: 'TCoE', desc: 'Bring art to life Ã¢â‚¬– animate objects and create items from song.' },
+            { name: 'College of Creation', source: 'TCoE', desc: 'Bring art to life — animate objects and create items from song.' },
             { name: 'College of Eloquence', source: 'TCoE', desc: 'Master of words whose Inspiration never goes to waste.' },
         ]
     },
@@ -471,7 +471,7 @@ const CLASSES = [
         source: 'PHB 2024',
         subclassLevel: 3,
         subclasses: [
-            { name: 'Oath of Devotion', source: 'PHB 2024', desc: 'The classic paladin Ã¢â‚¬– sacred weapon, holy aura, radiant smites.' },
+            { name: 'Oath of Devotion', source: 'PHB 2024', desc: 'The classic paladin — sacred weapon, holy aura, radiant smites.' },
             { name: 'Oath of Glory', source: 'PHB 2024', desc: 'Inspired by heroism, enhancing athleticism and speed.' },
             { name: 'Oath of the Ancients', source: 'PHB 2024', desc: 'Protect the light and joy of the natural world with fey magic.' },
             { name: 'Oath of Vengeance', source: 'PHB 2024', desc: 'Hunt down evildoers with relentless pursuit and focused fury.' },
@@ -514,7 +514,7 @@ const CLASSES = [
             { name: 'Arcane Trickster', source: 'PHB 2024', desc: 'Blend illusion and enchantment magic with roguish tricks.' },
             { name: 'Assassin', source: 'PHB 2024', desc: 'Master of disguise and poison with devastating surprise attacks.' },
             { name: 'Soulknife', source: 'PHB 2024', desc: 'Manifest psychic blades and use psionic dice for versatile tricks.' },
-            { name: 'Thief', source: 'PHB 2024', desc: 'Supreme skill and agility Ã¢â‚¬– fast hands, second-story work, reflexes.' },
+            { name: 'Thief', source: 'PHB 2024', desc: 'Supreme skill and agility — fast hands, second-story work, reflexes.' },
             { name: 'Inquisitive', source: 'XGtE', desc: 'Keen deductive eye that roots out hidden truths and lies.' },
             { name: 'Mastermind', source: 'XGtE', desc: 'Master manipulator who directs allies and reads foes at range.' },
             { name: 'Scout', source: 'XGtE', desc: 'Wilderness expert with enhanced mobility and Nature/Survival skills.' },
@@ -537,7 +537,7 @@ const CLASSES = [
             { name: 'Draconic Sorcery', source: 'PHB 2024', desc: 'Dragon blood grants resilience, elemental affinity, and wings.' },
             { name: 'Wild Magic Sorcery', source: 'PHB 2024', desc: 'Chaotic magic surges create unpredictable but powerful effects.' },
             { name: 'Divine Soul', source: 'XGtE', desc: 'Access the entire Cleric spell list with sorcerer versatility.' },
-            { name: 'Shadow Magic', source: 'XGtE', desc: 'Wield darkness itself Ã¢â‚¬– summon shadow hounds and cheat death.' },
+            { name: 'Shadow Magic', source: 'XGtE', desc: 'Wield darkness itself — summon shadow hounds and cheat death.' },
             { name: 'Storm Sorcery', source: 'XGtE', desc: 'Command wind and lightning, fly briefly after casting spells.' },
             { name: 'Lunar Sorcery', source: 'FToD (Dragonlance)', desc: 'Draw power from moon phases for varied magical effects.' },
         ]
@@ -552,13 +552,13 @@ const CLASSES = [
         source: 'PHB 2024',
         subclassLevel: 3,
         subclasses: [
-            { name: 'Archfey Patron', source: 'PHB 2024', desc: 'Fey charm and misdirection Ã¢â‚¬– beguile, teleport, and confuse.' },
+            { name: 'Archfey Patron', source: 'PHB 2024', desc: 'Fey charm and misdirection — beguile, teleport, and confuse.' },
             { name: 'Celestial Patron', source: 'PHB 2024', desc: 'Heal allies with celestial light while wielding eldritch power.' },
             { name: 'Fiend Patron', source: 'PHB 2024', desc: 'Gain temp HP on kills, hurl hellfire, and cheat death.' },
             { name: 'Great Old One Patron', source: 'PHB 2024', desc: 'Alien telepathy, psychic damage, and mind-rending abilities.' },
             { name: 'Hexblade', source: 'XGtE', desc: 'Manifest a sentient weapon, use CHA for attacks, curse enemies.' },
             { name: 'The Fathomless', source: 'TCoE', desc: 'Tentacles from the deep sea grapple and protect.' },
-            { name: 'The Genie', source: 'TCoE', desc: 'Patron is a genie Ã¢â‚¬– gain a vessel, bonus damage, and limited wish.' },
+            { name: 'The Genie', source: 'TCoE', desc: 'Patron is a genie — gain a vessel, bonus damage, and limited wish.' },
             { name: 'Undead Patron', source: 'FToD', desc: 'Transform into a terrifying undead form with necrotic power.' },
         ]
     },
@@ -573,13 +573,13 @@ const CLASSES = [
         subclassLevel: 3,
         subclasses: [
             { name: 'School of Abjuration', source: 'PHB 2024', desc: 'Protective wards and an arcane ward that absorbs damage.' },
-            { name: 'School of Divination', source: 'PHB 2024', desc: 'See the future with Portent Ã¢â‚¬– replace any d20 roll.' },
+            { name: 'School of Divination', source: 'PHB 2024', desc: 'See the future with Portent — replace any d20 roll.' },
             { name: 'School of Evocation', source: 'PHB 2024', desc: 'Sculpt devastating damage spells around your allies.' },
             { name: 'School of Illusion', source: 'PHB 2024', desc: 'Create increasingly real illusions that deceive all senses.' },
             { name: 'Bladesinging', source: 'TCoE', desc: 'Elven tradition blending swordplay and wizardry with AC and speed bonuses.' },
-            { name: 'Order of Scribes', source: 'TCoE', desc: 'Your spellbook is sentient Ã¢â‚¬– swap damage types and cast rituals faster.' },
+            { name: 'Order of Scribes', source: 'TCoE', desc: 'Your spellbook is sentient — swap damage types and cast rituals faster.' },
             { name: 'War Magic', source: 'XGtE', desc: 'Tactical wizard with power surges and boosted initiative/saves.' },
-            { name: 'Chronurgy Magic', source: 'EGtW', desc: 'Manipulate time Ã¢â‚¬– reroll initiative, freeze creatures, bottle spells.' },
+            { name: 'Chronurgy Magic', source: 'EGtW', desc: 'Manipulate time — reroll initiative, freeze creatures, bottle spells.' },
             { name: 'Graviturgy Magic', source: 'EGtW', desc: 'Control gravity to move creatures, alter weight, and create singularities.' },
         ]
     }
@@ -847,7 +847,7 @@ function initStdArray(){
         const k=AK[i],a=state.arrayAssignments[k];
         return `<div class="ability-box" onclick="tapSlot('${k}')">
             <div class="ab-label">${ab}</div>
-            <div class="ability-drop">${a!=null?`<div class="array-chip" onclick="event.stopPropagation();unassign('${k}')">${a}</div>`:'<span style="color:#bbb;font-size:13px">Ã¢â‚¬–</span>'}</div>
+            <div class="ability-drop">${a!=null?`<div class="array-chip" onclick="event.stopPropagation();unassign('${k}')">${a}</div>`:'<span style="color:#bbb;font-size:13px">—</span>'}</div>
             <div class="ab-mod">${a!=null?fmtMod(calcMod(a)):''}</div></div>`;
     }).join('');
 }
@@ -971,7 +971,7 @@ function createCharacter(){
         `Background: ${bg.name}`,
         `Origin Feat: ${bg.feat}`,
         '',
-        `Class: ${cl.name}${scName?' Ã¢â‚¬– '+scName:''}`,
+        `Class: ${cl.name}${scName?' — '+scName:''}`,
         `Skills: ${cl.skillChoices}`,
     ];
 
@@ -999,9 +999,9 @@ function createCharacter(){
     overlay.innerHTML=`<div style="background:linear-gradient(to bottom,#faf7f2,#f5f0e8);border:2px solid #8B4513;border-radius:12px;padding:30px;max-width:400px;width:100%;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.3)">
         <div style="font-family:'Cinzel',serif;font-size:24px;color:#5a1a1a;font-weight:700;margin-bottom:10px">Character Created!</div>
         <div style="font-size:16px;color:#666;margin-bottom:4px">${state.name}</div>
-        <div style="font-size:14px;color:#888;margin-bottom:24px">Level ${lvl} ${sp.name} ${cl.name}${scName?' Ã¢â‚¬– '+scName:''}</div>
+        <div style="font-size:14px;color:#888;margin-bottom:24px">Level ${lvl} ${sp.name} ${cl.name}${scName?' — '+scName:''}</div>
         <a href="index.html" style="display:block;padding:14px;background:linear-gradient(135deg,#4a7c59,#2d5016);color:#faf7f2;border:2px solid #2d5016;border-radius:8px;font-family:'Cinzel',serif;font-size:16px;font-weight:600;text-decoration:none;letter-spacing:1px;margin-bottom:12px;box-shadow:0 3px 8px rgba(45,80,22,.3)">Open Character Sheet</a>
-        <div style="font-size:12px;color:#999;margin-top:8px">Saved to localStorage Ã¢â‚¬– loads automatically in the sheet.</div></div>`;
+        <div style="font-size:12px;color:#999;margin-top:8px">Saved to localStorage — loads automatically in the sheet.</div></div>`;
     document.body.appendChild(overlay);
 }
 
