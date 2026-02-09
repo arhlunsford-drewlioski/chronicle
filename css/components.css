@@ -305,43 +305,9 @@
     margin-bottom: 16px;
 }
 
-.prof-checkbox {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    margin-right: 10px;
-    width: 18px;
-    height: 18px;
-    border: 2px solid var(--brown-primary);
-    border-radius: 50%;
-    cursor: pointer;
-    position: relative;
-    background: white;
-    transition: all 0.2s;
-}
-
-.prof-checkbox:hover {
-    border-color: var(--brown-dark);
-    box-shadow: 0 0 0 2px rgba(139, 69, 19, 0.1);
-}
-
-.prof-checkbox:checked {
-    background: var(--brown-primary);
-    border-color: var(--brown-dark);
-}
-
-.prof-checkbox:checked::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 8px;
-    height: 8px;
-    background: var(--parchment-light);
-    border-radius: 50%;
-}
-
+/* ─────────────────────────────────────────────────────────────────
+   INPUTS
+   ───────────────────────────────────────────────────────────────── */
 .input-group {
     display: flex;
     flex-direction: column;
