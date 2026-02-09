@@ -16,27 +16,65 @@
 
         body {
             font-family: 'Crimson Text', Georgia, serif;
-            background: #f5f5f5;
+            background: linear-gradient(to bottom, #f4e8d8 0%, #ede0d0 100%);
+            background-image: 
+                linear-gradient(to bottom, #f4e8d8 0%, #ede0d0 100%),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(139, 69, 19, 0.03) 2px, rgba(139, 69, 19, 0.03) 4px),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(139, 69, 19, 0.03) 2px, rgba(139, 69, 19, 0.03) 4px);
             padding: 20px;
             max-width: 1200px;
             margin: 0 auto;
+            min-height: 100vh;
         }
 
         .sheet {
-            background: white;
+            background: linear-gradient(to bottom, #faf7f2 0%, #f5f0e8 100%);
             border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+            box-shadow: 
+                0 4px 6px rgba(0, 0, 0, 0.1),
+                0 10px 20px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            border: 2px solid #8B4513;
+            position: relative;
+        }
+
+        .sheet::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid rgba(139, 69, 19, 0.3);
+            border-radius: 4px;
+            pointer-events: none;
         }
 
         h1 {
             font-family: 'Cinzel', serif;
-            color: #8B0000;
-            margin-bottom: 20px;
+            color: #5a1a1a;
+            margin-bottom: 30px;
             text-align: center;
             font-weight: 700;
-            font-size: 32px;
-            letter-spacing: 2px;
+            font-size: 36px;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            padding-bottom: 20px;
+            border-bottom: 3px double #8B4513;
+            position: relative;
+        }
+
+        h1::after {
+            content: '⚔';
+            position: absolute;
+            left: 50%;
+            bottom: -15px;
+            transform: translateX(-50%);
+            background: linear-gradient(to bottom, #faf7f2 0%, #f5f0e8 100%);
+            padding: 0 15px;
+            font-size: 24px;
+            color: #8B4513;
         }
 
         .character-info {
@@ -63,22 +101,25 @@
 
         .input-group input {
             padding: 8px;
-            border: 2px solid #ddd;
+            border: 2px solid #c9a77c;
             border-radius: 4px;
             font-size: 16px;
             cursor: pointer;
-            background: white;
+            background: rgba(255, 255, 255, 0.6);
+            transition: all 0.2s;
         }
 
         .input-group input:hover {
-            border-color: #8B0000;
-            background: #fff8f8;
+            border-color: #8B4513;
+            background: rgba(255, 255, 255, 0.8);
         }
 
         .input-group input:focus {
             outline: none;
-            border-color: #8B0000;
+            border-color: #5a1a1a;
             cursor: text;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
         }
 
         .stats-grid {
@@ -89,10 +130,24 @@
         }
 
         .stat-box {
-            background: #f9f9f9;
-            border: 2px solid #8B0000;
+            background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%);
+            border: 2px solid #8B4513;
             border-radius: 8px;
-            padding: 15px;
+            padding: 18px;
+            box-shadow: 
+                0 2px 4px rgba(0, 0, 0, 0.1),
+                0 4px 8px rgba(139, 69, 19, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            position: relative;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 4px 8px rgba(0, 0, 0, 0.15),
+                0 8px 16px rgba(139, 69, 19, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
         }
 
         .stat-header {
@@ -106,7 +161,7 @@
             font-family: 'Cinzel', serif;
             font-size: 16px;
             font-weight: 700;
-            color: #8B0000;
+            color: #5a1a1a;
             margin-bottom: 8px;
             letter-spacing: 1.5px;
         }
@@ -157,14 +212,15 @@
         .stat-modifier {
             font-size: 20px;
             font-weight: bold;
-            color: white;
-            background: #8B0000;
+            color: #faf7f2;
+            background: linear-gradient(135deg, #8B4513 0%, #5a2d0d 100%);
             width: 45px;
             height: 50px;
             clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
         }
 
         .stat-skills {
@@ -176,20 +232,22 @@
             align-items: center;
             padding: 6px;
             margin-bottom: 2px;
-            background: white;
+            background: rgba(255, 255, 255, 0.4);
             border-radius: 4px;
             font-size: 14px;
+            transition: background 0.2s;
         }
 
         .stat-skill-item:hover {
-            background: #f5f5f5;
+            background: rgba(139, 69, 19, 0.1);
         }
 
         .stat-skill-item.save-item {
-            background: #fff8dc;
-            border-bottom: 2px solid #ddd;
+            background: linear-gradient(135deg, #fff8dc 0%, #f5e6c8 100%);
+            border-bottom: 2px solid #8B4513;
             margin-bottom: 8px;
             font-weight: 600;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
         .combat-section {
@@ -198,13 +256,31 @@
 
         .section-title {
             font-family: 'Cinzel', serif;
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 700;
-            color: #8B0000;
-            margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #8B0000;
-            letter-spacing: 1px;
+            color: #5a1a1a;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #8B4513;
+            letter-spacing: 1.5px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .section-title::before {
+            content: '◆';
+            margin-right: 10px;
+            color: #8B4513;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(to right, #5a1a1a, transparent);
         }
 
         .prof-checkbox {
@@ -248,20 +324,25 @@
         .exhaustion-box {
             flex: 1;
             height: 30px;
-            background: #f0f0f0;
-            border: 2px solid #ddd;
+            background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+            border: 2px solid #8B4513;
             border-radius: 4px;
             cursor: pointer;
             transition: all 0.2s;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .exhaustion-box.filled {
-            background: #8B0000;
-            border-color: #660000;
+            background: linear-gradient(135deg, #8B4513 0%, #5a2d0d 100%);
+            border-color: #5a1a1a;
+            box-shadow: 
+                inset 0 1px 2px rgba(0, 0, 0, 0.3),
+                0 1px 3px rgba(139, 69, 19, 0.4);
         }
 
         .exhaustion-box:hover {
-            border-color: #8B0000;
+            border-color: #5a1a1a;
+            transform: translateY(-1px);
         }
 
         .exhaustion-labels {
@@ -283,8 +364,8 @@
         .hp-button {
             width: 30px;
             height: 30px;
-            background: #8B0000;
-            color: white;
+            background: linear-gradient(135deg, #8B4513 0%, #5a2d0d 100%);
+            color: #faf7f2;
             border: none;
             border-radius: 4px;
             font-size: 18px;
@@ -293,10 +374,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s;
         }
 
         .hp-button:hover {
-            background: #660000;
+            background: linear-gradient(135deg, #a0521f 0%, #6b3610 100%);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
         }
 
         .hp-button:active {
@@ -331,17 +415,21 @@
         }
 
         .combat-box {
-            background: #f9f9f9;
-            border: 2px solid #333;
+            background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%);
+            border: 2px solid #8B4513;
             border-radius: 8px;
             padding: 15px;
             text-align: center;
+            box-shadow: 
+                0 2px 4px rgba(0, 0, 0, 0.1),
+                0 4px 8px rgba(139, 69, 19, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
         }
 
         .combat-label {
             font-family: 'Cinzel', serif;
             font-size: 11px;
-            color: #666;
+            color: #5a1a1a;
             font-weight: 600;
             margin-bottom: 8px;
             letter-spacing: 0.5px;
@@ -360,19 +448,37 @@
 
         .save-button {
             width: 100%;
-            padding: 12px;
-            background: #8B0000;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            font-weight: 600;
+            padding: 15px;
+            background: linear-gradient(135deg, #8B4513 0%, #5a2d0d 100%);
+            color: #faf7f2;
+            border: 2px solid #5a1a1a;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 700;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 2px;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 30px;
+            box-shadow: 
+                0 4px 6px rgba(0, 0, 0, 0.2),
+                0 8px 12px rgba(139, 69, 19, 0.3);
+            transition: all 0.3s;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         .save-button:hover {
-            background: #660000;
+            background: linear-gradient(135deg, #a0521f 0%, #6b3610 100%);
+            transform: translateY(-2px);
+            box-shadow: 
+                0 6px 10px rgba(0, 0, 0, 0.25),
+                0 12px 18px rgba(139, 69, 19, 0.35);
+        }
+
+        .save-button:active {
+            transform: translateY(0);
+            box-shadow: 
+                0 2px 4px rgba(0, 0, 0, 0.2),
+                0 4px 8px rgba(139, 69, 19, 0.25);
         }
 
         .saves-grid {
