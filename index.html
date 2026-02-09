@@ -62,19 +62,24 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
             padding-bottom: 20px;
             border-bottom: 3px double #8B4513;
-            position: relative;
         }
 
-        h1::after {
-            content: '⚔';
+        .chronicle-logo {
             position: absolute;
             left: 50%;
-            bottom: -15px;
+            bottom: -35px;
             transform: translateX(-50%);
-            background: linear-gradient(to bottom, #faf7f2 0%, #f5f0e8 100%);
-            padding: 0 15px;
-            font-size: 24px;
-            color: #8B4513;
+            width: 70px;
+            height: 70px;
+            z-index: 10;
+        }
+
+        .logo-dragon {
+            position: relative;
+            width: 70px;
+            height: 70px;
+            margin: 20px auto;
+            display: block;
         }
 
         .character-info {
@@ -849,29 +854,41 @@
 
             <!-- Inspiration & Exhaustion -->
             <div style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                <div class="combat-box" style="padding: 10px;">
-                    <label style="display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;">
-                        <input type="checkbox" id="inspiration" style="width: 16px; height: 16px; cursor: pointer;">
-                        <span style="font-size: 13px; font-weight: 600; font-family: 'Cinzel', serif; letter-spacing: 0.5px;">HEROIC INSPIRATION</span>
-                    </label>
+                <div class="combat-box" style="padding: 15px;">
+                    <div class="combat-label" style="margin-bottom: 10px;">HEROIC INSPIRATION</div>
+                    <div style="text-align: center;">
+                        <button id="inspiration-toggle" onclick="toggleInspiration()" 
+                                style="background: linear-gradient(135deg, #e0e0e0 0%, #d0d0d0 100%); 
+                                       border: 2px solid #8B4513; 
+                                       border-radius: 20px; 
+                                       padding: 8px 20px; 
+                                       font-family: 'Cinzel', serif; 
+                                       font-size: 12px; 
+                                       font-weight: 600;
+                                       cursor: pointer;
+                                       transition: all 0.3s;
+                                       box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                            NOT INSPIRED
+                        </button>
+                        <input type="checkbox" id="inspiration" style="display: none;">
+                    </div>
                 </div>
                 <div class="combat-box">
                     <div class="combat-label">EXHAUSTION LEVEL</div>
                     <div class="exhaustion-slider">
                         <div class="exhaustion-track" id="exhaustion-track">
-                            <div class="exhaustion-box" onclick="setExhaustion(1)"></div>
-                            <div class="exhaustion-box" onclick="setExhaustion(2)"></div>
-                            <div class="exhaustion-box" onclick="setExhaustion(3)"></div>
-                            <div class="exhaustion-box" onclick="setExhaustion(4)"></div>
-                            <div class="exhaustion-box" onclick="setExhaustion(5)"></div>
-                            <div class="exhaustion-box" onclick="setExhaustion(6)"></div>
-                            <div class="exhaustion-box" onclick="setExhaustion(7)"></div>
-                            <div class="exhaustion-box" onclick="setExhaustion(8)"></div>
-                            <div class="exhaustion-box" onclick="setExhaustion(9)"></div>
-                            <div class="exhaustion-box" onclick="setExhaustion(10)"></div>
+                            <div class="exhaustion-box" onclick="toggleExhaustion(1)"></div>
+                            <div class="exhaustion-box" onclick="toggleExhaustion(2)"></div>
+                            <div class="exhaustion-box" onclick="toggleExhaustion(3)"></div>
+                            <div class="exhaustion-box" onclick="toggleExhaustion(4)"></div>
+                            <div class="exhaustion-box" onclick="toggleExhaustion(5)"></div>
+                            <div class="exhaustion-box" onclick="toggleExhaustion(6)"></div>
+                            <div class="exhaustion-box" onclick="toggleExhaustion(7)"></div>
+                            <div class="exhaustion-box" onclick="toggleExhaustion(8)"></div>
+                            <div class="exhaustion-box" onclick="toggleExhaustion(9)"></div>
+                            <div class="exhaustion-box" onclick="toggleExhaustion(10)"></div>
                         </div>
                         <div style="display: flex; justify-content: space-between; font-size: 10px; color: #666; font-weight: 600; margin-top: 5px;">
-                            <span>0</span>
                             <span>1</span>
                             <span>2</span>
                             <span>3</span>
@@ -884,7 +901,7 @@
                             <span>10</span>
                         </div>
                         <div style="text-align: center; margin-top: 8px;">
-                            <span style="font-weight: 700; color: #8B0000; font-size: 14px;">Level: <span id="exhaustion-level">0</span></span>
+                            <span style="font-weight: 700; color: #8B4513; font-size: 14px;">Level: <span id="exhaustion-level">None</span></span>
                             <span style="font-size: 11px; color: #666; margin-left: 10px;">(10 = Death)</span>
                         </div>
                     </div>
@@ -941,6 +958,116 @@
             </div>
         </div>
 
+        <!-- Rest Buttons -->
+        <div style="margin-top: 30px;">
+            <div class="section-title">Rest & Recovery</div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                <button onclick="shortRest()" style="padding: 15px; background: linear-gradient(135deg, #4a7c59 0%, #2d5016 100%); color: #faf7f2; border: 2px solid #2d5016; border-radius: 8px; font-family: 'Cinzel', serif; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.2); transition: all 0.2s;">
+                    SHORT REST
+                </button>
+                <button onclick="longRest()" style="padding: 15px; background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%); color: #faf7f2; border: 2px solid #1e3a8a; border-radius: 8px; font-family: 'Cinzel', serif; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.2); transition: all 0.2s;">
+                    LONG REST
+                </button>
+            </div>
+        </div>
+
+        <!-- Coins -->
+        <div style="margin-top: 30px;">
+            <div class="section-title">Coins</div>
+            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;">
+                <div class="combat-box" style="padding: 10px;">
+                    <div style="font-size: 11px; font-weight: 600; margin-bottom: 5px; color: #8B4513;">CP</div>
+                    <input type="number" id="coin-cp" value="0" min="0" style="width: 100%; padding: 5px; text-align: center; border: 2px solid #c9a77c; border-radius: 4px;">
+                </div>
+                <div class="combat-box" style="padding: 10px;">
+                    <div style="font-size: 11px; font-weight: 600; margin-bottom: 5px; color: #8B4513;">SP</div>
+                    <input type="number" id="coin-sp" value="0" min="0" style="width: 100%; padding: 5px; text-align: center; border: 2px solid #c9a77c; border-radius: 4px;">
+                </div>
+                <div class="combat-box" style="padding: 10px;">
+                    <div style="font-size: 11px; font-weight: 600; margin-bottom: 5px; color: #8B4513;">EP</div>
+                    <input type="number" id="coin-ep" value="0" min="0" style="width: 100%; padding: 5px; text-align: center; border: 2px solid #c9a77c; border-radius: 4px;">
+                </div>
+                <div class="combat-box" style="padding: 10px;">
+                    <div style="font-size: 11px; font-weight: 600; margin-bottom: 5px; color: #8B4513;">GP</div>
+                    <input type="number" id="coin-gp" value="0" min="0" style="width: 100%; padding: 5px; text-align: center; border: 2px solid #c9a77c; border-radius: 4px;">
+                </div>
+                <div class="combat-box" style="padding: 10px;">
+                    <div style="font-size: 11px; font-weight: 600; margin-bottom: 5px; color: #8B4513;">PP</div>
+                    <input type="number" id="coin-pp" value="0" min="0" style="width: 100%; padding: 5px; text-align: center; border: 2px solid #c9a77c; border-radius: 4px;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Conditions -->
+        <div style="margin-top: 30px;">
+            <div class="section-title">Conditions</div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
+                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
+                    <input type="checkbox" class="condition-check" data-condition="blinded">
+                    <span style="font-size: 14px;">Blinded</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
+                    <input type="checkbox" class="condition-check" data-condition="charmed">
+                    <span style="font-size: 14px;">Charmed</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
+                    <input type="checkbox" class="condition-check" data-condition="deafened">
+                    <span style="font-size: 14px;">Deafened</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
+                    <input type="checkbox" class="condition-check" data-condition="frightened">
+                    <span style="font-size: 14px;">Frightened</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
+                    <input type="checkbox" class="condition-check" data-condition="grappled">
+                    <span style="font-size: 14px;">Grappled</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
+                    <input type="checkbox" class="condition-check" data-condition="incapacitated">
+                    <span style="font-size: 14px;">Incapacitated</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
+                    <input type="checkbox" class="condition-check" data-condition="invisible">
+                    <span style="font-size: 14px;">Invisible</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
+                    <input type="checkbox" class="condition-check" data-condition="paralyzed">
+                    <span style="font-size: 14px;">Paralyzed</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
+                    <input type="checkbox" class="condition-check" data-condition="petrified">
+                    <span style="font-size: 14px;">Petrified</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
+                    <input type="checkbox" class="condition-check" data-condition="poisoned">
+                    <span style="font-size: 14px;">Poisoned</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
+                    <input type="checkbox" class="condition-check" data-condition="prone">
+                    <span style="font-size: 14px;">Prone</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
+                    <input type="checkbox" class="condition-check" data-condition="restrained">
+                    <span style="font-size: 14px;">Restrained</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
+                    <input type="checkbox" class="condition-check" data-condition="stunned">
+                    <span style="font-size: 14px;">Stunned</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;">
+                    <input type="checkbox" class="condition-check" data-condition="unconscious">
+                    <span style="font-size: 14px;">Unconscious</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Notes & Features -->
+        <div style="margin-top: 30px;">
+            <div class="section-title">Notes & Features</div>
+            <textarea id="notes" placeholder="Racial traits, class features, important notes..." 
+                      style="width: 100%; min-height: 150px; padding: 15px; border: 2px solid #8B4513; border-radius: 8px; font-family: 'Crimson Text', Georgia, serif; font-size: 14px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); resize: vertical;"></textarea>
+        </div>
+
         <button class="save-button" onclick="saveCharacter()">Save Character</button>
     </div>
 
@@ -967,6 +1094,79 @@
         ];
 
         let currentExhaustion = 0;
+
+        function toggleInspiration() {
+            const checkbox = document.getElementById('inspiration');
+            const button = document.getElementById('inspiration-toggle');
+            
+            checkbox.checked = !checkbox.checked;
+            
+            if (checkbox.checked) {
+                button.textContent = 'INSPIRED';
+                button.style.background = 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)';
+                button.style.color = '#5a1a1a';
+                button.style.boxShadow = '0 3px 8px rgba(255, 215, 0, 0.5), 0 0 15px rgba(255, 215, 0, 0.3)';
+            } else {
+                button.textContent = 'NOT INSPIRED';
+                button.style.background = 'linear-gradient(135deg, #e0e0e0 0%, #d0d0d0 100%)';
+                button.style.color = '#333';
+                button.style.boxShadow = '0 2px 4px rgba(0,0,0,0.2)';
+            }
+        }
+
+        function toggleExhaustion(level) {
+            // If clicking the current level, turn off exhaustion
+            if (currentExhaustion === level) {
+                currentExhaustion = 0;
+                document.getElementById('exhaustion-level').textContent = 'None';
+            } else {
+                currentExhaustion = level;
+                document.getElementById('exhaustion-level').textContent = level;
+            }
+            
+            const boxes = document.querySelectorAll('.exhaustion-box');
+            boxes.forEach((box, index) => {
+                if (index < currentExhaustion) {
+                    box.classList.add('filled');
+                } else {
+                    box.classList.remove('filled');
+                }
+            });
+        }
+
+        function shortRest() {
+            if (confirm('Take a short rest? This will allow you to spend hit dice to recover HP.')) {
+                alert('Short Rest: You can now spend hit dice using the buttons above. Remember to restore any class features that recharge on a short rest!');
+            }
+        }
+
+        function longRest() {
+            if (confirm('Take a long rest? This will restore HP, half your hit dice, and reset abilities.')) {
+                // Restore HP to max
+                const maxHP = parseInt(document.getElementById('max-hp').value) || 10;
+                document.getElementById('current-hp').value = maxHP;
+                
+                // Restore hit dice (half, minimum 1)
+                const maxHitDice = parseInt(document.getElementById('max-hit-dice').textContent) || 1;
+                const restoreAmount = Math.max(1, Math.floor(maxHitDice / 2));
+                const currentHitDice = parseInt(document.getElementById('current-hit-dice').textContent) || 0;
+                const newHitDice = Math.min(maxHitDice, currentHitDice + restoreAmount);
+                document.getElementById('current-hit-dice').textContent = newHitDice;
+                
+                // Clear temp HP
+                document.getElementById('temp-hp').value = 0;
+                
+                // Clear death saves
+                document.querySelectorAll('.death-save-checkbox').forEach(cb => cb.checked = false);
+                
+                // Reduce exhaustion by 1 if any
+                if (currentExhaustion > 0) {
+                    toggleExhaustion(currentExhaustion - 1);
+                }
+                
+                alert('Long Rest complete! HP and hit dice restored. Remember to reset spell slots and daily abilities!');
+            }
+        }
 
         function adjustHP(type, amount) {
             const input = document.getElementById(type === 'current' ? 'current-hp' : 'temp-hp');
@@ -1268,7 +1468,19 @@
                     weapons: document.getElementById('weapon-profs').value,
                     tools: document.getElementById('tool-profs').value,
                     languages: document.getElementById('languages').value
-                }
+                },
+                coins: {
+                    cp: document.getElementById('coin-cp').value,
+                    sp: document.getElementById('coin-sp').value,
+                    ep: document.getElementById('coin-ep').value,
+                    gp: document.getElementById('coin-gp').value,
+                    pp: document.getElementById('coin-pp').value
+                },
+                conditions: Array.from(document.querySelectorAll('.condition-check')).map(cb => ({
+                    condition: cb.dataset.condition,
+                    active: cb.checked
+                })),
+                notes: document.getElementById('notes').value
             };
 
             localStorage.setItem('dndCharacter', JSON.stringify(character));
@@ -1308,6 +1520,9 @@
             document.getElementById('hit-dice-type').value = character.combat.hitDiceType || character.combat.hitDice || '1d8';
             document.getElementById('current-hit-dice').textContent = character.combat.currentHitDice || character.level || 1;
             document.getElementById('inspiration').checked = character.combat.inspiration || false;
+            if (character.combat.inspiration) {
+                toggleInspiration(); // Trigger the visual update
+            }
             
             // Load overrides
             if (character.combat.acOverride) {
@@ -1328,8 +1543,8 @@
             }
             
             // Load exhaustion
-            if (character.combat.exhaustion !== undefined) {
-                setExhaustion(character.combat.exhaustion);
+            if (character.combat.exhaustion !== undefined && character.combat.exhaustion > 0) {
+                toggleExhaustion(character.combat.exhaustion);
             }
 
             if (character.deathSaves) {
@@ -1364,6 +1579,28 @@
             }
             if (character.proficiencies.languages) {
                 document.getElementById('languages').value = character.proficiencies.languages;
+            }
+
+            // Load coins
+            if (character.coins) {
+                document.getElementById('coin-cp').value = character.coins.cp || 0;
+                document.getElementById('coin-sp').value = character.coins.sp || 0;
+                document.getElementById('coin-ep').value = character.coins.ep || 0;
+                document.getElementById('coin-gp').value = character.coins.gp || 0;
+                document.getElementById('coin-pp').value = character.coins.pp || 0;
+            }
+
+            // Load conditions
+            if (character.conditions) {
+                character.conditions.forEach(cond => {
+                    const checkbox = document.querySelector(`.condition-check[data-condition="${cond.condition}"]`);
+                    if (checkbox) checkbox.checked = cond.active;
+                });
+            }
+
+            // Load notes
+            if (character.notes) {
+                document.getElementById('notes').value = character.notes;
             }
 
             updateModifiers();
