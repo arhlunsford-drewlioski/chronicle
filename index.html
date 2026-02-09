@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/sheet.css">
 </head>
-</head>
 <body>
     <div class="sheet">
         <h1>D&D Character Sheet</h1>
@@ -67,7 +66,7 @@
                                style="max-width: 80px; font-size: 20px;">
                     </div>
                     <div class="hp-control">
-                        <button class="hp-button" onclick="adjustHP('current', -1)">âˆ’</button>
+                        <button class="hp-button" onclick="adjustHP('current', -1)">-</button>
                         <button class="hp-button" onclick="adjustHP('current', 1)">+</button>
                     </div>
                 </div>
@@ -83,7 +82,7 @@
                                style="max-width: 80px; font-size: 20px;">
                     </div>
                     <div class="hp-control">
-                        <button class="hp-button" onclick="adjustHP('temp', -1)">âˆ’</button>
+                        <button class="hp-button" onclick="adjustHP('temp', -1)">-</button>
                         <button class="hp-button" onclick="adjustHP('temp', 1)">+</button>
                     </div>
                 </div>
@@ -296,6 +295,306 @@
                 </div>
             </div>
         </div>
+        .hp-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 8px;
+        }
+
+        .hp-button {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #8B4513 0%, #5a2d0d 100%);
+            color: #faf7f2;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s;
+        }
+
+        .hp-button:hover {
+            background: linear-gradient(135deg, #a0521f 0%, #6b3610 100%);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .hp-button:active {
+            transform: scale(0.95);
+        }
+
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        .editable-stat {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .editable-stat:hover {
+            background: #fff8f8;
+            transform: scale(1.05);
+        }
+
+        .combat-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .combat-box {
+            background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%);
+            border: 2px solid #8B4513;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 
+                0 2px 4px rgba(0, 0, 0, 0.1),
+                0 4px 8px rgba(139, 69, 19, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        }
+
+        .combat-label {
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            color: #5a1a1a;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .combat-value {
+            width: 80px;
+            margin: 0 auto;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .save-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #8B4513 0%, #5a2d0d 100%);
+            color: #faf7f2;
+            border: 2px solid #5a1a1a;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 700;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 2px;
+            cursor: pointer;
+            margin-top: 30px;
+            box-shadow: 
+                0 4px 6px rgba(0, 0, 0, 0.2),
+                0 8px 12px rgba(139, 69, 19, 0.3);
+            transition: all 0.3s;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .save-button:hover {
+            background: linear-gradient(135deg, #a0521f 0%, #6b3610 100%);
+            transform: translateY(-2px);
+            box-shadow: 
+                0 6px 10px rgba(0, 0, 0, 0.25),
+                0 12px 18px rgba(139, 69, 19, 0.35);
+        }
+
+        .save-button:active {
+            transform: translateY(0);
+            box-shadow: 
+                0 2px 4px rgba(0, 0, 0, 0.2),
+                0 4px 8px rgba(139, 69, 19, 0.25);
+        }
+
+        .collapsible-section {
+            margin-top: 20px;
+        }
+
+        .section-toggle {
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-icon {
+            font-size: 14px;
+            transition: transform 0.3s;
+            color: #8B4513;
+        }
+
+        .toggle-icon.collapsed {
+            transform: rotate(-90deg);
+        }
+
+        .section-body {
+            max-height: 5000px;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .section-body.collapsed {
+            max-height: 0;
+        }
+
+        @media (max-width: 768px) {
+            .stat-skill-item {
+                padding: 10px;
+                min-height: 44px;
+            }
+
+            .combat-box {
+                min-height: 80px;
+            }
+
+            input, select, textarea, button {
+                font-size: 16px;
+            }
+
+            .hp-button {
+                width: 44px;
+                height: 44px;
+                font-size: 20px;
+            }
+        }
+
+        .saves-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sheet">
+        <h1>D&D Character Sheet</h1>
+
+        <!-- Top Actions -->
+        <div class="top-actions">
+            <a href="builder.html" class="btn-builder">+ New Character</a>
+            <button class="btn-export" onclick="exportCharacter()">Export JSON</button>
+            <button class="btn-import" onclick="document.getElementById('import-file').click()">Import JSON</button>
+            <input type="file" id="import-file" accept=".json" style="display:none" onchange="importCharacter(event)">
+        </div>
+        
+        <!-- Character Info -->
+        <div class="character-info">
+            <div class="input-group">
+                <label>Character Name</label>
+                <input type="text" id="charName" placeholder="Enter name">
+            </div>
+            <div class="input-group">
+                <label>Species</label>
+                <input type="text" id="species" placeholder="e.g., Human">
+            </div>
+            <div class="input-group">
+                <label>Class</label>
+                <input type="text" id="class" placeholder="e.g., Fighter">
+            </div>
+            <div class="input-group">
+                <label>Subclass</label>
+                <input type="text" id="subclass" placeholder="e.g., Champion">
+            </div>
+            <div class="input-group">
+                <label>Level</label>
+                <input type="number" id="level" value="1" min="1" max="20">
+            </div>
+            <div class="input-group">
+                <label>Background</label>
+                <input type="text" id="background" placeholder="e.g., Soldier">
+            </div>
+            <div class="input-group">
+                <label>Alignment</label>
+                <input type="text" id="alignment" placeholder="e.g., Lawful Good">
+            </div>
+            <div class="input-group">
+                <label>Experience Points</label>
+                <input type="number" id="xp" value="0" min="0">
+            </div>
+        </div>
+
+        <!-- HP Section -->
+        <div style="margin-top: 20px; margin-bottom: 30px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                <div class="combat-box">
+                    <div class="combat-label">CURRENT HP</div>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        <input type="number" class="combat-value" id="current-hp" value="10" min="0" 
+                               style="max-width: 80px; font-size: 20px;">
+                    </div>
+                    <div class="hp-control">
+                        <button class="hp-button" onclick="adjustHP('current', -1)">âˆ’</button>
+                        <button class="hp-button" onclick="adjustHP('current', 1)">+</button>
+                    </div>
+                </div>
+                <div class="combat-box">
+                    <div class="combat-label">MAX HP</div>
+                    <div class="combat-value editable-stat" id="max-hp-display" onclick="makeStatEditable('max-hp')" style="cursor: pointer;">10</div>
+                    <input type="number" id="max-hp" value="10" min="1" style="display: none;">
+                </div>
+                <div class="combat-box">
+                    <div class="combat-label">TEMP HP</div>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        <input type="number" class="combat-value" id="temp-hp" value="0" min="0" 
+                               style="max-width: 80px; font-size: 20px;">
+                    </div>
+                    <div class="hp-control">
+                        <button class="hp-button" onclick="adjustHP('temp', -1)">âˆ’</button>
+                        <button class="hp-button" onclick="adjustHP('temp', 1)">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ability Scores with Skills -->
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-header">
+                    <div class="stat-name">STRENGTH</div>
+                    <div class="stat-value" onclick="makeEditable(this, 'str')" id="str-display">10</div>
+                    <input type="number" id="str" value="10" min="1" max="30" style="display: none;">
+                    <div class="stat-modifier-container">
+                        <div class="stat-modifier-label">MODIFIER</div>
+                        <div class="stat-modifier" id="str-mod">+0</div>
+                    </div>
+                </div>
+                <div class="stat-skills">
+                    <div class="stat-skill-item save-item">
+                        <input type="checkbox" class="prof-checkbox" data-save="str" onchange="updateSaves()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Save</span>
+                        <span class="skill-bonus" id="save-str">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="3" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Athletics</span>
+                        <span class="skill-bonus" id="skill-3">+0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-box">
+                <div class="stat-header">
+                    <div class="stat-name">DEXTERITY</div>
+                    <div class="stat-value" onclick="makeEditable(this, 'dex')" id="dex-display">10</div>
+                    <input type="number" id="dex" value="10" min="1" max="30" style="display: none;">
+                    <div class="stat-modifier-container">
 
         <!-- Combat Stats -->
         <div class="combat-section">
@@ -358,7 +657,7 @@
             <div style="margin-top: 20px;">
                 <div class="combat-box" style="max-width: 400px;">
                     <div style="margin-bottom: 15px;">
-                        <div style="font-weight: 600; margin-bottom: 8px; color: #2d5016; font-family: 'Cinzel', serif; font-size: 12px;">SUCCESSES</div>
+                        <div style="font-weight: 600; margin-bottom: 8px; color: #2d5016; font-family: 'Cinzel', serif; font-size: 12px;">DEATH SAVE SUCCESSES</div>
                         <div style="display: flex; gap: 15px; justify-content: center; align-items: center;">
                             <input type="checkbox" class="death-save-checkbox" data-type="success" data-index="0">
                             <input type="checkbox" class="death-save-checkbox" data-type="success" data-index="1">
@@ -366,7 +665,7 @@
                         </div>
                     </div>
                     <div>
-                        <div style="font-weight: 600; margin-bottom: 8px; color: #8B0000; font-family: 'Cinzel', serif; font-size: 12px;">FAILURES</div>
+                        <div style="font-weight: 600; margin-bottom: 8px; color: #8B0000; font-family: 'Cinzel', serif; font-size: 12px;">DEATH SAVE FAILURES</div>
                         <div style="display: flex; gap: 15px; justify-content: center; align-items: center;">
                             <input type="checkbox" class="death-save-checkbox" data-type="failure" data-index="0">
                             <input type="checkbox" class="death-save-checkbox" data-type="failure" data-index="1">
@@ -418,7 +717,7 @@
         <!-- Proficiencies & Training -->
         <div class="collapsible-section" style="margin-top: 30px;">
             <div class="section-title section-toggle" onclick="toggleSection('proficiencies')">
-                <span class="toggle-icon" id="proficiencies-icon">â–¼</span>
+                <span class="toggle-icon" id="proficiencies-icon">▼</span>
                 Equipment Training & Proficiencies
             </div>
             <div class="section-body" id="proficiencies-body">
@@ -452,6 +751,62 @@
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
                 <button onclick="shortRest()" style="padding: 15px; background: linear-gradient(135deg, #4a7c59 0%, #2d5016 100%); color: #faf7f2; border: 2px solid #2d5016; border-radius: 8px; font-family: 'Cinzel', serif; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.2); transition: all 0.2s;">SHORT REST</button>
                 <button onclick="longRest()" style="padding: 15px; background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%); color: #faf7f2; border: 2px solid #1e3a8a; border-radius: 8px; font-family: 'Cinzel', serif; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.2); transition: all 0.2s;">LONG REST</button>
+            </div>
+        </div>
+
+        <!-- Coins -->
+        <div class="collapsible-section" style="margin-top: 30px;">
+            <div class="section-title section-toggle" onclick="toggleSection('coins')">
+                <span class="toggle-icon" id="coins-icon">▼</span> Coins
+            </div>
+            <div class="section-body" id="coins-body">
+                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;">
+                    <div class="combat-box" style="padding: 10px;"><div style="font-size: 11px; font-weight: 600; margin-bottom: 5px; color: #8B4513;">CP</div><input type="number" id="coin-cp" value="0" min="0" style="width: 100%; padding: 5px; text-align: center; border: 2px solid #c9a77c; border-radius: 4px;"></div>
+                    <div class="combat-box" style="padding: 10px;"><div style="font-size: 11px; font-weight: 600; margin-bottom: 5px; color: #8B4513;">SP</div><input type="number" id="coin-sp" value="0" min="0" style="width: 100%; padding: 5px; text-align: center; border: 2px solid #c9a77c; border-radius: 4px;"></div>
+                    <div class="combat-box" style="padding: 10px;"><div style="font-size: 11px; font-weight: 600; margin-bottom: 5px; color: #8B4513;">EP</div><input type="number" id="coin-ep" value="0" min="0" style="width: 100%; padding: 5px; text-align: center; border: 2px solid #c9a77c; border-radius: 4px;"></div>
+                    <div class="combat-box" style="padding: 10px;"><div style="font-size: 11px; font-weight: 600; margin-bottom: 5px; color: #8B4513;">GP</div><input type="number" id="coin-gp" value="0" min="0" style="width: 100%; padding: 5px; text-align: center; border: 2px solid #c9a77c; border-radius: 4px;"></div>
+                    <div class="combat-box" style="padding: 10px;"><div style="font-size: 11px; font-weight: 600; margin-bottom: 5px; color: #8B4513;">PP</div><input type="number" id="coin-pp" value="0" min="0" style="width: 100%; padding: 5px; text-align: center; border: 2px solid #c9a77c; border-radius: 4px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conditions -->
+        <div class="collapsible-section" style="margin-top: 30px;">
+            <div class="section-title section-toggle" onclick="toggleSection('conditions')">
+                <span class="toggle-icon" id="conditions-icon">▼</span> Conditions
+            </div>
+            <div class="section-body" id="conditions-body">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="blinded"><span style="font-size: 14px;">Blinded</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="charmed"><span style="font-size: 14px;">Charmed</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="deafened"><span style="font-size: 14px;">Deafened</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="frightened"><span style="font-size: 14px;">Frightened</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="grappled"><span style="font-size: 14px;">Grappled</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="incapacitated"><span style="font-size: 14px;">Incapacitated</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="invisible"><span style="font-size: 14px;">Invisible</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="paralyzed"><span style="font-size: 14px;">Paralyzed</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="petrified"><span style="font-size: 14px;">Petrified</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="poisoned"><span style="font-size: 14px;">Poisoned</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="prone"><span style="font-size: 14px;">Prone</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="restrained"><span style="font-size: 14px;">Restrained</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="stunned"><span style="font-size: 14px;">Stunned</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); border: 2px solid #8B4513; border-radius: 4px; cursor: pointer;"><input type="checkbox" class="condition-check" data-condition="unconscious"><span style="font-size: 14px;">Unconscious</span></label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notes & Features -->
+        <div class="collapsible-section" style="margin-top: 30px;">
+            <div class="section-title section-toggle" onclick="toggleSection('notes')">
+                <span class="toggle-icon" id="notes-icon">▼</span> Notes & Features
+            </div>
+            <div class="section-body" id="notes-body">
+                <textarea id="notes" placeholder="Racial traits, class features, important notes..." style="width: 100%; min-height: 150px; padding: 15px; border: 2px solid #8B4513; border-radius: 8px; font-family: 'Crimson Text', Georgia, serif; font-size: 14px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); resize: vertical;"></textarea>
+            </div>
+        </div>
+
+        <button class="save-button" onclick="saveCharacter()">Save Character</button>
+    </div>
             </div>
         </div>
 
