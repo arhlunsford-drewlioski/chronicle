@@ -720,7 +720,7 @@ const BACKGROUNDS = [
     { name: 'Sage', skillProfs: ['Arcana', 'History'], toolProf: "Calligrapher's Supplies", feat: 'Magic Initiate (Wizard)', desc: 'You spent years learning the lore of the world.', source: 'PHB 2024' },
     { name: 'Sailor', skillProfs: ['Acrobatics', 'Perception'], toolProf: "Navigator's Tools", feat: 'Tavern Brawler', desc: 'You sailed the seas for years.', source: 'PHB 2024' },
     { name: 'Scribe', skillProfs: ['Investigation', 'Perception'], toolProf: "Calligrapher's Supplies", feat: 'Skilled', desc: 'You devoted yourself to recording knowledge.', source: 'PHB 2024' },
-    { name: 'Soldier', skillProfs: ['Athletics', 'Intimidation'], toolProf: 'Gaming Set (your choice)', feat: 'Savage Attacker', desc: 'You trained as a soldier in an army.', source: 'PHB 2024' },
+    { name: 'Soldier', skillProfs: ['Athletics', 'Intimidation'], toolProf: 'Gaming Set (your choice)', feat: 'Alert', desc: 'You trained as a soldier in an army.', source: 'PHB 2024' },
     { name: 'Wayfarer', skillProfs: ['Insight', 'Stealth'], toolProf: "Thieves' Tools", feat: 'Lucky', desc: 'You grew up on the streets, surviving by wit.', source: 'PHB 2024' },
 ];
 
@@ -1116,7 +1116,7 @@ function createCharacter(){
         <div style="font-family:'Cinzel',serif;font-size:24px;color:#5a1a1a;font-weight:700;margin-bottom:10px">Character Created!</div>
         <div style="font-size:16px;color:#666;margin-bottom:4px">${state.name}</div>
         <div style="font-size:14px;color:#888;margin-bottom:24px">Level ${lvl} ${sp.name} ${cl.name}${scName?' — '+scName:''}</div>
-        <a href="dnd-sheet.html" style="display:block;padding:14px;background:linear-gradient(135deg,#4a7c59,#2d5016);color:#faf7f2;border:2px solid #2d5016;border-radius:8px;font-family:'Cinzel',serif;font-size:16px;font-weight:600;text-decoration:none;letter-spacing:1px;margin-bottom:12px;box-shadow:0 3px 8px rgba(45,80,22,.3)">Open Character Sheet</a>
+        <a href="index.html" style="display:block;padding:14px;background:linear-gradient(135deg,#4a7c59,#2d5016);color:#faf7f2;border:2px solid #2d5016;border-radius:8px;font-family:'Cinzel',serif;font-size:16px;font-weight:600;text-decoration:none;letter-spacing:1px;margin-bottom:12px;box-shadow:0 3px 8px rgba(45,80,22,.3)">Open Character Sheet</a>
         <div style="font-size:12px;color:#999;margin-top:8px">Saved to localStorage — loads automatically in the sheet.</div></div>`;
     document.body.appendChild(overlay);
 }
