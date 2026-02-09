@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chronicle — Character Builder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Crimson Text',Georgia,serif;background:linear-gradient(to bottom,#f4e8d8,#ede0d0);padding:20px;max-width:800px;margin:0 auto;min-height:100vh}
+        .sheet{background:linear-gradient(to bottom,#faf7f2,#f5f0e8);border-radius:8px;padding:30px;box-shadow:0 4px 6px rgba(0,0,0,.1),0 10px 20px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.6);border:2px solid #8B4513;position:relative}
+        .sheet::before{content:'';position:absolute;top:10px;left:10px;right:10px;bottom:10px;border:1px solid rgba(139,69,19,.3);border-radius:4px;pointer-events:none}
+        h1{font-family:'Cinzel',serif;color:#5a1a1a;margin-bottom:8px;text-align:center;font-weight:700;font-size:32px;letter-spacing:3px;text-shadow:2px 2px 4px rgba(0,0,0,.2)}
+        .subtitle{text-align:center;color:#8B4513;font-family:'Cinzel',serif;font-size:13px;letter-spacing:2px;margin-bottom:25px;padding-bottom:20px;border-bottom:3px double #8B4513}
+        .progress-bar{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:30px}
+        .progress-step{display:flex;flex-direction:column;align-items:center;z-index:1}
+        .progress-dot{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#e0d5c5,#d0c5b5);border:2px solid #c9a77c;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:#999;transition:all .4s}
+        .progress-dot.active{background:linear-gradient(135deg,#8B4513,#5a2d0d);border-color:#5a1a1a;color:#faf7f2;box-shadow:0 0 12px rgba(139,69,19,.4)}
+        .progress-dot.done{background:linear-gradient(135deg,#4a7c59,#2d5016);border-color:#2d5016;color:#faf7f2}
+        .progress-label{font-family:'Cinzel',serif;font-size:9px;color:#999;margin-top:6px;letter-spacing:.5px;font-weight:600;text-align:center;width:70px}
+        .progress-step.active .progress-label,.progress-step.done .progress-label{color:#5a1a1a}
+        .progress-line{width:40px;height:2px;background:#d0c5b5;margin-bottom:20px;transition:background .4s}
+        .progress-line.done{background:#4a7c59}
+        .step{display:none;animation:fadeIn .3s ease}.step.active{display:block}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        .step-title{font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:#5a1a1a;margin-bottom:6px;letter-spacing:1.5px}
+        .step-desc{color:#666;font-size:15px;margin-bottom:20px;font-style:italic}
+        .form-group{margin-bottom:18px}
+        .form-group label{display:block;font-family:'Cinzel',serif;font-size:11px;color:#666;margin-bottom:6px;text-transform:uppercase;font-weight:600;letter-spacing:.5px}
+        .form-group input,.form-group select{width:100%;padding:10px 12px;border:2px solid #c9a77c;border-radius:4px;font-size:16px;font-family:'Crimson Text',Georgia,serif;background:rgba(255,255,255,.6);transition:all .2s}
+        .form-group input:focus,.form-group select:focus{outline:none;border-color:#5a1a1a;background:rgba(255,255,255,.9);box-shadow:0 0 0 3px rgba(139,69,19,.1)}
+        .search-bar{position:relative;margin-bottom:14px}
+        .search-bar input{width:100%;padding:10px 12px 10px 36px;border:2px solid #c9a77c;border-radius:4px;font-size:15px;font-family:'Crimson Text',serif;background:rgba(255,255,255,.6)}
+        .search-bar input:focus{outline:none;border-color:#5a1a1a;background:rgba(255,255,255,.9);box-shadow:0 0 0 3px rgba(139,69,19,.1)}
+        .search-bar::before{content:'⌕';position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:16px;color:#999;pointer-events:none}
+        .filter-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+        .filter-pill{padding:5px 12px;border-radius:20px;border:1px solid #c9a77c;background:rgba(255,255,255,.4);font-family:'Cinzel',serif;font-size:10px;font-weight:600;cursor:pointer;transition:all .2s;color:#666;letter-spacing:.5px}
+        .filter-pill:hover{border-color:#8B4513;color:#5a1a1a}
+        .filter-pill.active{background:linear-gradient(135deg,#8B4513,#5a2d0d);color:#faf7f2;border-color:#5a1a1a}
+        .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-bottom:16px;max-height:480px;overflow-y:auto;padding-right:4px}
+        .card-grid::-webkit-scrollbar{width:6px}
+        .card-grid::-webkit-scrollbar-track{background:rgba(0,0,0,.05);border-radius:3px}
+        .card-grid::-webkit-scrollbar-thumb{background:#c9a77c;border-radius:3px}
+        .selection-card{background:linear-gradient(135deg,#fff9f0,#f5ede0);border:2px solid #c9a77c;border-radius:8px;padding:14px;cursor:pointer;transition:all .2s;position:relative}
+        .selection-card:hover{border-color:#8B4513;transform:translateY(-2px);box-shadow:0 4px 12px rgba(139,69,19,.2)}
+        .selection-card.selected{border-color:#5a1a1a;background:linear-gradient(135deg,#f5e6d0,#ecdbc5);box-shadow:0 0 0 3px rgba(139,69,19,.15),0 4px 12px rgba(139,69,19,.2)}
+        .selection-card.selected::after{content:'✓';position:absolute;top:8px;right:10px;color:#4a7c59;font-size:18px;font-weight:700}
+        .selection-card.hidden{display:none}
+        .card-title{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:#5a1a1a;margin-bottom:4px}
+        .card-detail{font-size:12px;color:#666;line-height:1.4}
+        .card-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+        .card-tag{display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-family:'Cinzel',serif;font-weight:600;letter-spacing:.3px}
+        .tag-stat{background:linear-gradient(135deg,#8B4513,#5a2d0d);color:#faf7f2}
+        .tag-source{background:rgba(139,69,19,.08);color:#8B4513;border:1px solid rgba(139,69,19,.15)}
+        .info-panel{background:linear-gradient(135deg,#fff8dc,#f5e6c8);border:2px solid #8B4513;border-radius:8px;padding:18px;margin-top:16px;box-shadow:inset 0 1px 3px rgba(0,0,0,.08)}
+        .info-panel h3{font-family:'Cinzel',serif;font-size:16px;color:#5a1a1a;margin-bottom:10px}
+        .info-panel .trait{margin-bottom:8px;font-size:14px;line-height:1.5}
+        .info-panel .trait strong{color:#5a1a1a}
+        .subclass-section{margin-top:16px}
+        .subclass-section h4{font-family:'Cinzel',serif;font-size:13px;color:#5a1a1a;margin-bottom:10px;letter-spacing:1px}
+        .subclass-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+        .subclass-card{background:linear-gradient(135deg,#faf7f2,#f0ead8);border:2px solid #d4b896;border-radius:6px;padding:12px;cursor:pointer;transition:all .2s;position:relative}
+        .subclass-card:hover{border-color:#8B4513;box-shadow:0 2px 8px rgba(139,69,19,.15)}
+        .subclass-card.selected{border-color:#5a1a1a;background:linear-gradient(135deg,#f0e0c8,#e8d4b8);box-shadow:0 0 0 2px rgba(139,69,19,.15)}
+        .subclass-card.selected::after{content:'✓';position:absolute;top:6px;right:8px;color:#4a7c59;font-size:14px;font-weight:700}
+        .subclass-card .sc-name{font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:#5a1a1a;margin-bottom:3px}
+        .subclass-card .sc-desc{font-size:11px;color:#666;line-height:1.3}
+        .subclass-card .sc-source{font-size:9px;color:#8B4513;margin-top:4px;font-weight:600}
+        .ability-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:12px;margin-bottom:20px}
+        .ability-box{background:linear-gradient(135deg,#fff9f0,#f5ede0);border:2px solid #c9a77c;border-radius:8px;padding:14px 8px;text-align:center}
+        .ability-box .ab-label{font-family:'Cinzel',serif;font-size:11px;font-weight:700;color:#5a1a1a;letter-spacing:1px;margin-bottom:8px}
+        .ability-box input[type=number]{width:56px;padding:8px 4px;border:2px solid #ddd;border-radius:4px;text-align:center;font-size:22px;font-weight:bold;font-family:'Crimson Text',serif;background:white}
+        .ability-box input:focus{outline:none;border-color:#8B4513;box-shadow:0 0 0 3px rgba(139,69,19,.1)}
+        .ability-box .ab-mod{margin-top:6px;font-size:16px;font-weight:700;color:#8B4513}
+        .method-tabs{display:flex;gap:0;margin-bottom:20px;border:2px solid #8B4513;border-radius:8px;overflow:hidden}
+        .method-tab{flex:1;padding:10px 8px;text-align:center;font-family:'Cinzel',serif;font-size:12px;font-weight:600;cursor:pointer;background:linear-gradient(135deg,#f5ede0,#ede0d0);color:#666;border-right:1px solid #c9a77c;transition:all .2s;letter-spacing:.5px}
+        .method-tab:last-child{border-right:none}
+        .method-tab:hover{background:#ecdbc5}
+        .method-tab.active{background:linear-gradient(135deg,#8B4513,#5a2d0d);color:#faf7f2}
+        .points-remaining{text-align:center;font-family:'Cinzel',serif;font-size:16px;color:#5a1a1a;padding:10px;background:linear-gradient(135deg,#fff8dc,#f5e6c8);border:2px solid #8B4513;border-radius:8px;margin-bottom:16px}
+        .points-remaining .pts-num{font-size:28px;font-weight:700}
+        .points-remaining.over-budget{color:#8B0000;border-color:#8B0000}
+        .warning-box{background:#fff3cd;border:2px solid #c9a77c;border-radius:8px;padding:12px 16px;font-size:14px;color:#664d03;margin-bottom:16px}
+        .array-pool{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:16px;min-height:50px;padding:12px;background:rgba(255,255,255,.4);border:2px dashed #c9a77c;border-radius:8px}
+        .array-chip{width:44px;height:44px;background:linear-gradient(135deg,#8B4513,#5a2d0d);color:#faf7f2;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;font-family:'Crimson Text',serif;cursor:pointer;user-select:none;transition:transform .15s,box-shadow .15s;box-shadow:0 2px 4px rgba(0,0,0,.2)}
+        .array-chip:hover{transform:scale(1.1);box-shadow:0 4px 8px rgba(0,0,0,.3)}
+        .array-chip.selected-chip{outline:3px solid #5a1a1a;outline-offset:2px}
+        .ability-drop{min-height:50px;border:2px dashed transparent;border-radius:4px;display:flex;align-items:center;justify-content:center}
+        .review-section{background:linear-gradient(135deg,#fff9f0,#f5ede0);border:2px solid #8B4513;border-radius:8px;padding:18px;margin-bottom:16px}
+        .review-section h3{font-family:'Cinzel',serif;font-size:15px;color:#5a1a1a;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #ddd}
+        .review-row{display:flex;justify-content:space-between;padding:6px 0;font-size:15px}
+        .review-row .rlabel{color:#666}.review-row .rvalue{font-weight:600;color:#333}
+        .review-abilities{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+        .review-ab{text-align:center;padding:10px;background:rgba(255,255,255,.5);border-radius:4px}
+        .review-ab .ab-name{font-family:'Cinzel',serif;font-size:11px;color:#666;font-weight:600}
+        .review-ab .ab-score{font-size:24px;font-weight:700;color:#5a1a1a}
+        .review-ab .ab-modifier{font-size:14px;color:#8B4513;font-weight:600}
+        .review-traits{list-style:none;padding:0}
+        .review-traits li{padding:4px 0;font-size:13px;color:#444}
+        .review-traits li::before{content:'◆ ';color:#8B4513;font-size:10px}
+        .btn-row{display:flex;gap:12px;margin-top:30px}
+        .btn{flex:1;padding:14px;border-radius:8px;font-family:'Cinzel',serif;font-size:16px;font-weight:600;letter-spacing:1.5px;cursor:pointer;transition:all .2s;text-align:center;border:2px solid}
+        .btn-back{background:linear-gradient(135deg,#e0d5c5,#d0c5b5);color:#5a1a1a;border-color:#c9a77c}
+        .btn-back:hover{background:#d0c5b5;transform:translateY(-1px)}
+        .btn-next{background:linear-gradient(135deg,#8B4513,#5a2d0d);color:#faf7f2;border-color:#5a1a1a;box-shadow:0 3px 8px rgba(139,69,19,.3);text-shadow:1px 1px 2px rgba(0,0,0,.3)}
+        .btn-next:hover{background:linear-gradient(135deg,#a0521f,#6b3610);transform:translateY(-2px);box-shadow:0 5px 12px rgba(139,69,19,.4)}
+        .btn-create{background:linear-gradient(135deg,#4a7c59,#2d5016);color:#faf7f2;border-color:#2d5016;box-shadow:0 3px 8px rgba(45,80,22,.3);text-shadow:1px 1px 2px rgba(0,0,0,.3)}
+        .btn-create:hover{background:linear-gradient(135deg,#5a8c69,#3d6026);transform:translateY(-2px);box-shadow:0 5px 12px rgba(45,80,22,.4)}
+        .no-results{text-align:center;padding:30px;color:#999;font-style:italic;font-size:15px}
+        .count-badge{font-size:12px;color:#999;margin-bottom:8px}
+        input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+        input[type=number]{-moz-appearance:textfield}
+        @media(max-width:600px){
+            body{padding:12px}.sheet{padding:20px}h1{font-size:26px}
+            .card-grid{grid-template-columns:1fr;max-height:400px}
+            .subclass-grid{grid-template-columns:1fr}
+            .ability-row{grid-template-columns:repeat(3,1fr)}
+            .review-abilities{grid-template-columns:repeat(3,1fr)}
+            .progress-line{width:16px}.progress-label{width:46px;font-size:7px}
+            .progress-dot{width:28px;height:28px;font-size:11px}
+            .btn-row{flex-direction:column}
+        }
+    </style>
+</head>
+<body>
+<div class="sheet">
+    <h1>Chronicle</h1>
+    <div class="subtitle">Character Builder</div>
+
+    <div class="progress-bar" id="progress-bar">
+        <div class="progress-step active" data-step="1"><div class="progress-dot active">1</div><div class="progress-label">Identity</div></div>
+        <div class="progress-line" id="line-1-2"></div>
+        <div class="progress-step" data-step="2"><div class="progress-dot">2</div><div class="progress-label">Class</div></div>
+        <div class="progress-line" id="line-2-3"></div>
+        <div class="progress-step" data-step="3"><div class="progress-dot">3</div><div class="progress-label">Background</div></div>
+        <div class="progress-line" id="line-3-4"></div>
+        <div class="progress-step" data-step="4"><div class="progress-dot">4</div><div class="progress-label">Abilities</div></div>
+        <div class="progress-line" id="line-4-5"></div>
+        <div class="progress-step" data-step="5"><div class="progress-dot">5</div><div class="progress-label">Review</div></div>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="step active" id="step-1">
+        <div class="step-title">Name & Species</div>
+        <div class="step-desc">Who are you, adventurer?</div>
+        <div class="form-group"><label>Character Name</label><input type="text" id="b-name" placeholder="Enter your character's name"></div>
+        <div class="form-group"><label>Choose Your Species</label></div>
+        <div class="search-bar"><input type="text" id="species-search" placeholder="Search species..." oninput="filterSpecies()"></div>
+        <div class="filter-row" id="species-filters"></div>
+        <div class="count-badge" id="species-count"></div>
+        <div class="card-grid" id="species-cards"></div>
+        <div id="species-info"></div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step" id="step-2">
+        <div class="step-title">Class</div>
+        <div class="step-desc">Choose your path of adventure.</div>
+        <div class="card-grid" id="class-cards"></div>
+        <div id="class-info"></div>
+        <div id="subclass-area"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px">
+            <div class="form-group"><label>Starting Level</label>
+                <select id="b-level" onchange="onLevelChange()">
+                    <option value="1" selected>Level 1</option><option value="2">Level 2</option><option value="3">Level 3</option>
+                    <option value="4">Level 4</option><option value="5">Level 5</option><option value="6">Level 6</option>
+                    <option value="7">Level 7</option><option value="8">Level 8</option><option value="9">Level 9</option>
+                    <option value="10">Level 10</option><option value="11">Level 11</option><option value="12">Level 12</option>
+                    <option value="13">Level 13</option><option value="14">Level 14</option><option value="15">Level 15</option>
+                    <option value="16">Level 16</option><option value="17">Level 17</option><option value="18">Level 18</option>
+                    <option value="19">Level 19</option><option value="20">Level 20</option>
+                </select>
+            </div>
+            <div class="form-group"><label>Alignment (Optional)</label>
+                <input type="text" id="b-alignment" placeholder="e.g., Chaotic Good">
+            </div>
+        </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step" id="step-3">
+        <div class="step-title">Background</div>
+        <div class="step-desc">Where did your journey begin?</div>
+        <div class="card-grid" id="background-cards"></div>
+        <div id="background-info"></div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step" id="step-4">
+        <div class="step-title">Ability Scores</div>
+        <div class="step-desc">Define your character's capabilities.</div>
+        <div class="method-tabs">
+            <div class="method-tab active" data-method="standard" onclick="setAbilityMethod('standard')">Standard Array</div>
+            <div class="method-tab" data-method="pointbuy" onclick="setAbilityMethod('pointbuy')">Point Buy</div>
+            <div class="method-tab" data-method="manual" onclick="setAbilityMethod('manual')">Manual</div>
+        </div>
+        <div id="method-standard"><div class="warning-box">Tap a score from the pool, then tap an ability slot to assign it. Tap an assigned score to return it.</div><div class="array-pool" id="array-pool"></div><div class="ability-row" id="array-abilities"></div></div>
+        <div id="method-pointbuy" style="display:none"><div class="points-remaining" id="points-display">Points Remaining: <span class="pts-num" id="pts-remaining">27</span> / 27</div><div class="ability-row" id="pointbuy-abilities"></div></div>
+        <div id="method-manual" style="display:none"><div class="warning-box">Enter your rolled or assigned scores directly.</div><div class="ability-row" id="manual-abilities"></div></div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="step" id="step-5">
+        <div class="step-title">Review Your Character</div>
+        <div class="step-desc">Everything look right? Create your character to open it in the Chronicle sheet.</div>
+        <div id="review-content"></div>
+    </div>
+
+    <div class="btn-row" id="nav-buttons">
+        <button class="btn btn-back" id="btn-back" onclick="prevStep()" style="display:none">Back</button>
+        <button class="btn btn-next" id="btn-next" onclick="nextStep()">Continue</button>
+    </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+//  CHRONICLE — COMPLETE D&D 5E DATA
+//  Sources: 2024 PHB (default), 2024 DMG, 2024 MM,
+//  XGtE, TCoE, FToD, MotM, MOoT, SCoC, EGtW,
+//  Spelljammer, Deck of Many Things, Tortle Package,
+//  Heroes of Faerûn
+// ══════════════════════════════════════════════════════════════
+
+// ─────────────────────────────────────
+//  SPECIES
+// ─────────────────────────────────────
+
+const SPECIES = [
+    // ── 2024 PHB ──
+    { name: 'Aasimar', source: 'PHB 2024', size: 'Medium', speed: 30,
+      traits: ['Darkvision (60 ft.)','Celestial Resistance: Resistance to Necrotic and Radiant damage.','Healing Hands: Heal PB × d4 HP as an action, once per Long Rest.','Light Bearer: You know the Light cantrip.','Celestial Revelation (3rd level): Choose Heavenly Wings, Inner Radiance, or Necrotic Shroud transformation once per Long Rest.'],
+      desc: 'Blessed with a celestial spark, agents of light and mercy.' },
+    { name: 'Dragonborn', source: 'PHB 2024', size: 'Medium', speed: 30,
+      traits: ['Darkvision (60 ft.)','Draconic Ancestry: Choose a dragon type for damage resistance and breath weapon type.','Breath Weapon: 15-ft. cone or 30-ft. line, DEX or CON save, PB uses per Long Rest. Damage scales: 1d10 at 1st, 2d10 at 5th, 3d10 at 11th, 4d10 at 17th.','Damage Resistance: Resistance to your ancestry damage type.','Draconic Flight (5th level): Sprout spectral wings, fly speed = Speed for 10 min, once per Long Rest.'],
+      desc: 'Proud descendants of dragons, bearing their elemental power.' },
+    { name: 'Dwarf', source: 'PHB 2024', size: 'Medium', speed: 30,
+      traits: ['Darkvision (120 ft.)','Dwarven Resilience: Resistance to Poison damage; advantage on saves vs. Poisoned condition.','Dwarven Toughness: HP maximum increases by 1, and increases by 1 again each level.','Stonecunning: As a Bonus Action, gain Tremorsense 60 ft. for 10 minutes, PB uses per Long Rest.'],
+      desc: 'Stout and steadfast, masters of stone and forge.' },
+    { name: 'Elf', source: 'PHB 2024', size: 'Medium', speed: 30,
+      traits: ['Darkvision (60 ft.)','Elven Lineage: Choose Drow, High Elf, or Wood Elf lineage for cantrip/spells and additional traits.','Fey Ancestry: Advantage on saves vs. Charmed condition.','Keen Senses: Proficiency in Insight or Perception.','Trance: You only need 4 hours for a Long Rest (remain semiconscious).'],
+      desc: 'Graceful and long-lived, with an innate connection to magic.' },
+    { name: 'Gnome', source: 'PHB 2024', size: 'Small', speed: 30,
+      traits: ['Darkvision (60 ft.)','Gnomish Cunning: Advantage on INT, WIS, and CHA saving throws.','Gnomish Lineage: Choose Forest Gnome (Minor Illusion + Speak with Small Beasts) or Rock Gnome (Mending + Tinker).'],
+      desc: 'Curious and inventive, brimming with arcane energy.' },
+    { name: 'Goliath', source: 'PHB 2024', size: 'Medium', speed: 35,
+      traits: ['Giant Ancestry: Choose Cloud (use Misty Step PB/LR), Fire (fire retaliation PB/LR), Frost (cold resistance + cold retaliation), Hill (Bulwark — resist push/knock prone), Stone (endurance — reduce damage PB/LR), or Storm (Tempestuous — bonus action 10ft fly).','Large Form: Powerful Build (count as Large for carry/push/lift). Advantage on checks/saves to avoid grapple or being knocked prone.'],
+      desc: 'Towering and competitive, born of giant-kin.' },
+    { name: 'Halfling', source: 'PHB 2024', size: 'Small', speed: 30,
+      traits: ['Brave: Advantage on saves vs. Frightened condition.','Halfling Nimbleness: Move through the space of any creature of a size larger than yours.','Luck: When you roll a 1 on a d20 Test, reroll and use new result.','Naturally Stealthy: You can Hide behind a creature at least one size larger than you.'],
+      desc: 'Small and cheerful, with an uncanny knack for luck.' },
+    { name: 'Human', source: 'PHB 2024', size: 'Medium', speed: 30,
+      traits: ['Resourceful: Gain Heroic Inspiration whenever you finish a Long Rest.','Skillful: Gain proficiency in one skill of your choice.','Versatile: Gain an Origin feat of your choice.'],
+      desc: 'Adaptable and ambitious, found in every corner of the world.' },
+    { name: 'Orc', source: 'PHB 2024', size: 'Medium', speed: 30,
+      traits: ['Darkvision (120 ft.)','Adrenaline Rush: Bonus Action Dash and gain Temp HP equal to PB, usable PB times per Long Rest.','Relentless Endurance: When reduced to 0 HP but not killed outright, drop to 1 HP instead, once per Long Rest.'],
+      desc: 'Powerful and enduring, driven by primal strength.' },
+    { name: 'Tiefling', source: 'PHB 2024', size: 'Medium', speed: 30,
+      traits: ['Darkvision (60 ft.)','Fiendish Legacy: Choose Abyssal (Poison Spray → Ray of Sickness → Hold Person), Chthonic (Chill Touch → False Life → Ray of Enfeeblement), or Infernal (Fire Bolt → Hellish Rebuke → Darkness).','Otherworldly Presence: You know the Thaumaturgy cantrip.'],
+      desc: 'Touched by the Lower Planes, bearing an infernal heritage.' },
+
+    // ── Mordenkainen Presents: Monsters of the Multiverse ──
+    { name: 'Aarakocra', source: 'MotM', size: 'Medium', speed: 30,
+      traits: ['Flight: Fly speed equal to walking speed (no medium/heavy armor).','Talons: Unarmed strikes deal 1d6 slashing.','Wind Caller: You can cast Gust of Wind (PB/LR) with this trait, using a spell slot after 3rd level.'],
+      desc: 'Bird-like humanoids from the Elemental Plane of Air.' },
+    { name: 'Bugbear', source: 'MotM', size: 'Medium', speed: 30,
+      traits: ['Darkvision (60 ft.)','Fey Ancestry: Advantage on saves vs. Charmed, magic can\'t put you to sleep.','Long-Limbed: Melee attack reach +5 ft. on your turn.','Powerful Build: Count as Large for carry/push/lift.','Sneaky: Proficiency in Stealth.','Surprise Attack: Extra 2d6 damage to surprised creatures on first turn.'],
+      desc: 'Hulking fey goblinoids who strike from shadow.' },
+    { name: 'Centaur', source: 'MotM', size: 'Medium', speed: 40,
+      traits: ['Fey: Creature type is Fey rather than Humanoid.','Charge: If you move 30+ ft. straight toward a target and hit with melee on same turn, deal extra 1d6 damage.','Equine Build: Count as Large for carry capacity. Climbing costs extra movement. Mounting Medium or smaller creatures.','Hooves: Unarmed strikes deal 1d6 + STR bludgeoning.','Natural Affinity: Proficiency in Animal Handling, Medicine, Nature, or Survival.'],
+      desc: 'Half-human, half-horse denizens of wild lands.' },
+    { name: 'Changeling', source: 'MotM', size: 'Small or Medium', speed: 30,
+      traits: ['Fey: Creature type is Fey rather than Humanoid.','Shapechanger: As an action, change appearance to look like another humanoid you\'ve seen. Reverts on death.','Changeling Instincts: Proficiency in two of: Deception, Insight, Intimidation, Persuasion.'],
+      desc: 'Shapeshifting fey who can assume any humanoid form.' },
+    { name: 'Deep Gnome', source: 'MotM', size: 'Small', speed: 30,
+      traits: ['Darkvision (120 ft.)','Gift of the Svirfneblin: Cast Disguise Self, Nondetection, or Blindness/Deafness (PB/LR) without material components.','Gnomish Magic Resistance: Advantage on INT, WIS, CHA saves vs. spells.','Svirfneblin Camouflage: Advantage on Stealth checks in rocky terrain.'],
+      desc: 'Secretive gnomes of the Underdark, masters of concealment.' },
+    { name: 'Duergar', source: 'MotM', size: 'Medium', speed: 30,
+      traits: ['Darkvision (120 ft.)','Duergar Magic: Cast Enlarge/Reduce and Invisibility on yourself (PB/LR each) without material components.','Dwarven Resilience: Resistance to Poison damage; advantage on saves vs. Poisoned.','Psionic Fortitude: Advantage on saves vs. Charmed and Stunned.'],
+      desc: 'Psionic dwarves of the Underdark, forged in hardship.' },
+    { name: 'Eladrin', source: 'MotM', size: 'Medium', speed: 30,
+      traits: ['Darkvision (60 ft.)','Fey Ancestry: Advantage on saves vs. Charmed, magic can\'t put you to sleep.','Fey Step: Bonus Action teleport 30 ft. (PB/LR). Effect varies by season: Autumn (charm), Winter (frighten), Spring (teleport ally instead), Summer (fire damage).','Trance: 4-hour long rest.'],
+      desc: 'Elves of the Feywild who embody the changing seasons.' },
+    { name: 'Fairy', source: 'MotM', size: 'Small', speed: 30,
+      traits: ['Fey: Creature type is Fey rather than Humanoid.','Flight: Fly speed equal to walking speed (can\'t fly in medium/heavy armor).','Fairy Magic: You know Druidcraft. At 3rd level: Faerie Fire (1/LR). At 5th level: Enlarge/Reduce (1/LR).'],
+      desc: 'Tiny fey beings with gossamer wings and innate magic.' },
+    { name: 'Firbolg', source: 'MotM', size: 'Medium', speed: 30,
+      traits: ['Firbolg Magic: Cast Detect Magic and Disguise Self (PB/LR) without material components. Disguise Self lets you appear up to 3 feet shorter.','Hidden Step: Bonus Action to become Invisible until start of next turn (PB/LR).','Powerful Build: Count as Large for carry/push/lift.','Speech of Beast and Leaf: Can communicate simple ideas to Beasts and Plants, advantage on CHA checks to influence them.'],
+      desc: 'Gentle giants connected to the natural world.' },
+    { name: 'Genasi, Air', source: 'MotM', size: 'Small or Medium', speed: 35,
+      traits: ['Darkvision (60 ft.)','Unending Breath: You can hold your breath indefinitely while not incapacitated.','Lightning Resistance: Resistance to Lightning damage.','Mingle with the Wind: You can cast Shocking Grasp cantrip. At 3rd level: Feather Fall (PB/LR). At 5th level: Levitate (PB/LR).'],
+      desc: 'Touched by elemental air, swift and free as the wind.' },
+    { name: 'Genasi, Earth', source: 'MotM', size: 'Small or Medium', speed: 30,
+      traits: ['Darkvision (60 ft.)','Earth Walk: Move across difficult terrain made of earth/stone without extra movement.','Merge with Stone: You know Blade Ward cantrip. At 5th level: Pass Without Trace (1/LR).'],
+      desc: 'Touched by elemental earth, solid and unyielding.' },
+    { name: 'Genasi, Fire', source: 'MotM', size: 'Small or Medium', speed: 30,
+      traits: ['Darkvision (60 ft.)','Fire Resistance: Resistance to Fire damage.','Reach to the Blaze: You know Produce Flame cantrip. At 3rd level: Burning Hands (PB/LR). At 5th level: Flame Blade (PB/LR).'],
+      desc: 'Touched by elemental fire, passionate and volatile.' },
+    { name: 'Genasi, Water', source: 'MotM', size: 'Small or Medium', speed: 30,
+      traits: ['Darkvision (60 ft.)','Amphibious: You can breathe air and water.','Acid Resistance: Resistance to Acid damage.','Swim speed equal to walking speed.','Call to the Wave: You know Acid Splash cantrip. At 3rd level: Create or Destroy Water (PB/LR). At 5th level: Water Walk (PB/LR).'],
+      desc: 'Touched by elemental water, fluid and adaptable.' },
+    { name: 'Githyanki', source: 'MotM', size: 'Medium', speed: 30,
+      traits: ['Astral Knowledge: After a Long Rest, gain proficiency with one skill and one weapon/tool of your choice (until next LR).','Githyanki Psionics: You know Mage Hand (invisible). At 3rd level: Jump (PB/LR). At 5th level: Misty Step (PB/LR).','Psychic Resilience: Resistance to Psychic damage.'],
+      desc: 'Astral warriors who escaped mind flayer enslavement.' },
+    { name: 'Githzerai', source: 'MotM', size: 'Medium', speed: 30,
+      traits: ['Githzerai Psionics: You know Mage Hand (invisible). At 3rd level: Shield (PB/LR). At 5th level: Detect Thoughts (PB/LR).','Mental Discipline: Advantage on saves vs. Charmed and Frightened.','Psychic Resilience: Resistance to Psychic damage.'],
+      desc: 'Monastic githzerai who hone mind over matter in Limbo.' },
+    { name: 'Goblin', source: 'MotM', size: 'Small', speed: 30,
+      traits: ['Darkvision (60 ft.)','Fey Ancestry: Advantage on saves vs. Charmed, magic can\'t put you to sleep.','Fury of the Small: Extra damage equal to PB on one attack per turn against larger creatures (PB/LR).','Nimble Escape: Disengage or Hide as a Bonus Action.'],
+      desc: 'Clever and resourceful fey creatures, small but fierce.' },
+    { name: 'Harengon', source: 'MotM', size: 'Small or Medium', speed: 30,
+      traits: ['Hare-Trigger: Add PB to Initiative rolls.','Leporine Senses: Proficiency in Perception.','Lucky Footwork: When you fail a DEX save, use reaction to add 1d4 to the save.','Rabbit Hop: Bonus Action jump (5 × PB ft.) without provoking opportunity attacks, PB uses per Long Rest.'],
+      desc: 'Rabbit-folk known for quick reflexes and lucky feet.' },
+    { name: 'Hobgoblin', source: 'MotM', size: 'Medium', speed: 30,
+      traits: ['Darkvision (60 ft.)','Fey Ancestry: Advantage on saves vs. Charmed, magic can\'t put you to sleep.','Fey Gift: When you use the Help action, you or the target gain Temp HP equal to PB. Also choose a bonus: speed +10, or advantage on next attack, or bonus to next save.','Fortune from the Many: When you miss an attack or fail a save, gain bonus equal to number of allies within 30 ft. (max +3), PB/LR.'],
+      desc: 'Disciplined fey goblinoids with martial precision.' },
+    { name: 'Kenku', source: 'MotM', size: 'Small or Medium', speed: 30,
+      traits: ['Expert Duplication: Advantage on checks to produce forgeries or duplicates of objects.','Kenku Recall: Proficiency in two of: Acrobatics, Deception, Stealth, Sleight of Hand. PB/LR give yourself advantage on one of these checks.','Mimicry: Accurately mimic sounds you\'ve heard, including voices. WIS (Insight) vs. CHA (Deception) to detect.'],
+      desc: 'Raven-like beings gifted with perfect mimicry.' },
+    { name: 'Kobold', source: 'MotM', size: 'Small', speed: 30,
+      traits: ['Darkvision (60 ft.)','Draconic Cry: Bonus Action shout to give allies advantage on attacks against enemies within 10 ft. of you, until start of your next turn. PB/LR.','Kobold Legacy: Choose Craftiness (Proficiency in one of Arcana, Investigation, Medicine, Sleight of Hand, Survival), Defiance (Advantage on saves vs. Frightened), or Draconic Sorcery (Choose a cantrip from the Sorcerer list, CHA casting).'],
+      desc: 'Small draconic beings with a fierce pack mentality.' },
+    { name: 'Lizardfolk', source: 'MotM', size: 'Medium', speed: 30,
+      traits: ['Swim speed of 30 ft.','Bite: Unarmed strikes deal 1d6 slashing.','Hold Breath: Up to 15 minutes.','Hungry Jaws: Bonus Action bite attack, gain Temp HP equal to PB on hit. PB/LR.','Natural Armor: AC = 13 + DEX modifier when not wearing armor.','Nature\'s Intuition: Proficiency in two of: Animal Handling, Medicine, Nature, Perception, Stealth, Survival.'],
+      desc: 'Cold-blooded reptilian hunters at home in swamps.' },
+    { name: 'Minotaur', source: 'MotM', size: 'Medium', speed: 30,
+      traits: ['Horns: Unarmed strikes deal 1d6 piercing.','Goring Rush: After Dashing 20+ ft. straight, make a bonus Horns attack.','Hammering Horns: After hitting with melee on your turn, Bonus Action to push target 10 ft. (STR save DC 8 + PB + STR).','Labyrinthine Recall: You always know which direction is north, and have advantage on checks to navigate or track.'],
+      desc: 'Horned hulks driven by primal power and territorial fury.' },
+    { name: 'Owlin', source: 'MotM', size: 'Small or Medium', speed: 30,
+      traits: ['Darkvision (120 ft.)','Flight: Fly speed equal to walking speed (can\'t fly in medium/heavy armor).','Silent Feathers: Proficiency in Stealth.'],
+      desc: 'Owl-like humanoids from the Feywild with silent flight.' },
+    { name: 'Satyr', source: 'MotM', size: 'Medium', speed: 35,
+      traits: ['Fey: Creature type is Fey rather than Humanoid.','Magic Resistance: Advantage on saves vs. spells.','Mirthful Leaps: When you make a long or high jump, add 1d8 to distance.','Ram: Unarmed strikes deal 1d6 bludgeoning.','Reveler: Proficiency in Performance and Persuasion.'],
+      desc: 'Fey revelers who delight in music, wine, and freedom.' },
+    { name: 'Sea Elf', source: 'MotM', size: 'Medium', speed: 30,
+      traits: ['Darkvision (60 ft.)','Swim speed of 30 ft.','Child of the Sea: Breathe air and water.','Fey Ancestry: Advantage on saves vs. Charmed, magic can\'t put you to sleep.','Friend of the Sea: Communicate simple ideas to Beasts with a swim speed.','Trance: 4-hour long rest.'],
+      desc: 'Elves adapted to ocean depths, guardians of the sea.' },
+    { name: 'Shadar-kai', source: 'MotM', size: 'Medium', speed: 30,
+      traits: ['Darkvision (60 ft.)','Necrotic Resistance: Resistance to Necrotic damage.','Blessing of the Raven Queen: Bonus Action teleport 30 ft. and gain resistance to all damage until start of next turn (PB/LR).','Fey Ancestry: Advantage on saves vs. Charmed, magic can\'t put you to sleep.','Trance: 4-hour long rest.'],
+      desc: 'Elves of the Shadowfell, servants of the Raven Queen.' },
+    { name: 'Shifter', source: 'MotM', size: 'Medium', speed: 30,
+      traits: ['Bestial Instincts: Proficiency in one of: Acrobatics, Athletics, Intimidation, Survival.','Darkvision (60 ft.)','Shifting: Bonus Action to shift for 1 minute, gain Temp HP equal to PB + level. Choose subtype: Beasthide (+1 AC), Longtooth (1d6 fangs bonus attack), Swiftstride (+10 speed, reaction to move 5 ft.), Wildhunt (advantage on WIS checks, no advantage on attacks against you). PB/LR.'],
+      desc: 'Lycanthrope descendants who channel bestial power.' },
+    { name: 'Tabaxi', source: 'MotM', size: 'Small or Medium', speed: 30,
+      traits: ['Darkvision (60 ft.)','Cat\'s Claws: Unarmed strikes deal 1d6 slashing. Climb speed equal to walking speed.','Cat\'s Talent: Proficiency in Perception and Stealth.','Feline Agility: When you move, double speed until end of turn. Can\'t use again until you spend a turn not moving.'],
+      desc: 'Cat-folk driven by curiosity and wanderlust.' },
+    { name: 'Tortle', source: 'MotM / Tortle Package', size: 'Medium', speed: 30,
+      traits: ['Claws: Unarmed strikes deal 1d6 slashing.','Hold Breath: Up to 1 hour.','Natural Armor: AC = 17 (can\'t benefit from worn armor, shields still work).','Nature\'s Intuition: Proficiency in one of Animal Handling, Medicine, Nature, Perception, Stealth, or Survival.','Shell Defense: As an action, withdraw into shell: +4 AC, advantage on STR/CON saves, prone, speed 0. Emerge as bonus action.'],
+      desc: 'Turtle-folk with natural armor and patient wisdom.' },
+    { name: 'Triton', source: 'MotM', size: 'Medium', speed: 30,
+      traits: ['Swim speed of 30 ft.','Amphibious: Breathe air and water.','Control Air and Water: Cast Fog Cloud. At 3rd: Gust of Wind. At 5th: Water Walk. PB/LR, no material components.','Darkvision (60 ft.)','Emissary of the Sea: Communicate simple ideas to Beasts, Elementals, and Monstrosities with a swim speed.','Guardian of the Depths: Resistance to Cold damage.'],
+      desc: 'Noble guardians of the ocean depths, born to protect.' },
+    { name: 'Yuan-ti', source: 'MotM', size: 'Small or Medium', speed: 30,
+      traits: ['Darkvision (60 ft.)','Magic Resistance: Advantage on saving throws vs. spells.','Poison Resilience: Resistance to Poison damage, advantage on saves vs. Poisoned.','Serpentine Spellcasting: You know Poison Spray cantrip. At 3rd level: Suggestion (PB/LR). Cast with INT, WIS, or CHA.'],
+      desc: 'Serpentine beings with innate magic resistance.' },
+
+    // ── Spelljammer: Adventures in Space ──
+    { name: 'Astral Elf', source: 'Spelljammer', size: 'Medium', speed: 30,
+      traits: ['Darkvision (60 ft.)','Astral Fire: You know Sacred Flame or Dancing Lights cantrip (INT, WIS, or CHA casting).','Fey Ancestry: Advantage on saves vs. Charmed, magic can\'t put you to sleep.','Keen Senses: Proficiency in Perception.','Starlight Step: Bonus Action teleport 30 ft. to unoccupied space you can see (PB/LR).','Astral Trance: 4-hour long rest with proficiency in one weapon or tool until next trance.','Radiant Soul: When you succeed on a death save, regain 1d4 + PB HP (1/LR) and a free Starlight Step.'],
+      desc: 'Elves who dwell in the Astral Sea, suffused with starlight.' },
+    { name: 'Autognome', source: 'Spelljammer', size: 'Small', speed: 30,
+      traits: ['Construct: Creature type is Construct. Advantage on saves vs. Paralyzed/Poisoned. Resistance to Poison. Immune to disease. Don\'t need to eat, drink, or breathe. Mending heals 1d8, heal normally from Cure Wounds etc.','Armored Casing: AC = 13 + DEX modifier when not wearing armor.','Built for Success: Add 1d4 to an attack, check, or save (PB/LR).','Mechanical Nature: Advantage on death saves.','Sentry\'s Rest: Spend 6 hours in inactive state for Long Rest (remain conscious).','Specialized Design: Proficiency with two tools of your choice.'],
+      desc: 'Mechanical gnome-like beings built for a specific purpose.' },
+    { name: 'Giff', source: 'Spelljammer', size: 'Medium', speed: 30,
+      traits: ['Astral Spark: Extra force damage (PB/LR) on one hit per turn equal to PB.','Firearms Mastery: Ignore loading property of firearms, no disadvantage on attacks in melee.','Hippo Build: Advantage on STR checks/saves. Count as Large for carry/push/lift.','Swim speed equal to walking speed.'],
+      desc: 'Hippo-headed spacefaring militarists with explosive flair.' },
+    { name: 'Hadozee', source: 'Spelljammer', size: 'Small or Medium', speed: 30,
+      traits: ['Dexterous Feet: Can use feet as hands with a free object interaction.','Glide: Reduce fall speed, glide horizontally. Reaction to reduce falling damage by 1d6 × PB.','Hadozee Resilience: As a reaction, reduce non-psychic damage by 1d6 + PB (PB/LR).'],
+      desc: 'Simian spacefarers with wing-like membranes for gliding.' },
+    { name: 'Plasmoid', source: 'Spelljammer', size: 'Small or Medium', speed: 30,
+      traits: ['Ooze: Creature type is Ooze. Amorphous — squeeze through 1-inch spaces. Hold Breath 1 hour.','Darkvision (60 ft.)','Natural Resilience: Resistance to Acid and Poison damage. Advantage on saves vs. Poisoned.','Shape Self: Reshape body as an action to form pseudopods. Can have 1 extra pseudopod at a time.'],
+      desc: 'Sentient ooze-beings that can reshape their amorphous bodies.' },
+    { name: 'Thri-kreen', source: 'Spelljammer', size: 'Small or Medium', speed: 30,
+      traits: ['Monstrosity: Creature type is Monstrosity.','Chameleon Carapace: AC = 13 + DEX when not wearing armor. As an action, change color for advantage on Stealth checks, concentration up to 1 hour.','Darkvision (60 ft.)','Secondary Arms: Two secondary arms for light objects, simple tasks, light weapons (no two-handed or heavy).','Sleepless: Don\'t need sleep, can\'t be put to sleep by magic. Long rest = 4 hours of inactivity.','Thri-kreen Telepathy: Telepathy 120 ft., must share a language.'],
+      desc: 'Insectoid hunters with four arms and alien minds.' },
+
+    // ── Mythic Odysseys of Theros ──
+    { name: 'Leonin', source: 'MOoT', size: 'Medium', speed: 35,
+      traits: ['Darkvision (60 ft.)','Claws: Unarmed strikes deal 1d6 slashing.','Hunter\'s Instincts: Proficiency in one of Athletics, Intimidation, Perception, or Survival.','Daunting Roar: As a Bonus Action, creatures of your choice within 10 ft. must WIS save or be frightened until end of your next turn. PB/LR.'],
+      desc: 'Lion-like warriors from the golden savannahs of Theros.' },
+    { name: 'Satyr (Theros)', source: 'MOoT', size: 'Medium', speed: 35,
+      traits: ['Fey: Creature type is Fey.','Magic Resistance: Advantage on saves vs. spells.','Mirthful Leaps: Add 1d8 to long/high jump distance.','Ram: Unarmed strikes deal 1d6 bludgeoning.','Reveler: Proficiency in Performance and Persuasion.'],
+      desc: 'Fey revelers of Theros who live for celebration. (Use MotM Satyr unless Theros-specific preferred.)' },
+
+    // ── Strixhaven ──
+    { name: 'Owlin (Strixhaven)', source: 'SCoC', size: 'Small or Medium', speed: 30,
+      traits: ['Darkvision (120 ft.)','Flight: Fly speed equal to walking speed (no medium/heavy armor).','Silent Feathers: Proficiency in Stealth.'],
+      desc: 'Owl-folk of Strixhaven. (Use MotM version — identical stats.)' },
+
+    // ── Explorer\'s Guide to Wildemount ──
+    { name: 'Lotusden Halfling', source: 'EGtW', size: 'Small', speed: 25,
+      traits: ['Brave: Advantage on saves vs. Frightened.','Halfling Nimbleness: Move through space of larger creatures.','Luck: Reroll 1s on d20 Tests.','Child of the Wood: You know Druidcraft. At 3rd: Entangle (1/LR). At 5th: Spike Growth (1/LR). WIS is spellcasting ability.','Timberwalk: Move through nonmagical difficult terrain (plants) without extra movement.'],
+      desc: 'Halflings rooted in the primal forests of Wildemount.' },
+    { name: 'Pallid Elf', source: 'EGtW', size: 'Medium', speed: 30,
+      traits: ['Darkvision (60 ft.)','Fey Ancestry: Advantage on saves vs. Charmed, magic can\'t put you to sleep.','Keen Senses: Proficiency in Perception.','Trance: 4-hour long rest.','Incisive Sense: Advantage on Investigation and Insight checks.','Blessing of the Moon Weaver: You know Light cantrip. At 3rd: Sleep (1/LR). At 5th: Invisibility on self (1/LR). WIS casting.'],
+      desc: 'Pale elves blessed by the Moon Weaver, masters of subtlety.' },
+    { name: 'Draconblood Dragonborn', source: 'EGtW', size: 'Medium', speed: 30,
+      traits: ['Draconic Ancestry: Choose a dragon type for damage resistance.','Breath Weapon: 15-ft. cone or 30-ft. line, DC = 8 + CON + PB, 2d6 damage (scales at 6th, 11th, 16th).','Darkvision (60 ft.)','Forceful Presence: Proficiency in Intimidation or Persuasion.'],
+      desc: 'Dragonborn of Wildemount with an imperial bearing.' },
+    { name: 'Ravenite Dragonborn', source: 'EGtW', size: 'Medium', speed: 30,
+      traits: ['Draconic Ancestry: Choose a dragon type for damage resistance.','Breath Weapon: 15-ft. cone or 30-ft. line, DC = 8 + CON + PB, 2d6 damage (scales).','Darkvision (60 ft.)','Vengeful Assault: When damaged by a creature within range, use reaction to make an attack against them. 1/SR or LR.'],
+      desc: 'Dragonborn of Wildemount tempered by oppression and fury.' },
+
+    // ── Fizban\'s Treasury of Dragons ──
+    { name: 'Chromatic Dragonborn', source: 'FToD', size: 'Medium', speed: 30,
+      traits: ['Chromatic Ancestry: Choose Black (Acid), Blue (Lightning), Green (Poison), Red (Fire), or White (Cold).','Breath Weapon: 15-ft. cone or 30-ft. line, d10 damage scaling.','Draconic Resistance: Resistance to your ancestry damage type.','Chromatic Warding (5th level): Immunity to your damage type for 1 minute, 1/LR.'],
+      desc: 'Dragonborn with chromatic dragon heritage. (Use PHB 2024 Dragonborn by default.)' },
+    { name: 'Metallic Dragonborn', source: 'FToD', size: 'Medium', speed: 30,
+      traits: ['Metallic Ancestry: Choose Brass (Fire), Bronze (Lightning), Copper (Acid), Gold (Fire), or Silver (Cold).','Breath Weapon: 15-ft. cone, d10 damage scaling.','Draconic Resistance: Resistance to your ancestry damage type.','Metallic Breath Weapon (5th level): 15-ft. cone, choose Enervating (CON save or incapacitated) or Repulsion (STR save or pushed 20 ft. + prone). 1/LR.'],
+      desc: 'Dragonborn with metallic dragon heritage. (Use PHB 2024 Dragonborn by default.)' },
+    { name: 'Gem Dragonborn', source: 'FToD', size: 'Medium', speed: 30,
+      traits: ['Gem Ancestry: Choose Amethyst (Force), Crystal (Radiant), Emerald (Psychic), Sapphire (Thunder), or Topaz (Necrotic).','Breath Weapon: 15-ft. cone, d10 damage scaling.','Draconic Resistance: Resistance to your ancestry damage type.','Psionic Mind: Telepathy 30 ft.','Gem Flight (5th level): Fly speed = walking speed for 1 minute, 1/LR (hover).'],
+      desc: 'Dragonborn with gem dragon heritage and psionic abilities.' },
+
+    // ── Mordenkainen/MotM additional ──
+    { name: 'Grung', source: 'MotM', size: 'Small', speed: 30,
+      traits: ['Arboreal Alertness: Proficiency in Perception.','Amphibious: Breathe air and water.','Poison Skin: Creatures that grapple you or hit you with unarmed/natural weapon take 2d4 Poison damage. You can coat a weapon to add 2d4 Poison on hit (1 minute duration).','Standing Leap: Long jump 25 ft., high jump 15 ft.','Water Dependency: Must submerge in water for 1 hour per day or suffer 1 exhaustion.','Climb speed of 30 ft.'],
+      desc: 'Poisonous frog-folk who live in jungle treetops.' },
+    { name: 'Loxodon', source: 'MotM', size: 'Medium', speed: 30,
+      traits: ['Natural Armor: AC = 12 + CON modifier when not wearing armor.','Loxodon Serenity: Advantage on saves vs. Charmed and Frightened.','Keen Smell: Advantage on Perception, Investigation, and Survival checks involving smell.','Trunk: Prehensile trunk — lift up to 5 × STR lbs., breathe through while grappled, interact with objects.','Powerful Build: Count as Large for carry/push/lift.'],
+      desc: 'Elephant-folk known for their calm wisdom and powerful trunks.' },
+    { name: 'Simic Hybrid', source: 'MotM', size: 'Medium', speed: 30,
+      traits: ['Darkvision (60 ft.)','Animal Enhancement (1st level): Choose Manta Glide (glide 5:1 ratio), Nimble Climber (climb speed = walk), or Underwater Adaptation (swim speed = walk + water breathing).','Animal Enhancement (5th level): Choose Grappling Appendages (1d6 grapple attack), Carapace (+1 AC when not in heavy armor), or Acid Spit (30 ft. ranged, 2d10 acid, PB/LR).'],
+      desc: 'Magically enhanced beings with animal grafts from Ravnica.' },
+    { name: 'Vedalken', source: 'MotM', size: 'Medium', speed: 30,
+      traits: ['Vedalken Dispassion: Advantage on INT, WIS, and CHA saving throws.','Tireless Precision: Proficiency in one of Arcana, History, Investigation, Medicine, Performance, Sleight of Hand. Add 1d4 to checks with that skill.','Partially Amphibious: Breathe underwater for up to 1 hour, then need air for same duration.'],
+      desc: 'Tall blue humanoids devoted to logical perfection.' },
+    { name: 'Verdan', source: 'MotM', size: 'Small or Medium', speed: 30,
+      traits: ['Black Blood Healing: When you roll a 1 or 2 on any hit die spent during Short Rest, reroll (keep new).','Limited Telepathy: Telepathy 30 ft. (must share a language).','Persuasive: Proficiency in Persuasion.','Telepathic Insight: Advantage on WIS and CHA saving throws.'],
+      desc: 'Green-skinned goblinoids changed by chaos, still growing.' },
+    { name: 'Kalashtar', source: 'MotM', size: 'Medium', speed: 30,
+      traits: ['Dual Mind: Advantage on WIS saving throws.','Mental Discipline: Resistance to Psychic damage.','Mind Link: Telepathy (10 × level) ft. with one creature at a time. Can communicate even without shared language.','Severed from Dreams: You don\'t dream; magic can\'t put you to sleep.'],
+      desc: 'Humans merged with quori spirits, serene and telepathic.' },
+    { name: 'Warforged', source: 'MotM', size: 'Medium', speed: 30,
+      traits: ['Constructed Resilience: Advantage on saves vs. Poisoned. Resistance to Poison. Don\'t need to eat, drink, or breathe. Immune to disease. Don\'t need to sleep.','Sentry\'s Rest: 6-hour inactive Long Rest (remain conscious).','Integrated Protection: AC = 11 + PB + DEX modifier when not wearing armor. You can don armor normally.','Specialized Design: Proficiency in one skill and one tool.'],
+      desc: 'Living constructs forged for war, now seeking purpose.' },
+
+    // ── Deck of Many Things ──
+    { name: 'Strixhaven Mascot (custom species)', source: 'SCoC', size: 'Small', speed: 30,
+      traits: ['This is a setting-specific option. Consult the DM for Strixhaven Mascot species (Owlin is the default Strixhaven species).'],
+      desc: 'Use Owlin from MotM for Strixhaven campaigns.' },
+
+    // ── Heroes of Faerûn additional ──
+    { name: 'Half-Elf', source: 'Heroes of Faerûn', size: 'Medium', speed: 30,
+      traits: ['Darkvision (60 ft.)','Fey Ancestry: Advantage on saves vs. Charmed, magic can\'t put you to sleep.','Skill Versatility: Proficiency in two skills of your choice.','Languages: Common, Elvish, one extra language.'],
+      desc: 'Blending human ambition and elven grace. (Consider using 2024 Elf or Human with variant traits.)' },
+    { name: 'Half-Orc', source: 'Heroes of Faerûn', size: 'Medium', speed: 30,
+      traits: ['Darkvision (60 ft.)','Relentless Endurance: Drop to 1 HP instead of 0, once per Long Rest.','Savage Attacks: Extra damage die on melee critical hits.','Menacing: Proficiency in Intimidation.'],
+      desc: 'Bearing orcish strength and human determination. (Consider using 2024 Orc or Human with variant traits.)' },
+];
+
+// ─────────────────────────────────────
+//  CLASSES & SUBCLASSES
+// ─────────────────────────────────────
+
+const CLASSES = [
+    {
+        name: 'Barbarian', hitDie: 'd12', primaryAbility: 'STR',
+        savingThrows: ['str', 'con'],
+        armorProf: { light: true, medium: true, heavy: false, shields: true },
+        weaponProf: 'Simple weapons, Martial weapons',
+        skillChoices: 'Choose 2: Animal Handling, Athletics, Intimidation, Nature, Perception, Survival',
+        desc: 'A fierce warrior who channels primal rage.',
+        source: 'PHB 2024',
+        subclassLevel: 3,
+        subclasses: [
+            { name: 'Path of the Berserker', source: 'PHB 2024', desc: 'Frenzy fuels your battle fury, granting bonus attacks and resilience.' },
+            { name: 'Path of the Wild Heart', source: 'PHB 2024', desc: 'Formerly Totem Warrior. Channel animal spirits for varied combat abilities.' },
+            { name: 'Path of the World Tree', source: 'PHB 2024', desc: 'Draw on the World Tree to teleport allies and create vitality.' },
+            { name: 'Path of the Zealot', source: 'PHB 2024', desc: 'Divine fury empowers your rage with radiant or necrotic damage.' },
+            { name: 'Path of the Ancestral Guardian', source: 'XGtE', desc: 'Summon ancestral spirits to protect allies and punish foes.' },
+            { name: 'Path of the Storm Herald', source: 'XGtE', desc: 'Channel environmental fury — desert, sea, or tundra auras.' },
+            { name: 'Path of the Beast', source: 'TCoE', desc: 'Transform your body with bestial natural weapons while raging.' },
+            { name: 'Path of Wild Magic', source: 'TCoE', desc: 'Your rage unleashes random surges of wild magic.' },
+        ]
+    },
+    {
+        name: 'Bard', hitDie: 'd8', primaryAbility: 'CHA',
+        savingThrows: ['dex', 'cha'],
+        armorProf: { light: true, medium: false, heavy: false, shields: false },
+        weaponProf: 'Simple weapons',
+        skillChoices: 'Choose any 3 skills',
+        desc: 'A versatile performer who weaves magic through music.',
+        source: 'PHB 2024',
+        subclassLevel: 3,
+        subclasses: [
+            { name: 'College of Dance', source: 'PHB 2024', desc: 'Channel magic through graceful movement and battle dances.' },
+            { name: 'College of Glamour', source: 'PHB 2024', desc: 'Weave fey enchantments to charm and inspire through performance.' },
+            { name: 'College of Lore', source: 'PHB 2024', desc: 'Cut others down with wit, steal magical secrets from any class.' },
+            { name: 'College of Valor', source: 'PHB 2024', desc: 'Inspire allies in battle, blending martial prowess with magic.' },
+            { name: 'College of Swords', source: 'XGtE', desc: 'Blade flourishes let you fight with style and deadly grace.' },
+            { name: 'College of Whispers', source: 'XGtE', desc: 'Use fear, psychic blades, and stolen identities to manipulate.' },
+            { name: 'College of Creation', source: 'TCoE', desc: 'Bring art to life — animate objects and create items from song.' },
+            { name: 'College of Eloquence', source: 'TCoE', desc: 'Master of words whose Inspiration never goes to waste.' },
+        ]
+    },
+    {
+        name: 'Cleric', hitDie: 'd8', primaryAbility: 'WIS',
+        savingThrows: ['wis', 'cha'],
+        armorProf: { light: true, medium: true, heavy: false, shields: true },
+        weaponProf: 'Simple weapons',
+        skillChoices: 'Choose 2: History, Insight, Medicine, Persuasion, Religion',
+        desc: 'A holy conduit of divine power and healing.',
+        source: 'PHB 2024',
+        subclassLevel: 3,
+        subclasses: [
+            { name: 'Life Domain', source: 'PHB 2024', desc: 'Master healer whose spells restore extra HP and protect allies.' },
+            { name: 'Light Domain', source: 'PHB 2024', desc: 'Wield radiant fire and protective light against darkness.' },
+            { name: 'Trickery Domain', source: 'PHB 2024', desc: 'Illusions, stealth, and cunning blessings from a trickster god.' },
+            { name: 'War Domain', source: 'PHB 2024', desc: 'Divine warrior who bolsters attacks and wears heavy armor.' },
+            { name: 'Forge Domain', source: 'XGtE', desc: 'Imbue equipment with divine power and master fire and metal.' },
+            { name: 'Grave Domain', source: 'XGtE', desc: 'Guardian of the line between life and death, punisher of undead.' },
+            { name: 'Order Domain', source: 'TCoE', desc: 'Enforce divine law, granting allies reaction attacks and compulsions.' },
+            { name: 'Peace Domain', source: 'TCoE', desc: 'Bond allies together with shared healing and protective magic.' },
+            { name: 'Twilight Domain', source: 'TCoE', desc: 'Comfort allies with soothing twilight auras and darkvision.' },
+        ]
+    },
+    {
+        name: 'Druid', hitDie: 'd8', primaryAbility: 'WIS',
+        savingThrows: ['int', 'wis'],
+        armorProf: { light: true, medium: false, heavy: false, shields: true },
+        weaponProf: 'Simple weapons',
+        skillChoices: 'Choose 2: Arcana, Animal Handling, Insight, Medicine, Nature, Perception, Religion, Survival',
+        desc: 'A keeper of the old faith, shapeshifter and nature mage.',
+        source: 'PHB 2024',
+        subclassLevel: 3,
+        subclasses: [
+            { name: 'Circle of the Land', source: 'PHB 2024', desc: 'Draw on terrain-specific magic for an expanded spell list.' },
+            { name: 'Circle of the Moon', source: 'PHB 2024', desc: 'Master shapeshifter who adopts powerful beast forms.' },
+            { name: 'Circle of the Sea', source: 'PHB 2024', desc: 'Channel tides and storms to push, pull, and blast foes.' },
+            { name: 'Circle of the Stars', source: 'PHB 2024', desc: 'Read the stars for divination and assume starry forms.' },
+            { name: 'Circle of the Shepherd', source: 'XGtE', desc: 'Summon spirit totems that heal, protect, and empower beasts.' },
+            { name: 'Circle of Dreams', source: 'XGtE', desc: 'Tap into the Feywild to heal, teleport, and protect.' },
+            { name: 'Circle of Spores', source: 'TCoE', desc: 'Harness the cycle of decay with necrotic spores and symbiotic armor.' },
+            { name: 'Circle of Wildfire', source: 'TCoE', desc: 'Summon a wildfire spirit that burns and heals in equal measure.' },
+        ]
+    },
+    {
+        name: 'Fighter', hitDie: 'd10', primaryAbility: 'STR or DEX',
+        savingThrows: ['str', 'con'],
+        armorProf: { light: true, medium: true, heavy: true, shields: true },
+        weaponProf: 'Simple weapons, Martial weapons',
+        skillChoices: 'Choose 2: Acrobatics, Animal Handling, Athletics, History, Insight, Intimidation, Perception, Survival',
+        desc: 'A master of martial combat and battlefield tactics.',
+        source: 'PHB 2024',
+        subclassLevel: 3,
+        subclasses: [
+            { name: 'Battle Master', source: 'PHB 2024', desc: 'Tactical genius who uses superiority dice for combat maneuvers.' },
+            { name: 'Champion', source: 'PHB 2024', desc: 'Raw physical power with improved critical hits and athleticism.' },
+            { name: 'Eldritch Knight', source: 'PHB 2024', desc: 'Blend arcane magic with martial mastery for devastating combos.' },
+            { name: 'Psi Warrior', source: 'PHB 2024', desc: 'Harness psionic power for telekinetic strikes and shields.' },
+            { name: 'Arcane Archer', source: 'XGtE', desc: 'Infuse arrows with arcane effects for magical ranged attacks.' },
+            { name: 'Cavalier', source: 'XGtE', desc: 'Mounted combat expert who marks and locks down enemies.' },
+            { name: 'Samurai', source: 'XGtE', desc: 'Fight with elegant precision, gaining advantage through resolve.' },
+            { name: 'Echo Knight', source: 'EGtW', desc: 'Manifest a shadowy echo to attack from two places at once.' },
+            { name: 'Rune Knight', source: 'TCoE', desc: 'Inscribe giant runes for magical buffs and battlefield control.' },
+        ]
+    },
+    {
+        name: 'Monk', hitDie: 'd8', primaryAbility: 'DEX & WIS',
+        savingThrows: ['str', 'dex'],
+        armorProf: { light: false, medium: false, heavy: false, shields: false },
+        weaponProf: 'Simple weapons, Martial weapons (Melee, Light property)',
+        skillChoices: 'Choose 2: Acrobatics, Athletics, History, Insight, Religion, Stealth',
+        desc: 'A disciplined warrior who harnesses ki energy.',
+        source: 'PHB 2024',
+        subclassLevel: 3,
+        subclasses: [
+            { name: 'Warrior of the Open Hand', source: 'PHB 2024', desc: 'Classic martial artist with enhanced Flurry of Blows effects.' },
+            { name: 'Warrior of Shadow', source: 'PHB 2024', desc: 'Harness darkness for stealth, teleportation, and shadow strikes.' },
+            { name: 'Warrior of the Elements', source: 'PHB 2024', desc: 'Channel elemental power through your ki for devastating attacks.' },
+            { name: 'Warrior of Mercy', source: 'PHB 2024', desc: 'Heal and harm with a touch, balancing life and death.' },
+            { name: 'Way of the Drunken Master', source: 'XGtE', desc: 'Unpredictable swaying combat style with enhanced mobility.' },
+            { name: 'Way of the Kensei', source: 'XGtE', desc: 'Master specific weapons, blending monk features with martial arms.' },
+            { name: 'Way of the Sun Soul', source: 'XGtE', desc: 'Hurl bolts of radiant energy and create searing sunbursts.' },
+            { name: 'Way of the Astral Self', source: 'TCoE', desc: 'Manifest astral arms for powerful attacks and enhanced senses.' },
+        ]
+    },
+    {
+        name: 'Paladin', hitDie: 'd10', primaryAbility: 'STR & CHA',
+        savingThrows: ['wis', 'cha'],
+        armorProf: { light: true, medium: true, heavy: true, shields: true },
+        weaponProf: 'Simple weapons, Martial weapons',
+        skillChoices: 'Choose 2: Athletics, Insight, Intimidation, Medicine, Persuasion, Religion',
+        desc: 'A holy knight bound by a sacred oath.',
+        source: 'PHB 2024',
+        subclassLevel: 3,
+        subclasses: [
+            { name: 'Oath of Devotion', source: 'PHB 2024', desc: 'The classic paladin — sacred weapon, holy aura, radiant smites.' },
+            { name: 'Oath of Glory', source: 'PHB 2024', desc: 'Inspired by heroism, enhancing athleticism and speed.' },
+            { name: 'Oath of the Ancients', source: 'PHB 2024', desc: 'Protect the light and joy of the natural world with fey magic.' },
+            { name: 'Oath of Vengeance', source: 'PHB 2024', desc: 'Hunt down evildoers with relentless pursuit and focused fury.' },
+            { name: 'Oath of Conquest', source: 'XGtE', desc: 'Rule through fear, locking down frightened enemies completely.' },
+            { name: 'Oath of Redemption', source: 'XGtE', desc: 'Absorb damage for allies and seek peaceful resolution first.' },
+            { name: 'Oath of the Watchers', source: 'TCoE', desc: 'Guard against extraplanar threats with enhanced saves and banishment.' },
+            { name: 'Oathbreaker', source: 'DMG 2024', desc: 'A paladin who has broken their oath, wielding dark powers.' },
+        ]
+    },
+    {
+        name: 'Ranger', hitDie: 'd10', primaryAbility: 'DEX & WIS',
+        savingThrows: ['str', 'dex'],
+        armorProf: { light: true, medium: true, heavy: false, shields: true },
+        weaponProf: 'Simple weapons, Martial weapons',
+        skillChoices: 'Choose 3: Animal Handling, Athletics, Insight, Investigation, Nature, Perception, Stealth, Survival',
+        desc: 'A wilderness warrior and tracker.',
+        source: 'PHB 2024',
+        subclassLevel: 3,
+        subclasses: [
+            { name: 'Beast Master', source: 'PHB 2024', desc: 'Bond with a primal beast companion that fights alongside you.' },
+            { name: 'Fey Wanderer', source: 'PHB 2024', desc: 'Channel fey magic for charm, psychic damage, and misty escapes.' },
+            { name: 'Gloom Stalker', source: 'PHB 2024', desc: 'Ambush specialist invisible in darkness with devastating first strikes.' },
+            { name: 'Hunter', source: 'PHB 2024', desc: 'Specialize in fighting specific types of prey with combat tactics.' },
+            { name: 'Horizon Walker', source: 'XGtE', desc: 'Detect and travel between planes, striking with force damage.' },
+            { name: 'Monster Slayer', source: 'XGtE', desc: 'Study and exploit monster weaknesses with supernatural focus.' },
+            { name: 'Swarmkeeper', source: 'TCoE', desc: 'Command a swarm of fey spirits that move and damage enemies.' },
+            { name: 'Drakewarden', source: 'FToD', desc: 'Bond with a draconic spirit that grows into a fierce drake.' },
+        ]
+    },
+    {
+        name: 'Rogue', hitDie: 'd8', primaryAbility: 'DEX',
+        savingThrows: ['dex', 'int'],
+        armorProf: { light: true, medium: false, heavy: false, shields: false },
+        weaponProf: 'Simple weapons, Martial weapons (Finesse or Light)',
+        skillChoices: 'Choose 4: Acrobatics, Athletics, Deception, Insight, Intimidation, Investigation, Perception, Performance, Persuasion, Sleight of Hand, Stealth',
+        desc: 'A cunning scoundrel who relies on skill and guile.',
+        source: 'PHB 2024',
+        subclassLevel: 3,
+        subclasses: [
+            { name: 'Arcane Trickster', source: 'PHB 2024', desc: 'Blend illusion and enchantment magic with roguish tricks.' },
+            { name: 'Assassin', source: 'PHB 2024', desc: 'Master of disguise and poison with devastating surprise attacks.' },
+            { name: 'Soulknife', source: 'PHB 2024', desc: 'Manifest psychic blades and use psionic dice for versatile tricks.' },
+            { name: 'Thief', source: 'PHB 2024', desc: 'Supreme skill and agility — fast hands, second-story work, reflexes.' },
+            { name: 'Inquisitive', source: 'XGtE', desc: 'Keen deductive eye that roots out hidden truths and lies.' },
+            { name: 'Mastermind', source: 'XGtE', desc: 'Master manipulator who directs allies and reads foes at range.' },
+            { name: 'Scout', source: 'XGtE', desc: 'Wilderness expert with enhanced mobility and Nature/Survival skills.' },
+            { name: 'Swashbuckler', source: 'XGtE', desc: 'Dashing duelist who provokes and escapes with flair.' },
+            { name: 'Phantom', source: 'TCoE', desc: 'Channel the dead for extra damage and ghostly movement.' },
+        ]
+    },
+    {
+        name: 'Sorcerer', hitDie: 'd6', primaryAbility: 'CHA',
+        savingThrows: ['con', 'cha'],
+        armorProf: { light: false, medium: false, heavy: false, shields: false },
+        weaponProf: 'Simple weapons',
+        skillChoices: 'Choose 2: Arcana, Deception, Insight, Intimidation, Persuasion, Religion',
+        desc: 'A spellcaster who draws on inherent magic.',
+        source: 'PHB 2024',
+        subclassLevel: 3,
+        subclasses: [
+            { name: 'Aberrant Sorcery', source: 'PHB 2024', desc: 'Alien psionic power warps reality around you.' },
+            { name: 'Clockwork Sorcery', source: 'PHB 2024', desc: 'Channel the order of Mechanus to restore balance and negate chaos.' },
+            { name: 'Draconic Sorcery', source: 'PHB 2024', desc: 'Dragon blood grants resilience, elemental affinity, and wings.' },
+            { name: 'Wild Magic Sorcery', source: 'PHB 2024', desc: 'Chaotic magic surges create unpredictable but powerful effects.' },
+            { name: 'Divine Soul', source: 'XGtE', desc: 'Access the entire Cleric spell list with sorcerer versatility.' },
+            { name: 'Shadow Magic', source: 'XGtE', desc: 'Wield darkness itself — summon shadow hounds and cheat death.' },
+            { name: 'Storm Sorcery', source: 'XGtE', desc: 'Command wind and lightning, fly briefly after casting spells.' },
+            { name: 'Lunar Sorcery', source: 'FToD (Dragonlance)', desc: 'Draw power from moon phases for varied magical effects.' },
+        ]
+    },
+    {
+        name: 'Warlock', hitDie: 'd8', primaryAbility: 'CHA',
+        savingThrows: ['wis', 'cha'],
+        armorProf: { light: true, medium: false, heavy: false, shields: false },
+        weaponProf: 'Simple weapons',
+        skillChoices: 'Choose 2: Arcana, Deception, History, Intimidation, Investigation, Nature, Religion',
+        desc: 'A wielder of eldritch power from an otherworldly patron.',
+        source: 'PHB 2024',
+        subclassLevel: 3,
+        subclasses: [
+            { name: 'Archfey Patron', source: 'PHB 2024', desc: 'Fey charm and misdirection — beguile, teleport, and confuse.' },
+            { name: 'Celestial Patron', source: 'PHB 2024', desc: 'Heal allies with celestial light while wielding eldritch power.' },
+            { name: 'Fiend Patron', source: 'PHB 2024', desc: 'Gain temp HP on kills, hurl hellfire, and cheat death.' },
+            { name: 'Great Old One Patron', source: 'PHB 2024', desc: 'Alien telepathy, psychic damage, and mind-rending abilities.' },
+            { name: 'Hexblade', source: 'XGtE', desc: 'Manifest a sentient weapon, use CHA for attacks, curse enemies.' },
+            { name: 'The Fathomless', source: 'TCoE', desc: 'Tentacles from the deep sea grapple and protect.' },
+            { name: 'The Genie', source: 'TCoE', desc: 'Patron is a genie — gain a vessel, bonus damage, and limited wish.' },
+            { name: 'Undead Patron', source: 'FToD', desc: 'Transform into a terrifying undead form with necrotic power.' },
+        ]
+    },
+    {
+        name: 'Wizard', hitDie: 'd6', primaryAbility: 'INT',
+        savingThrows: ['int', 'wis'],
+        armorProf: { light: false, medium: false, heavy: false, shields: false },
+        weaponProf: 'Simple weapons',
+        skillChoices: 'Choose 2: Arcana, History, Insight, Investigation, Medicine, Nature, Religion',
+        desc: 'A scholarly mage who masters the arcane through study.',
+        source: 'PHB 2024',
+        subclassLevel: 3,
+        subclasses: [
+            { name: 'School of Abjuration', source: 'PHB 2024', desc: 'Protective wards and an arcane ward that absorbs damage.' },
+            { name: 'School of Divination', source: 'PHB 2024', desc: 'See the future with Portent — replace any d20 roll.' },
+            { name: 'School of Evocation', source: 'PHB 2024', desc: 'Sculpt devastating damage spells around your allies.' },
+            { name: 'School of Illusion', source: 'PHB 2024', desc: 'Create increasingly real illusions that deceive all senses.' },
+            { name: 'Bladesinging', source: 'TCoE', desc: 'Elven tradition blending swordplay and wizardry with AC and speed bonuses.' },
+            { name: 'Order of Scribes', source: 'TCoE', desc: 'Your spellbook is sentient — swap damage types and cast rituals faster.' },
+            { name: 'War Magic', source: 'XGtE', desc: 'Tactical wizard with power surges and boosted initiative/saves.' },
+            { name: 'Chronurgy Magic', source: 'EGtW', desc: 'Manipulate time — reroll initiative, freeze creatures, bottle spells.' },
+            { name: 'Graviturgy Magic', source: 'EGtW', desc: 'Control gravity to move creatures, alter weight, and create singularities.' },
+        ]
+    }
+];
+
+// ─────────────────────────────────────
+//  BACKGROUNDS (2024 PHB)
+// ─────────────────────────────────────
+
+const BACKGROUNDS = [
+    { name: 'Acolyte', skillProfs: ['Insight', 'Religion'], toolProf: "Calligrapher's Supplies", feat: 'Magic Initiate (Cleric)', desc: 'You spent years in service to a temple.', source: 'PHB 2024' },
+    { name: 'Artisan', skillProfs: ['Investigation', 'Persuasion'], toolProf: "Artisan's Tools (your choice)", feat: 'Crafter', desc: 'You trained under a master craftsperson.', source: 'PHB 2024' },
+    { name: 'Charlatan', skillProfs: ['Deception', 'Sleight of Hand'], toolProf: 'Forgery Kit', feat: 'Skilled', desc: 'You have always had a way with people.', source: 'PHB 2024' },
+    { name: 'Criminal', skillProfs: ['Sleight of Hand', 'Stealth'], toolProf: "Thieves' Tools", feat: 'Alert', desc: 'You have a history of breaking the law.', source: 'PHB 2024' },
+    { name: 'Entertainer', skillProfs: ['Acrobatics', 'Performance'], toolProf: 'Musical Instrument (your choice)', feat: 'Musician', desc: 'You thrive in front of an audience.', source: 'PHB 2024' },
+    { name: 'Farmer', skillProfs: ['Animal Handling', 'Nature'], toolProf: "Carpenter's Tools", feat: 'Tough', desc: 'You grew up working the land.', source: 'PHB 2024' },
+    { name: 'Guard', skillProfs: ['Athletics', 'Perception'], toolProf: 'Gaming Set (your choice)', feat: 'Alert', desc: 'You served as a protector of the people.', source: 'PHB 2024' },
+    { name: 'Guide', skillProfs: ['Stealth', 'Survival'], toolProf: "Cartographer's Tools", feat: 'Magic Initiate (Druid)', desc: 'You know the wilderness like the back of your hand.', source: 'PHB 2024' },
+    { name: 'Hermit', skillProfs: ['Medicine', 'Religion'], toolProf: "Herbalism Kit", feat: 'Healer', desc: 'You lived in seclusion for a formative period.', source: 'PHB 2024' },
+    { name: 'Merchant', skillProfs: ['Animal Handling', 'Persuasion'], toolProf: "Navigator's Tools", feat: 'Lucky', desc: 'You made your living trading goods.', source: 'PHB 2024' },
+    { name: 'Noble', skillProfs: ['History', 'Persuasion'], toolProf: 'Gaming Set (your choice)', feat: 'Skilled', desc: 'You were raised in privilege and authority.', source: 'PHB 2024' },
+    { name: 'Sage', skillProfs: ['Arcana', 'History'], toolProf: "Calligrapher's Supplies", feat: 'Magic Initiate (Wizard)', desc: 'You spent years learning the lore of the world.', source: 'PHB 2024' },
+    { name: 'Sailor', skillProfs: ['Acrobatics', 'Perception'], toolProf: "Navigator's Tools", feat: 'Tavern Brawler', desc: 'You sailed the seas for years.', source: 'PHB 2024' },
+    { name: 'Scribe', skillProfs: ['Investigation', 'Perception'], toolProf: "Calligrapher's Supplies", feat: 'Skilled', desc: 'You devoted yourself to recording knowledge.', source: 'PHB 2024' },
+    { name: 'Soldier', skillProfs: ['Athletics', 'Intimidation'], toolProf: 'Gaming Set (your choice)', feat: 'Savage Attacker', desc: 'You trained as a soldier in an army.', source: 'PHB 2024' },
+    { name: 'Wayfarer', skillProfs: ['Insight', 'Stealth'], toolProf: "Thieves' Tools", feat: 'Lucky', desc: 'You grew up on the streets, surviving by wit.', source: 'PHB 2024' },
+];
+
+// ─────────────────────────────────────
+//  CONSTANTS
+// ─────────────────────────────────────
+
+const ABILITIES = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
+const ABILITY_KEYS = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+const STANDARD_ARRAY = [15, 14, 13, 12, 10, 8];
+const POINT_BUY_COSTS = { 8:0, 9:1, 10:2, 11:3, 12:4, 13:5, 14:7, 15:9 };
+
+// ══════════════════════════════════════════
+//  CONSTANTS & STATE
+// ══════════════════════════════════════════
+const AB = ['STR','DEX','CON','INT','WIS','CHA'];
+const AK = ['str','dex','con','int','wis','cha'];
+const STD_ARRAY = [15,14,13,12,10,8];
+const PB_COST = {8:0,9:1,10:2,11:3,12:4,13:5,14:7,15:9};
+
+let currentStep = 1;
+let state = {
+    name:'', species:null, classChoice:null, subclass:null, level:1, alignment:'',
+    background:null, abilityMethod:'standard',
+    abilities:{str:10,dex:10,con:10,int:10,wis:10,cha:10},
+    arrayAssignments:{}, selectedChip:null,
+    speciesFilter:'All'
+};
+
+// ══════════════════════════════════════════
+//  NAVIGATION
+// ══════════════════════════════════════════
+function goToStep(step){
+    currentStep=step;
+    document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+    document.getElementById(`step-${step}`).classList.add('active');
+    document.querySelectorAll('.progress-step').forEach(ps=>{
+        const s=parseInt(ps.dataset.step);
+        ps.classList.remove('active','done');
+        ps.querySelector('.progress-dot').classList.remove('active','done');
+        if(s===step){ps.classList.add('active');ps.querySelector('.progress-dot').classList.add('active')}
+        else if(s<step){ps.classList.add('done');ps.querySelector('.progress-dot').classList.add('done')}
+    });
+    for(let i=1;i<5;i++){document.getElementById(`line-${i}-${i+1}`).classList.toggle('done',i<step)}
+    document.getElementById('btn-back').style.display=step===1?'none':'';
+    const btn=document.getElementById('btn-next');
+    if(step===5){btn.textContent='Create Character';btn.className='btn btn-create';btn.onclick=createCharacter;buildReview()}
+    else{btn.textContent='Continue';btn.className='btn btn-next';btn.onclick=nextStep}
+    if(step===4)initAbilityStep();
+    window.scrollTo({top:0,behavior:'smooth'});
+}
+function nextStep(){if(!validateStep(currentStep))return;saveStepData(currentStep);goToStep(currentStep+1)}
+function prevStep(){if(currentStep>1){saveStepData(currentStep);goToStep(currentStep-1)}}
+
+function validateStep(step){
+    if(step===1){
+        if(!document.getElementById('b-name').value.trim()){alert('Please enter a character name.');return false}
+        if(!state.species){alert('Please choose a species.');return false}
+        return true;
+    }
+    if(step===2){
+        if(!state.classChoice){alert('Please choose a class.');return false}
+        const lvl=parseInt(document.getElementById('b-level').value)||1;
+        if(lvl>=state.classChoice.subclassLevel&&!state.subclass){alert(`Please choose a subclass (required at level ${state.classChoice.subclassLevel}+).`);return false}
+        return true;
+    }
+    if(step===3){if(!state.background){alert('Please choose a background.');return false}return true}
+    if(step===4){
+        readAbilityScores();
+        const vals=Object.values(state.abilities);
+        if(vals.some(v=>isNaN(v)||v<1||v>30)){alert('All ability scores must be between 1 and 30.');return false}
+        if(state.abilityMethod==='standard'&&Object.keys(state.arrayAssignments).length<6){alert('Please assign all 6 scores.');return false}
+        if(state.abilityMethod==='pointbuy'&&calcPointsSpent()>27){alert('Too many points spent!');return false}
+        return true;
+    }
+    return true;
+}
+function saveStepData(step){
+    if(step===1)state.name=document.getElementById('b-name').value.trim();
+    if(step===2){state.level=parseInt(document.getElementById('b-level').value)||1;state.alignment=document.getElementById('b-alignment').value.trim()}
+    if(step===4)readAbilityScores();
+}
+
+// ══════════════════════════════════════════
+//  STEP 1: SPECIES
+// ══════════════════════════════════════════
+function getSpeciesSources(){
+    const s=new Set();SPECIES.forEach(sp=>s.add(sp.source));return['All',...Array.from(s)];
+}
+function renderSpeciesFilters(){
+    const c=document.getElementById('species-filters');
+    c.innerHTML=getSpeciesSources().map(s=>`<div class="filter-pill${s==='All'?' active':''}" onclick="setSpeciesFilter('${s}')">${s}</div>`).join('');
+}
+function setSpeciesFilter(f){
+    state.speciesFilter=f;
+    document.querySelectorAll('#species-filters .filter-pill').forEach(p=>p.classList.toggle('active',p.textContent===f));
+    filterSpecies();
+}
+function filterSpecies(){
+    const q=(document.getElementById('species-search').value||'').toLowerCase();
+    const f=state.speciesFilter;
+    let shown=0;
+    document.querySelectorAll('#species-cards .selection-card').forEach((card,i)=>{
+        const sp=SPECIES[i];
+        const matchQ=sp.name.toLowerCase().includes(q)||sp.desc.toLowerCase().includes(q)||(sp.source||'').toLowerCase().includes(q);
+        const matchF=f==='All'||sp.source===f;
+        const vis=matchQ&&matchF;
+        card.classList.toggle('hidden',!vis);
+        if(vis)shown++;
+    });
+    document.getElementById('species-count').textContent=`Showing ${shown} of ${SPECIES.length} species`;
+}
+function renderSpecies(){
+    const c=document.getElementById('species-cards');
+    c.innerHTML=SPECIES.map((sp,i)=>`
+        <div class="selection-card" onclick="selectSpecies(${i})" id="sp-${i}">
+            <div class="card-title">${sp.name}</div>
+            <div class="card-detail">${sp.desc}</div>
+            <div class="card-tags">
+                <span class="card-tag tag-stat">${sp.size} · ${sp.speed} ft.</span>
+                <span class="card-tag tag-source">${sp.source}</span>
+            </div>
+        </div>`).join('');
+    renderSpeciesFilters();
+    filterSpecies();
+}
+function selectSpecies(i){
+    state.species=SPECIES[i];
+    document.querySelectorAll('#species-cards .selection-card').forEach((c,j)=>c.classList.toggle('selected',j===i));
+    const sp=SPECIES[i];
+    document.getElementById('species-info').innerHTML=`<div class="info-panel"><h3>${sp.name} Traits <span style="font-size:11px;color:#8B4513;font-weight:400">(${sp.source})</span></h3>${sp.traits.map(t=>`<div class="trait">◆ ${t}</div>`).join('')}</div>`;
+}
+
+// ══════════════════════════════════════════
+//  STEP 2: CLASS & SUBCLASS
+// ══════════════════════════════════════════
+function renderClasses(){
+    document.getElementById('class-cards').innerHTML=CLASSES.map((cl,i)=>`
+        <div class="selection-card" onclick="selectClass(${i})" id="cl-${i}">
+            <div class="card-title">${cl.name}</div>
+            <div class="card-detail">${cl.desc}</div>
+            <div class="card-tags">
+                <span class="card-tag tag-stat">${cl.hitDie} · ${cl.primaryAbility}</span>
+                <span class="card-tag tag-source">${cl.source}</span>
+            </div>
+        </div>`).join('');
+}
+function selectClass(i){
+    state.classChoice=CLASSES[i];state.subclass=null;
+    document.querySelectorAll('#class-cards .selection-card').forEach((c,j)=>c.classList.toggle('selected',j===i));
+    const cl=CLASSES[i];
+    const armorList=[];
+    if(cl.armorProf.light)armorList.push('Light');if(cl.armorProf.medium)armorList.push('Medium');
+    if(cl.armorProf.heavy)armorList.push('Heavy');if(cl.armorProf.shields)armorList.push('Shields');
+    document.getElementById('class-info').innerHTML=`<div class="info-panel"><h3>${cl.name}</h3>
+        <div class="trait"><strong>Hit Die:</strong> ${cl.hitDie}</div>
+        <div class="trait"><strong>Primary Ability:</strong> ${cl.primaryAbility}</div>
+        <div class="trait"><strong>Saving Throws:</strong> ${cl.savingThrows.map(s=>s.toUpperCase()).join(', ')}</div>
+        <div class="trait"><strong>Armor:</strong> ${armorList.length?armorList.join(', '):'None'}</div>
+        <div class="trait"><strong>Weapons:</strong> ${cl.weaponProf}</div>
+        <div class="trait"><strong>Skills:</strong> ${cl.skillChoices}</div></div>`;
+    renderSubclasses();
+}
+function renderSubclasses(){
+    const cl=state.classChoice;if(!cl)return;
+    const lvl=parseInt(document.getElementById('b-level').value)||1;
+    const area=document.getElementById('subclass-area');
+    if(lvl<cl.subclassLevel){
+        area.innerHTML=`<div class="warning-box" style="margin-top:16px">Subclass selection unlocks at level ${cl.subclassLevel}. Set your starting level to ${cl.subclassLevel}+ to choose a subclass.</div>`;
+        return;
+    }
+    area.innerHTML=`<div class="subclass-section"><h4>Choose ${cl.name} Subclass (Level ${cl.subclassLevel}+)</h4>
+        <div class="subclass-grid">${cl.subclasses.map((sc,j)=>`
+            <div class="subclass-card" onclick="selectSubclass(${j})" id="sc-${j}">
+                <div class="sc-name">${sc.name}</div>
+                <div class="sc-desc">${sc.desc}</div>
+                <div class="sc-source">${sc.source}</div>
+            </div>`).join('')}
+        </div></div>`;
+    if(state.subclass){
+        const idx=cl.subclasses.findIndex(s=>s.name===state.subclass.name);
+        if(idx>=0)document.getElementById(`sc-${idx}`).classList.add('selected');
+    }
+}
+function selectSubclass(j){
+    state.subclass=state.classChoice.subclasses[j];
+    document.querySelectorAll('.subclass-card').forEach((c,k)=>c.classList.toggle('selected',k===j));
+}
+function onLevelChange(){if(state.classChoice)renderSubclasses()}
+
+// ══════════════════════════════════════════
+//  STEP 3: BACKGROUND
+// ══════════════════════════════════════════
+function renderBackgrounds(){
+    document.getElementById('background-cards').innerHTML=BACKGROUNDS.map((bg,i)=>`
+        <div class="selection-card" onclick="selectBackground(${i})" id="bg-${i}">
+            <div class="card-title">${bg.name}</div>
+            <div class="card-detail">${bg.desc}</div>
+            <div class="card-tags"><span class="card-tag tag-stat">${bg.feat}</span></div>
+        </div>`).join('');
+}
+function selectBackground(i){
+    state.background=BACKGROUNDS[i];
+    document.querySelectorAll('#background-cards .selection-card').forEach((c,j)=>c.classList.toggle('selected',j===i));
+    const bg=BACKGROUNDS[i];
+    document.getElementById('background-info').innerHTML=`<div class="info-panel"><h3>${bg.name}</h3>
+        <div class="trait"><strong>Skill Proficiencies:</strong> ${bg.skillProfs.join(', ')}</div>
+        <div class="trait"><strong>Tool Proficiency:</strong> ${bg.toolProf}</div>
+        <div class="trait"><strong>Origin Feat:</strong> ${bg.feat}</div></div>`;
+}
+
+// ══════════════════════════════════════════
+//  STEP 4: ABILITY SCORES
+// ══════════════════════════════════════════
+function calcMod(s){return Math.floor((s-10)/2)}
+function fmtMod(m){return m>=0?`+${m}`:`${m}`}
+
+function setAbilityMethod(m){
+    state.abilityMethod=m;
+    document.querySelectorAll('.method-tab').forEach(t=>t.classList.toggle('active',t.dataset.method===m));
+    document.getElementById('method-standard').style.display=m==='standard'?'':'none';
+    document.getElementById('method-pointbuy').style.display=m==='pointbuy'?'':'none';
+    document.getElementById('method-manual').style.display=m==='manual'?'':'none';
+    initAbilityStep();
+}
+function initAbilityStep(){
+    if(state.abilityMethod==='standard')initStdArray();
+    else if(state.abilityMethod==='pointbuy')initPB();
+    else initManual();
+}
+
+// Standard Array
+function initStdArray(){
+    state.selectedChip=null;
+    const assigned=Object.values(state.arrayAssignments);
+    const avail=[...STD_ARRAY];
+    assigned.forEach(v=>{const i=avail.indexOf(v);if(i>-1)avail.splice(i,1)});
+    document.getElementById('array-pool').innerHTML=avail.map(v=>`<div class="array-chip" onclick="tapChip(${v},this)">${v}</div>`).join('');
+    document.getElementById('array-abilities').innerHTML=AB.map((ab,i)=>{
+        const k=AK[i],a=state.arrayAssignments[k];
+        return `<div class="ability-box" onclick="tapSlot('${k}')">
+            <div class="ab-label">${ab}</div>
+            <div class="ability-drop">${a!=null?`<div class="array-chip" onclick="event.stopPropagation();unassign('${k}')">${a}</div>`:'<span style="color:#bbb;font-size:13px">—</span>'}</div>
+            <div class="ab-mod">${a!=null?fmtMod(calcMod(a)):''}</div></div>`;
+    }).join('');
+}
+function tapChip(v,el){
+    document.querySelectorAll('#array-pool .array-chip').forEach(c=>c.classList.remove('selected-chip'));
+    el.classList.add('selected-chip');state.selectedChip=v;
+}
+function tapSlot(k){
+    if(state.selectedChip!=null){
+        if(state.arrayAssignments[k]!=null)delete state.arrayAssignments[k];
+        state.arrayAssignments[k]=state.selectedChip;state.selectedChip=null;initStdArray();
+    }else if(state.arrayAssignments[k]!=null)unassign(k);
+}
+function unassign(k){delete state.arrayAssignments[k];state.selectedChip=null;initStdArray()}
+
+// Point Buy
+function initPB(){
+    document.getElementById('pointbuy-abilities').innerHTML=AB.map((ab,i)=>{
+        const k=AK[i],v=state.abilities[k]||8;
+        return `<div class="ability-box"><div class="ab-label">${ab}</div>
+            <div style="display:flex;align-items:center;justify-content:center;gap:6px">
+                <button onclick="pbAdj('${k}',-1)" style="width:30px;height:30px;border:1px solid #c9a77c;border-radius:4px;background:#f5ede0;font-size:18px;font-weight:bold;cursor:pointer;color:#5a1a1a">−</button>
+                <input type="number" id="pb-${k}" value="${v}" min="8" max="15" readonly style="width:48px;padding:6px 2px;text-align:center;font-size:20px;font-weight:bold;border:2px solid #ddd;border-radius:4px;background:white;font-family:'Crimson Text',serif">
+                <button onclick="pbAdj('${k}',1)" style="width:30px;height:30px;border:1px solid #c9a77c;border-radius:4px;background:#f5ede0;font-size:18px;font-weight:bold;cursor:pointer;color:#5a1a1a">+</button>
+            </div><div class="ab-mod" id="pb-mod-${k}">${fmtMod(calcMod(v))}</div></div>`;
+    }).join('');
+    updatePBDisplay();
+}
+function pbAdj(k,d){
+    const inp=document.getElementById(`pb-${k}`);
+    let v=Math.max(8,Math.min(15,(parseInt(inp.value)||8)+d));
+    inp.value=v;state.abilities[k]=v;
+    document.getElementById(`pb-mod-${k}`).textContent=fmtMod(calcMod(v));
+    updatePBDisplay();
+}
+function calcPointsSpent(){
+    let t=0;AK.forEach(k=>{const v=state.abilities[k]||8;t+=PB_COST[Math.max(8,Math.min(15,v))]||0});return t;
+}
+function updatePBDisplay(){
+    AK.forEach(k=>{const inp=document.getElementById(`pb-${k}`);if(inp)state.abilities[k]=parseInt(inp.value)||8});
+    const r=27-calcPointsSpent();
+    document.getElementById('pts-remaining').textContent=r;
+    document.getElementById('points-display').classList.toggle('over-budget',r<0);
+}
+
+// Manual
+function initManual(){
+    document.getElementById('manual-abilities').innerHTML=AB.map((ab,i)=>{
+        const k=AK[i],v=state.abilities[k]||10;
+        return `<div class="ability-box"><div class="ab-label">${ab}</div>
+            <input type="number" id="man-${k}" value="${v}" min="1" max="30" oninput="document.getElementById('man-mod-${k}').textContent=fmtMod(calcMod(parseInt(this.value)||10))">
+            <div class="ab-mod" id="man-mod-${k}">${fmtMod(calcMod(v))}</div></div>`;
+    }).join('');
+}
+
+function readAbilityScores(){
+    if(state.abilityMethod==='standard'){AK.forEach(k=>{state.abilities[k]=state.arrayAssignments[k]||10})}
+    else if(state.abilityMethod==='pointbuy'){AK.forEach(k=>{const i=document.getElementById(`pb-${k}`);state.abilities[k]=i?parseInt(i.value)||8:(state.abilities[k]||8)})}
+    else{AK.forEach(k=>{const i=document.getElementById(`man-${k}`);state.abilities[k]=i?parseInt(i.value)||10:(state.abilities[k]||10)})}
+}
+
+// ══════════════════════════════════════════
+//  STEP 5: REVIEW
+// ══════════════════════════════════════════
+function buildReview(){
+    const sp=state.species,cl=state.classChoice,bg=state.background,lvl=state.level;
+    const pb=Math.ceil(lvl/4)+1;
+    const hd=parseInt(cl.hitDie.replace('d',''));
+    const conMod=calcMod(state.abilities.con);
+    const maxHP=hd+conMod+((lvl-1)*(Math.floor(hd/2)+1+conMod));
+    const scName=state.subclass?state.subclass.name:'None (below subclass level)';
+
+    document.getElementById('review-content').innerHTML=`
+        <div class="review-section"><h3>Identity</h3>
+            <div class="review-row"><span class="rlabel">Name</span><span class="rvalue">${state.name}</span></div>
+            <div class="review-row"><span class="rlabel">Species</span><span class="rvalue">${sp.name} <small style="color:#8B4513">(${sp.source})</small></span></div>
+            <div class="review-row"><span class="rlabel">Size / Speed</span><span class="rvalue">${sp.size} · ${sp.speed} ft.</span></div>
+            ${state.alignment?`<div class="review-row"><span class="rlabel">Alignment</span><span class="rvalue">${state.alignment}</span></div>`:''}</div>
+        <div class="review-section"><h3>Class</h3>
+            <div class="review-row"><span class="rlabel">Class</span><span class="rvalue">${cl.name}</span></div>
+            <div class="review-row"><span class="rlabel">Subclass</span><span class="rvalue">${scName}</span></div>
+            <div class="review-row"><span class="rlabel">Level</span><span class="rvalue">${lvl}</span></div>
+            <div class="review-row"><span class="rlabel">Hit Die / HP</span><span class="rvalue">${cl.hitDie} · ${maxHP} HP</span></div>
+            <div class="review-row"><span class="rlabel">Proficiency Bonus</span><span class="rvalue">+${pb}</span></div>
+            <div class="review-row"><span class="rlabel">Saving Throws</span><span class="rvalue">${cl.savingThrows.map(s=>s.toUpperCase()).join(', ')}</span></div></div>
+        <div class="review-section"><h3>Background</h3>
+            <div class="review-row"><span class="rlabel">Background</span><span class="rvalue">${bg.name}</span></div>
+            <div class="review-row"><span class="rlabel">Skills</span><span class="rvalue">${bg.skillProfs.join(', ')}</span></div>
+            <div class="review-row"><span class="rlabel">Tool</span><span class="rvalue">${bg.toolProf}</span></div>
+            <div class="review-row"><span class="rlabel">Origin Feat</span><span class="rvalue">${bg.feat}</span></div></div>
+        <div class="review-section"><h3>Ability Scores</h3>
+            <div class="review-abilities">${AB.map((ab,i)=>{
+                const s=state.abilities[AK[i]];
+                return `<div class="review-ab"><div class="ab-name">${ab}</div><div class="ab-score">${s}</div><div class="ab-modifier">${fmtMod(calcMod(s))}</div></div>`;
+            }).join('')}</div></div>
+        <div class="review-section"><h3>Species Traits</h3><ul class="review-traits">${sp.traits.map(t=>`<li>${t}</li>`).join('')}</ul></div>`;
+}
+
+// ══════════════════════════════════════════
+//  CREATE CHARACTER
+// ══════════════════════════════════════════
+function createCharacter(){
+    const sp=state.species,cl=state.classChoice,bg=state.background,lvl=state.level;
+    const hd=parseInt(cl.hitDie.replace('d',''));
+    const conMod=calcMod(state.abilities.con);
+    const maxHP=hd+conMod+((lvl-1)*(Math.floor(hd/2)+1+conMod));
+    const pb=Math.ceil(lvl/4)+1;
+    const wisMod=calcMod(state.abilities.wis);
+
+    const skillMap={'Acrobatics':0,'Animal Handling':1,'Arcana':2,'Athletics':3,'Deception':4,'History':5,'Insight':6,'Intimidation':7,'Investigation':8,'Medicine':9,'Nature':10,'Perception':11,'Performance':12,'Persuasion':13,'Religion':14,'Sleight of Hand':15,'Stealth':16,'Survival':17};
+    const profSkills=new Set();
+    bg.skillProfs.forEach(s=>{if(skillMap[s]!==undefined)profSkills.add(String(skillMap[s]))});
+    const percProf=profSkills.has('11');
+    const passivePerception=10+wisMod+(percProf?pb:0);
+
+    const scName=state.subclass?state.subclass.name:'';
+    const notesLines=[
+        `Species: ${sp.name} (${sp.source})`,
+        `Traits: ${sp.traits.join('; ')}`,
+        '',
+        `Background: ${bg.name}`,
+        `Origin Feat: ${bg.feat}`,
+        '',
+        `Class: ${cl.name}${scName?' — '+scName:''}`,
+        `Skills: ${cl.skillChoices}`,
+    ];
+
+    const character={
+        name:state.name, species:sp.name, class:cl.name, subclass:scName,
+        background:bg.name, alignment:state.alignment, level:String(lvl), xp:'0', size:sp.size,
+        abilities:{str:String(state.abilities.str),dex:String(state.abilities.dex),con:String(state.abilities.con),int:String(state.abilities.int),wis:String(state.abilities.wis),cha:String(state.abilities.cha)},
+        combat:{currentHP:String(maxHP),maxHP:String(maxHP),tempHP:'0',hitDiceType:`1${cl.hitDie}`,currentHitDice:String(lvl),exhaustion:0,inspiration:false,acOverride:'',initiativeOverride:'',speedOverride:String(sp.speed),passivePerceptionOverride:''},
+        deathSaves:{successes:[false,false,false],failures:[false,false,false]},
+        proficiencies:{
+            saves:AK.map(ab=>({ability:ab,proficient:cl.savingThrows.includes(ab)})),
+            skills:Array.from({length:18},(_,i)=>({index:String(i),proficient:profSkills.has(String(i))})),
+            armor:{light:cl.armorProf.light,medium:cl.armorProf.medium,heavy:cl.armorProf.heavy,shields:cl.armorProf.shields},
+            weapons:cl.weaponProf, tools:bg.toolProf, languages:'Common'
+        },
+        coins:{cp:'0',sp:'0',ep:'0',gp:'0',pp:'0'},
+        conditions:['blinded','charmed','deafened','frightened','grappled','incapacitated','invisible','paralyzed','petrified','poisoned','prone','restrained','stunned','unconscious'].map(c=>({condition:c,active:false})),
+        notes:notesLines.join('\n')
+    };
+
+    localStorage.setItem('dndCharacter',JSON.stringify(character));
+
+    const overlay=document.createElement('div');
+    overlay.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px';
+    overlay.innerHTML=`<div style="background:linear-gradient(to bottom,#faf7f2,#f5f0e8);border:2px solid #8B4513;border-radius:12px;padding:30px;max-width:400px;width:100%;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.3)">
+        <div style="font-family:'Cinzel',serif;font-size:24px;color:#5a1a1a;font-weight:700;margin-bottom:10px">Character Created!</div>
+        <div style="font-size:16px;color:#666;margin-bottom:4px">${state.name}</div>
+        <div style="font-size:14px;color:#888;margin-bottom:24px">Level ${lvl} ${sp.name} ${cl.name}${scName?' — '+scName:''}</div>
+        <a href="dnd-sheet.html" style="display:block;padding:14px;background:linear-gradient(135deg,#4a7c59,#2d5016);color:#faf7f2;border:2px solid #2d5016;border-radius:8px;font-family:'Cinzel',serif;font-size:16px;font-weight:600;text-decoration:none;letter-spacing:1px;margin-bottom:12px;box-shadow:0 3px 8px rgba(45,80,22,.3)">Open Character Sheet</a>
+        <div style="font-size:12px;color:#999;margin-top:8px">Saved to localStorage — loads automatically in the sheet.</div></div>`;
+    document.body.appendChild(overlay);
+}
+
+// ══════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════
+renderSpecies();
+renderClasses();
+renderBackgrounds();
+</script>
+</body>
+</html>
