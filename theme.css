@@ -1,0 +1,110 @@
+/* ═══════════════════════════════════════════════════════════════════
+   CHRONICLE THEME
+   Shared fonts, colors, parchment aesthetic, base reset
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────────────────────────
+   FONTS
+   ───────────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+/* ─────────────────────────────────────────────────────────────────
+   RESET
+   ───────────────────────────────────────────────────────────────── */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   ROOT VARIABLES
+   ───────────────────────────────────────────────────────────────── */
+:root {
+    /* Colors */
+    --parchment-light: #faf7f2;
+    --parchment-mid: #f5f0e8;
+    --parchment-dark: #ede0d0;
+    --parchment-darker: #f4e8d8;
+    
+    --brown-dark: #5a1a1a;
+    --brown-primary: #8B4513;
+    --brown-light: #c9a77c;
+    --brown-darker: #5a2d0d;
+    
+    --green-dark: #2d5016;
+    --green-primary: #4a7c59;
+    
+    --blue-dark: #1e3a8a;
+    --blue-primary: #1e40af;
+    
+    --red-dark: #8B0000;
+    
+    --cream: #fff8dc;
+    --cream-light: #f5e6c8;
+    
+    /* Typography */
+    --font-heading: 'Cinzel', serif;
+    --font-body: 'Crimson Text', Georgia, serif;
+    
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 20px;
+    --spacing-xl: 30px;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   BODY BASE
+   ───────────────────────────────────────────────────────────────── */
+body {
+    font-family: var(--font-body);
+    background: linear-gradient(to bottom, var(--parchment-darker) 0%, var(--parchment-dark) 100%);
+    background-image: 
+        linear-gradient(to bottom, var(--parchment-darker) 0%, var(--parchment-dark) 100%),
+        repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(139, 69, 19, 0.03) 2px, rgba(139, 69, 19, 0.03) 4px),
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(139, 69, 19, 0.03) 2px, rgba(139, 69, 19, 0.03) 4px);
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   TYPOGRAPHY
+   ───────────────────────────────────────────────────────────────── */
+h1 {
+    font-family: var(--font-heading);
+    color: var(--brown-dark);
+    margin-bottom: 30px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 36px;
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    padding-bottom: 20px;
+    border-bottom: 3px double var(--brown-primary);
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   INPUT NORMALIZATION
+   ───────────────────────────────────────────────────────────────── */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   MOBILE TOUCH TARGETS
+   ───────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+    input, select, textarea, button {
+        font-size: 16px; /* Prevents iOS zoom */
+    }
+}
