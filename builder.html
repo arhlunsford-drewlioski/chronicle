@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chronicle – Character Builder</title>
-    <link rel="stylesheet" href="css/theme.css">
-    <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/builder.css">
-</head>
+    <title>Chronicle â€“ Character Builder</title>
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="builder.css">
 </head>
 <body>
 <div class="sheet">
@@ -100,22 +99,22 @@
 </div>
 
 <script>
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-//  CHRONICLE â€” COMPLETE D&D 5E DATA
+// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+//  CHRONICLE Ã¢â‚¬â€ COMPLETE D&D 5E DATA
 //  Sources: 2024 PHB (default), 2024 DMG, 2024 MM,
 //  XGtE, TCoE, FToD, MotM, MOoT, SCoC, EGtW,
 //  Spelljammer, Deck of Many Things, Tortle Package,
-//  Heroes of FaerÃ»n
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+//  Heroes of FaerÃƒÂ»n
+// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 //  SPECIES
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 
 const SPECIES = [
-    // â”€â”€ 2024 PHB â”€â”€
+    // Ã¢â€â‚¬Ã¢â€â‚¬ 2024 PHB Ã¢â€â‚¬Ã¢â€â‚¬
     { name: 'Aasimar', source: 'PHB 2024', size: 'Medium', speed: 30,
-      traits: ['Darkvision (60 ft.)','Celestial Resistance: Resistance to Necrotic and Radiant damage.','Healing Hands: Heal PB Ã— d4 HP as an action, once per Long Rest.','Light Bearer: You know the Light cantrip.','Celestial Revelation (3rd level): Choose Heavenly Wings, Inner Radiance, or Necrotic Shroud transformation once per Long Rest.'],
+      traits: ['Darkvision (60 ft.)','Celestial Resistance: Resistance to Necrotic and Radiant damage.','Healing Hands: Heal PB Ãƒâ€” d4 HP as an action, once per Long Rest.','Light Bearer: You know the Light cantrip.','Celestial Revelation (3rd level): Choose Heavenly Wings, Inner Radiance, or Necrotic Shroud transformation once per Long Rest.'],
       desc: 'Blessed with a celestial spark, agents of light and mercy.' },
     { name: 'Dragonborn', source: 'PHB 2024', size: 'Medium', speed: 30,
       traits: ['Darkvision (60 ft.)','Draconic Ancestry: Choose a dragon type for damage resistance and breath weapon type.','Breath Weapon: 15-ft. cone or 30-ft. line, DEX or CON save, PB uses per Long Rest. Damage scales: 1d10 at 1st, 2d10 at 5th, 3d10 at 11th, 4d10 at 17th.','Damage Resistance: Resistance to your ancestry damage type.','Draconic Flight (5th level): Sprout spectral wings, fly speed = Speed for 10 min, once per Long Rest.'],
@@ -130,7 +129,7 @@ const SPECIES = [
       traits: ['Darkvision (60 ft.)','Gnomish Cunning: Advantage on INT, WIS, and CHA saving throws.','Gnomish Lineage: Choose Forest Gnome (Minor Illusion + Speak with Small Beasts) or Rock Gnome (Mending + Tinker).'],
       desc: 'Curious and inventive, brimming with arcane energy.' },
     { name: 'Goliath', source: 'PHB 2024', size: 'Medium', speed: 35,
-      traits: ['Giant Ancestry: Choose Cloud (use Misty Step PB/LR), Fire (fire retaliation PB/LR), Frost (cold resistance + cold retaliation), Hill (Bulwark â€” resist push/knock prone), Stone (endurance â€” reduce damage PB/LR), or Storm (Tempestuous â€” bonus action 10ft fly).','Large Form: Powerful Build (count as Large for carry/push/lift). Advantage on checks/saves to avoid grapple or being knocked prone.'],
+      traits: ['Giant Ancestry: Choose Cloud (use Misty Step PB/LR), Fire (fire retaliation PB/LR), Frost (cold resistance + cold retaliation), Hill (Bulwark Ã¢â‚¬â€ resist push/knock prone), Stone (endurance Ã¢â‚¬â€ reduce damage PB/LR), or Storm (Tempestuous Ã¢â‚¬â€ bonus action 10ft fly).','Large Form: Powerful Build (count as Large for carry/push/lift). Advantage on checks/saves to avoid grapple or being knocked prone.'],
       desc: 'Towering and competitive, born of giant-kin.' },
     { name: 'Halfling', source: 'PHB 2024', size: 'Small', speed: 30,
       traits: ['Brave: Advantage on saves vs. Frightened condition.','Halfling Nimbleness: Move through the space of any creature of a size larger than yours.','Luck: When you roll a 1 on a d20 Test, reroll and use new result.','Naturally Stealthy: You can Hide behind a creature at least one size larger than you.'],
@@ -142,10 +141,10 @@ const SPECIES = [
       traits: ['Darkvision (120 ft.)','Adrenaline Rush: Bonus Action Dash and gain Temp HP equal to PB, usable PB times per Long Rest.','Relentless Endurance: When reduced to 0 HP but not killed outright, drop to 1 HP instead, once per Long Rest.'],
       desc: 'Powerful and enduring, driven by primal strength.' },
     { name: 'Tiefling', source: 'PHB 2024', size: 'Medium', speed: 30,
-      traits: ['Darkvision (60 ft.)','Fiendish Legacy: Choose Abyssal (Poison Spray â†’ Ray of Sickness â†’ Hold Person), Chthonic (Chill Touch â†’ False Life â†’ Ray of Enfeeblement), or Infernal (Fire Bolt â†’ Hellish Rebuke â†’ Darkness).','Otherworldly Presence: You know the Thaumaturgy cantrip.'],
+      traits: ['Darkvision (60 ft.)','Fiendish Legacy: Choose Abyssal (Poison Spray Ã¢â€ â€™ Ray of Sickness Ã¢â€ â€™ Hold Person), Chthonic (Chill Touch Ã¢â€ â€™ False Life Ã¢â€ â€™ Ray of Enfeeblement), or Infernal (Fire Bolt Ã¢â€ â€™ Hellish Rebuke Ã¢â€ â€™ Darkness).','Otherworldly Presence: You know the Thaumaturgy cantrip.'],
       desc: 'Touched by the Lower Planes, bearing an infernal heritage.' },
 
-    // â”€â”€ Mordenkainen Presents: Monsters of the Multiverse â”€â”€
+    // Ã¢â€â‚¬Ã¢â€â‚¬ Mordenkainen Presents: Monsters of the Multiverse Ã¢â€â‚¬Ã¢â€â‚¬
     { name: 'Aarakocra', source: 'MotM', size: 'Medium', speed: 30,
       traits: ['Flight: Fly speed equal to walking speed (no medium/heavy armor).','Talons: Unarmed strikes deal 1d6 slashing.','Wind Caller: You can cast Gust of Wind (PB/LR) with this trait, using a spell slot after 3rd level.'],
       desc: 'Bird-like humanoids from the Elemental Plane of Air.' },
@@ -195,7 +194,7 @@ const SPECIES = [
       traits: ['Darkvision (60 ft.)','Fey Ancestry: Advantage on saves vs. Charmed, magic can\'t put you to sleep.','Fury of the Small: Extra damage equal to PB on one attack per turn against larger creatures (PB/LR).','Nimble Escape: Disengage or Hide as a Bonus Action.'],
       desc: 'Clever and resourceful fey creatures, small but fierce.' },
     { name: 'Harengon', source: 'MotM', size: 'Small or Medium', speed: 30,
-      traits: ['Hare-Trigger: Add PB to Initiative rolls.','Leporine Senses: Proficiency in Perception.','Lucky Footwork: When you fail a DEX save, use reaction to add 1d4 to the save.','Rabbit Hop: Bonus Action jump (5 Ã— PB ft.) without provoking opportunity attacks, PB uses per Long Rest.'],
+      traits: ['Hare-Trigger: Add PB to Initiative rolls.','Leporine Senses: Proficiency in Perception.','Lucky Footwork: When you fail a DEX save, use reaction to add 1d4 to the save.','Rabbit Hop: Bonus Action jump (5 Ãƒâ€” PB ft.) without provoking opportunity attacks, PB uses per Long Rest.'],
       desc: 'Rabbit-folk known for quick reflexes and lucky feet.' },
     { name: 'Hobgoblin', source: 'MotM', size: 'Medium', speed: 30,
       traits: ['Darkvision (60 ft.)','Fey Ancestry: Advantage on saves vs. Charmed, magic can\'t put you to sleep.','Fey Gift: When you use the Help action, you or the target gain Temp HP equal to PB. Also choose a bonus: speed +10, or advantage on next attack, or bonus to next save.','Fortune from the Many: When you miss an attack or fail a save, gain bonus equal to number of allies within 30 ft. (max +3), PB/LR.'],
@@ -240,7 +239,7 @@ const SPECIES = [
       traits: ['Darkvision (60 ft.)','Magic Resistance: Advantage on saving throws vs. spells.','Poison Resilience: Resistance to Poison damage, advantage on saves vs. Poisoned.','Serpentine Spellcasting: You know Poison Spray cantrip. At 3rd level: Suggestion (PB/LR). Cast with INT, WIS, or CHA.'],
       desc: 'Serpentine beings with innate magic resistance.' },
 
-    // â”€â”€ Spelljammer: Adventures in Space â”€â”€
+    // Ã¢â€â‚¬Ã¢â€â‚¬ Spelljammer: Adventures in Space Ã¢â€â‚¬Ã¢â€â‚¬
     { name: 'Astral Elf', source: 'Spelljammer', size: 'Medium', speed: 30,
       traits: ['Darkvision (60 ft.)','Astral Fire: You know Sacred Flame or Dancing Lights cantrip (INT, WIS, or CHA casting).','Fey Ancestry: Advantage on saves vs. Charmed, magic can\'t put you to sleep.','Keen Senses: Proficiency in Perception.','Starlight Step: Bonus Action teleport 30 ft. to unoccupied space you can see (PB/LR).','Astral Trance: 4-hour long rest with proficiency in one weapon or tool until next trance.','Radiant Soul: When you succeed on a death save, regain 1d4 + PB HP (1/LR) and a free Starlight Step.'],
       desc: 'Elves who dwell in the Astral Sea, suffused with starlight.' },
@@ -251,16 +250,16 @@ const SPECIES = [
       traits: ['Astral Spark: Extra force damage (PB/LR) on one hit per turn equal to PB.','Firearms Mastery: Ignore loading property of firearms, no disadvantage on attacks in melee.','Hippo Build: Advantage on STR checks/saves. Count as Large for carry/push/lift.','Swim speed equal to walking speed.'],
       desc: 'Hippo-headed spacefaring militarists with explosive flair.' },
     { name: 'Hadozee', source: 'Spelljammer', size: 'Small or Medium', speed: 30,
-      traits: ['Dexterous Feet: Can use feet as hands with a free object interaction.','Glide: Reduce fall speed, glide horizontally. Reaction to reduce falling damage by 1d6 Ã— PB.','Hadozee Resilience: As a reaction, reduce non-psychic damage by 1d6 + PB (PB/LR).'],
+      traits: ['Dexterous Feet: Can use feet as hands with a free object interaction.','Glide: Reduce fall speed, glide horizontally. Reaction to reduce falling damage by 1d6 Ãƒâ€” PB.','Hadozee Resilience: As a reaction, reduce non-psychic damage by 1d6 + PB (PB/LR).'],
       desc: 'Simian spacefarers with wing-like membranes for gliding.' },
     { name: 'Plasmoid', source: 'Spelljammer', size: 'Small or Medium', speed: 30,
-      traits: ['Ooze: Creature type is Ooze. Amorphous â€” squeeze through 1-inch spaces. Hold Breath 1 hour.','Darkvision (60 ft.)','Natural Resilience: Resistance to Acid and Poison damage. Advantage on saves vs. Poisoned.','Shape Self: Reshape body as an action to form pseudopods. Can have 1 extra pseudopod at a time.'],
+      traits: ['Ooze: Creature type is Ooze. Amorphous Ã¢â‚¬â€ squeeze through 1-inch spaces. Hold Breath 1 hour.','Darkvision (60 ft.)','Natural Resilience: Resistance to Acid and Poison damage. Advantage on saves vs. Poisoned.','Shape Self: Reshape body as an action to form pseudopods. Can have 1 extra pseudopod at a time.'],
       desc: 'Sentient ooze-beings that can reshape their amorphous bodies.' },
     { name: 'Thri-kreen', source: 'Spelljammer', size: 'Small or Medium', speed: 30,
       traits: ['Monstrosity: Creature type is Monstrosity.','Chameleon Carapace: AC = 13 + DEX when not wearing armor. As an action, change color for advantage on Stealth checks, concentration up to 1 hour.','Darkvision (60 ft.)','Secondary Arms: Two secondary arms for light objects, simple tasks, light weapons (no two-handed or heavy).','Sleepless: Don\'t need sleep, can\'t be put to sleep by magic. Long rest = 4 hours of inactivity.','Thri-kreen Telepathy: Telepathy 120 ft., must share a language.'],
       desc: 'Insectoid hunters with four arms and alien minds.' },
 
-    // â”€â”€ Mythic Odysseys of Theros â”€â”€
+    // Ã¢â€â‚¬Ã¢â€â‚¬ Mythic Odysseys of Theros Ã¢â€â‚¬Ã¢â€â‚¬
     { name: 'Leonin', source: 'MOoT', size: 'Medium', speed: 35,
       traits: ['Darkvision (60 ft.)','Claws: Unarmed strikes deal 1d6 slashing.','Hunter\'s Instincts: Proficiency in one of Athletics, Intimidation, Perception, or Survival.','Daunting Roar: As a Bonus Action, creatures of your choice within 10 ft. must WIS save or be frightened until end of your next turn. PB/LR.'],
       desc: 'Lion-like warriors from the golden savannahs of Theros.' },
@@ -268,12 +267,12 @@ const SPECIES = [
       traits: ['Fey: Creature type is Fey.','Magic Resistance: Advantage on saves vs. spells.','Mirthful Leaps: Add 1d8 to long/high jump distance.','Ram: Unarmed strikes deal 1d6 bludgeoning.','Reveler: Proficiency in Performance and Persuasion.'],
       desc: 'Fey revelers of Theros who live for celebration. (Use MotM Satyr unless Theros-specific preferred.)' },
 
-    // â”€â”€ Strixhaven â”€â”€
+    // Ã¢â€â‚¬Ã¢â€â‚¬ Strixhaven Ã¢â€â‚¬Ã¢â€â‚¬
     { name: 'Owlin (Strixhaven)', source: 'SCoC', size: 'Small or Medium', speed: 30,
       traits: ['Darkvision (120 ft.)','Flight: Fly speed equal to walking speed (no medium/heavy armor).','Silent Feathers: Proficiency in Stealth.'],
-      desc: 'Owl-folk of Strixhaven. (Use MotM version â€” identical stats.)' },
+      desc: 'Owl-folk of Strixhaven. (Use MotM version Ã¢â‚¬â€ identical stats.)' },
 
-    // â”€â”€ Explorer\'s Guide to Wildemount â”€â”€
+    // Ã¢â€â‚¬Ã¢â€â‚¬ Explorer\'s Guide to Wildemount Ã¢â€â‚¬Ã¢â€â‚¬
     { name: 'Lotusden Halfling', source: 'EGtW', size: 'Small', speed: 25,
       traits: ['Brave: Advantage on saves vs. Frightened.','Halfling Nimbleness: Move through space of larger creatures.','Luck: Reroll 1s on d20 Tests.','Child of the Wood: You know Druidcraft. At 3rd: Entangle (1/LR). At 5th: Spike Growth (1/LR). WIS is spellcasting ability.','Timberwalk: Move through nonmagical difficult terrain (plants) without extra movement.'],
       desc: 'Halflings rooted in the primal forests of Wildemount.' },
@@ -287,7 +286,7 @@ const SPECIES = [
       traits: ['Draconic Ancestry: Choose a dragon type for damage resistance.','Breath Weapon: 15-ft. cone or 30-ft. line, DC = 8 + CON + PB, 2d6 damage (scales).','Darkvision (60 ft.)','Vengeful Assault: When damaged by a creature within range, use reaction to make an attack against them. 1/SR or LR.'],
       desc: 'Dragonborn of Wildemount tempered by oppression and fury.' },
 
-    // â”€â”€ Fizban\'s Treasury of Dragons â”€â”€
+    // Ã¢â€â‚¬Ã¢â€â‚¬ Fizban\'s Treasury of Dragons Ã¢â€â‚¬Ã¢â€â‚¬
     { name: 'Chromatic Dragonborn', source: 'FToD', size: 'Medium', speed: 30,
       traits: ['Chromatic Ancestry: Choose Black (Acid), Blue (Lightning), Green (Poison), Red (Fire), or White (Cold).','Breath Weapon: 15-ft. cone or 30-ft. line, d10 damage scaling.','Draconic Resistance: Resistance to your ancestry damage type.','Chromatic Warding (5th level): Immunity to your damage type for 1 minute, 1/LR.'],
       desc: 'Dragonborn with chromatic dragon heritage. (Use PHB 2024 Dragonborn by default.)' },
@@ -298,12 +297,12 @@ const SPECIES = [
       traits: ['Gem Ancestry: Choose Amethyst (Force), Crystal (Radiant), Emerald (Psychic), Sapphire (Thunder), or Topaz (Necrotic).','Breath Weapon: 15-ft. cone, d10 damage scaling.','Draconic Resistance: Resistance to your ancestry damage type.','Psionic Mind: Telepathy 30 ft.','Gem Flight (5th level): Fly speed = walking speed for 1 minute, 1/LR (hover).'],
       desc: 'Dragonborn with gem dragon heritage and psionic abilities.' },
 
-    // â”€â”€ Mordenkainen/MotM additional â”€â”€
+    // Ã¢â€â‚¬Ã¢â€â‚¬ Mordenkainen/MotM additional Ã¢â€â‚¬Ã¢â€â‚¬
     { name: 'Grung', source: 'MotM', size: 'Small', speed: 30,
       traits: ['Arboreal Alertness: Proficiency in Perception.','Amphibious: Breathe air and water.','Poison Skin: Creatures that grapple you or hit you with unarmed/natural weapon take 2d4 Poison damage. You can coat a weapon to add 2d4 Poison on hit (1 minute duration).','Standing Leap: Long jump 25 ft., high jump 15 ft.','Water Dependency: Must submerge in water for 1 hour per day or suffer 1 exhaustion.','Climb speed of 30 ft.'],
       desc: 'Poisonous frog-folk who live in jungle treetops.' },
     { name: 'Loxodon', source: 'MotM', size: 'Medium', speed: 30,
-      traits: ['Natural Armor: AC = 12 + CON modifier when not wearing armor.','Loxodon Serenity: Advantage on saves vs. Charmed and Frightened.','Keen Smell: Advantage on Perception, Investigation, and Survival checks involving smell.','Trunk: Prehensile trunk â€” lift up to 5 Ã— STR lbs., breathe through while grappled, interact with objects.','Powerful Build: Count as Large for carry/push/lift.'],
+      traits: ['Natural Armor: AC = 12 + CON modifier when not wearing armor.','Loxodon Serenity: Advantage on saves vs. Charmed and Frightened.','Keen Smell: Advantage on Perception, Investigation, and Survival checks involving smell.','Trunk: Prehensile trunk Ã¢â‚¬â€ lift up to 5 Ãƒâ€” STR lbs., breathe through while grappled, interact with objects.','Powerful Build: Count as Large for carry/push/lift.'],
       desc: 'Elephant-folk known for their calm wisdom and powerful trunks.' },
     { name: 'Simic Hybrid', source: 'MotM', size: 'Medium', speed: 30,
       traits: ['Darkvision (60 ft.)','Animal Enhancement (1st level): Choose Manta Glide (glide 5:1 ratio), Nimble Climber (climb speed = walk), or Underwater Adaptation (swim speed = walk + water breathing).','Animal Enhancement (5th level): Choose Grappling Appendages (1d6 grapple attack), Carapace (+1 AC when not in heavy armor), or Acid Spit (30 ft. ranged, 2d10 acid, PB/LR).'],
@@ -315,29 +314,29 @@ const SPECIES = [
       traits: ['Black Blood Healing: When you roll a 1 or 2 on any hit die spent during Short Rest, reroll (keep new).','Limited Telepathy: Telepathy 30 ft. (must share a language).','Persuasive: Proficiency in Persuasion.','Telepathic Insight: Advantage on WIS and CHA saving throws.'],
       desc: 'Green-skinned goblinoids changed by chaos, still growing.' },
     { name: 'Kalashtar', source: 'MotM', size: 'Medium', speed: 30,
-      traits: ['Dual Mind: Advantage on WIS saving throws.','Mental Discipline: Resistance to Psychic damage.','Mind Link: Telepathy (10 Ã— level) ft. with one creature at a time. Can communicate even without shared language.','Severed from Dreams: You don\'t dream; magic can\'t put you to sleep.'],
+      traits: ['Dual Mind: Advantage on WIS saving throws.','Mental Discipline: Resistance to Psychic damage.','Mind Link: Telepathy (10 Ãƒâ€” level) ft. with one creature at a time. Can communicate even without shared language.','Severed from Dreams: You don\'t dream; magic can\'t put you to sleep.'],
       desc: 'Humans merged with quori spirits, serene and telepathic.' },
     { name: 'Warforged', source: 'MotM', size: 'Medium', speed: 30,
       traits: ['Constructed Resilience: Advantage on saves vs. Poisoned. Resistance to Poison. Don\'t need to eat, drink, or breathe. Immune to disease. Don\'t need to sleep.','Sentry\'s Rest: 6-hour inactive Long Rest (remain conscious).','Integrated Protection: AC = 11 + PB + DEX modifier when not wearing armor. You can don armor normally.','Specialized Design: Proficiency in one skill and one tool.'],
       desc: 'Living constructs forged for war, now seeking purpose.' },
 
-    // â”€â”€ Deck of Many Things â”€â”€
+    // Ã¢â€â‚¬Ã¢â€â‚¬ Deck of Many Things Ã¢â€â‚¬Ã¢â€â‚¬
     { name: 'Strixhaven Mascot (custom species)', source: 'SCoC', size: 'Small', speed: 30,
       traits: ['This is a setting-specific option. Consult the DM for Strixhaven Mascot species (Owlin is the default Strixhaven species).'],
       desc: 'Use Owlin from MotM for Strixhaven campaigns.' },
 
-    // â”€â”€ Heroes of FaerÃ»n additional â”€â”€
-    { name: 'Half-Elf', source: 'Heroes of FaerÃ»n', size: 'Medium', speed: 30,
+    // Ã¢â€â‚¬Ã¢â€â‚¬ Heroes of FaerÃƒÂ»n additional Ã¢â€â‚¬Ã¢â€â‚¬
+    { name: 'Half-Elf', source: 'Heroes of FaerÃƒÂ»n', size: 'Medium', speed: 30,
       traits: ['Darkvision (60 ft.)','Fey Ancestry: Advantage on saves vs. Charmed, magic can\'t put you to sleep.','Skill Versatility: Proficiency in two skills of your choice.','Languages: Common, Elvish, one extra language.'],
       desc: 'Blending human ambition and elven grace. (Consider using 2024 Elf or Human with variant traits.)' },
-    { name: 'Half-Orc', source: 'Heroes of FaerÃ»n', size: 'Medium', speed: 30,
+    { name: 'Half-Orc', source: 'Heroes of FaerÃƒÂ»n', size: 'Medium', speed: 30,
       traits: ['Darkvision (60 ft.)','Relentless Endurance: Drop to 1 HP instead of 0, once per Long Rest.','Savage Attacks: Extra damage die on melee critical hits.','Menacing: Proficiency in Intimidation.'],
       desc: 'Bearing orcish strength and human determination. (Consider using 2024 Orc or Human with variant traits.)' },
 ];
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 //  CLASSES & SUBCLASSES
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 
 const CLASSES = [
     {
@@ -355,7 +354,7 @@ const CLASSES = [
             { name: 'Path of the World Tree', source: 'PHB 2024', desc: 'Draw on the World Tree to teleport allies and create vitality.' },
             { name: 'Path of the Zealot', source: 'PHB 2024', desc: 'Divine fury empowers your rage with radiant or necrotic damage.' },
             { name: 'Path of the Ancestral Guardian', source: 'XGtE', desc: 'Summon ancestral spirits to protect allies and punish foes.' },
-            { name: 'Path of the Storm Herald', source: 'XGtE', desc: 'Channel environmental fury â€” desert, sea, or tundra auras.' },
+            { name: 'Path of the Storm Herald', source: 'XGtE', desc: 'Channel environmental fury Ã¢â‚¬â€ desert, sea, or tundra auras.' },
             { name: 'Path of the Beast', source: 'TCoE', desc: 'Transform your body with bestial natural weapons while raging.' },
             { name: 'Path of Wild Magic', source: 'TCoE', desc: 'Your rage unleashes random surges of wild magic.' },
         ]
@@ -376,7 +375,7 @@ const CLASSES = [
             { name: 'College of Valor', source: 'PHB 2024', desc: 'Inspire allies in battle, blending martial prowess with magic.' },
             { name: 'College of Swords', source: 'XGtE', desc: 'Blade flourishes let you fight with style and deadly grace.' },
             { name: 'College of Whispers', source: 'XGtE', desc: 'Use fear, psychic blades, and stolen identities to manipulate.' },
-            { name: 'College of Creation', source: 'TCoE', desc: 'Bring art to life â€” animate objects and create items from song.' },
+            { name: 'College of Creation', source: 'TCoE', desc: 'Bring art to life Ã¢â‚¬â€ animate objects and create items from song.' },
             { name: 'College of Eloquence', source: 'TCoE', desc: 'Master of words whose Inspiration never goes to waste.' },
         ]
     },
@@ -472,7 +471,7 @@ const CLASSES = [
         source: 'PHB 2024',
         subclassLevel: 3,
         subclasses: [
-            { name: 'Oath of Devotion', source: 'PHB 2024', desc: 'The classic paladin â€” sacred weapon, holy aura, radiant smites.' },
+            { name: 'Oath of Devotion', source: 'PHB 2024', desc: 'The classic paladin Ã¢â‚¬â€ sacred weapon, holy aura, radiant smites.' },
             { name: 'Oath of Glory', source: 'PHB 2024', desc: 'Inspired by heroism, enhancing athleticism and speed.' },
             { name: 'Oath of the Ancients', source: 'PHB 2024', desc: 'Protect the light and joy of the natural world with fey magic.' },
             { name: 'Oath of Vengeance', source: 'PHB 2024', desc: 'Hunt down evildoers with relentless pursuit and focused fury.' },
@@ -515,7 +514,7 @@ const CLASSES = [
             { name: 'Arcane Trickster', source: 'PHB 2024', desc: 'Blend illusion and enchantment magic with roguish tricks.' },
             { name: 'Assassin', source: 'PHB 2024', desc: 'Master of disguise and poison with devastating surprise attacks.' },
             { name: 'Soulknife', source: 'PHB 2024', desc: 'Manifest psychic blades and use psionic dice for versatile tricks.' },
-            { name: 'Thief', source: 'PHB 2024', desc: 'Supreme skill and agility â€” fast hands, second-story work, reflexes.' },
+            { name: 'Thief', source: 'PHB 2024', desc: 'Supreme skill and agility Ã¢â‚¬â€ fast hands, second-story work, reflexes.' },
             { name: 'Inquisitive', source: 'XGtE', desc: 'Keen deductive eye that roots out hidden truths and lies.' },
             { name: 'Mastermind', source: 'XGtE', desc: 'Master manipulator who directs allies and reads foes at range.' },
             { name: 'Scout', source: 'XGtE', desc: 'Wilderness expert with enhanced mobility and Nature/Survival skills.' },
@@ -538,7 +537,7 @@ const CLASSES = [
             { name: 'Draconic Sorcery', source: 'PHB 2024', desc: 'Dragon blood grants resilience, elemental affinity, and wings.' },
             { name: 'Wild Magic Sorcery', source: 'PHB 2024', desc: 'Chaotic magic surges create unpredictable but powerful effects.' },
             { name: 'Divine Soul', source: 'XGtE', desc: 'Access the entire Cleric spell list with sorcerer versatility.' },
-            { name: 'Shadow Magic', source: 'XGtE', desc: 'Wield darkness itself â€” summon shadow hounds and cheat death.' },
+            { name: 'Shadow Magic', source: 'XGtE', desc: 'Wield darkness itself Ã¢â‚¬â€ summon shadow hounds and cheat death.' },
             { name: 'Storm Sorcery', source: 'XGtE', desc: 'Command wind and lightning, fly briefly after casting spells.' },
             { name: 'Lunar Sorcery', source: 'FToD (Dragonlance)', desc: 'Draw power from moon phases for varied magical effects.' },
         ]
@@ -553,13 +552,13 @@ const CLASSES = [
         source: 'PHB 2024',
         subclassLevel: 3,
         subclasses: [
-            { name: 'Archfey Patron', source: 'PHB 2024', desc: 'Fey charm and misdirection â€” beguile, teleport, and confuse.' },
+            { name: 'Archfey Patron', source: 'PHB 2024', desc: 'Fey charm and misdirection Ã¢â‚¬â€ beguile, teleport, and confuse.' },
             { name: 'Celestial Patron', source: 'PHB 2024', desc: 'Heal allies with celestial light while wielding eldritch power.' },
             { name: 'Fiend Patron', source: 'PHB 2024', desc: 'Gain temp HP on kills, hurl hellfire, and cheat death.' },
             { name: 'Great Old One Patron', source: 'PHB 2024', desc: 'Alien telepathy, psychic damage, and mind-rending abilities.' },
             { name: 'Hexblade', source: 'XGtE', desc: 'Manifest a sentient weapon, use CHA for attacks, curse enemies.' },
             { name: 'The Fathomless', source: 'TCoE', desc: 'Tentacles from the deep sea grapple and protect.' },
-            { name: 'The Genie', source: 'TCoE', desc: 'Patron is a genie â€” gain a vessel, bonus damage, and limited wish.' },
+            { name: 'The Genie', source: 'TCoE', desc: 'Patron is a genie Ã¢â‚¬â€ gain a vessel, bonus damage, and limited wish.' },
             { name: 'Undead Patron', source: 'FToD', desc: 'Transform into a terrifying undead form with necrotic power.' },
         ]
     },
@@ -574,21 +573,21 @@ const CLASSES = [
         subclassLevel: 3,
         subclasses: [
             { name: 'School of Abjuration', source: 'PHB 2024', desc: 'Protective wards and an arcane ward that absorbs damage.' },
-            { name: 'School of Divination', source: 'PHB 2024', desc: 'See the future with Portent â€” replace any d20 roll.' },
+            { name: 'School of Divination', source: 'PHB 2024', desc: 'See the future with Portent Ã¢â‚¬â€ replace any d20 roll.' },
             { name: 'School of Evocation', source: 'PHB 2024', desc: 'Sculpt devastating damage spells around your allies.' },
             { name: 'School of Illusion', source: 'PHB 2024', desc: 'Create increasingly real illusions that deceive all senses.' },
             { name: 'Bladesinging', source: 'TCoE', desc: 'Elven tradition blending swordplay and wizardry with AC and speed bonuses.' },
-            { name: 'Order of Scribes', source: 'TCoE', desc: 'Your spellbook is sentient â€” swap damage types and cast rituals faster.' },
+            { name: 'Order of Scribes', source: 'TCoE', desc: 'Your spellbook is sentient Ã¢â‚¬â€ swap damage types and cast rituals faster.' },
             { name: 'War Magic', source: 'XGtE', desc: 'Tactical wizard with power surges and boosted initiative/saves.' },
-            { name: 'Chronurgy Magic', source: 'EGtW', desc: 'Manipulate time â€” reroll initiative, freeze creatures, bottle spells.' },
+            { name: 'Chronurgy Magic', source: 'EGtW', desc: 'Manipulate time Ã¢â‚¬â€ reroll initiative, freeze creatures, bottle spells.' },
             { name: 'Graviturgy Magic', source: 'EGtW', desc: 'Control gravity to move creatures, alter weight, and create singularities.' },
         ]
     }
 ];
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 //  BACKGROUNDS (2024 PHB)
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 
 const BACKGROUNDS = [
     { name: 'Acolyte', skillProfs: ['Insight', 'Religion'], toolProf: "Calligrapher's Supplies", feat: 'Magic Initiate (Cleric)', desc: 'You spent years in service to a temple.', source: 'PHB 2024' },
@@ -609,69 +608,18 @@ const BACKGROUNDS = [
     { name: 'Wayfarer', skillProfs: ['Insight', 'Stealth'], toolProf: "Thieves' Tools", feat: 'Lucky', desc: 'You grew up on the streets, surviving by wit.', source: 'PHB 2024' },
 ];
 
-// ═══════════════════════════════════════════════════════════════════
-//  FEAT DESCRIPTIONS
-// ═══════════════════════════════════════════════════════════════════
-const FEATS = {
-    'Alert': {
-        desc: "You can't be surprised. Other creatures don't gain advantage on attack rolls against you as a result of being unseen.",
-        source: 'PHB 2024'
-    },
-    'Crafter': {
-        desc: "You gain proficiency with three Artisan's Tools of your choice. When you buy a nonmagical item, you receive a 20% discount.",
-        source: 'PHB 2024'
-    },
-    'Healer': {
-        desc: "When you use a Healer's Kit to stabilize a creature, it regains 1 HP. As an action, spend one use to restore 1d6+4 HP plus additional HP equal to the creature's maximum number of Hit Dice.",
-        source: 'PHB 2024'
-    },
-    'Lucky': {
-        desc: 'You have 3 Luck Points. Spend 1 to roll an extra d20 when making an attack roll, ability check, or saving throw. You can also spend 1 when an attack roll is made against you. Regain all Luck Points on a long rest.',
-        source: 'PHB 2024'
-    },
-    'Magic Initiate (Cleric)': {
-        desc: 'You learn two cantrips and one 1st-level spell from the Cleric spell list. You can cast the 1st-level spell once per long rest. Your spellcasting ability is Wisdom.',
-        source: 'PHB 2024'
-    },
-    'Magic Initiate (Druid)': {
-        desc: 'You learn two cantrips and one 1st-level spell from the Druid spell list. You can cast the 1st-level spell once per long rest. Your spellcasting ability is Wisdom.',
-        source: 'PHB 2024'
-    },
-    'Magic Initiate (Wizard)': {
-        desc: 'You learn two cantrips and one 1st-level spell from the Wizard spell list. You can cast the 1st-level spell once per long rest. Your spellcasting ability is Intelligence.',
-        source: 'PHB 2024'
-    },
-    'Musician': {
-        desc: "You gain proficiency with three Musical Instruments of your choice. After a short or long rest, you can perform for 10 minutes to give allies temporary inspiration.",
-        source: 'PHB 2024'
-    },
-    'Skilled': {
-        desc: 'You gain proficiency in three skills of your choice.',
-        source: 'PHB 2024'
-    },
-    'Tavern Brawler': {
-        desc: 'You gain proficiency with improvised weapons. Your unarmed strike damage increases by one die size. When you hit with an unarmed strike, you can use a bonus action to grapple the target.',
-        source: 'PHB 2024'
-    },
-    'Tough': {
-        desc: "Your HP maximum increases by an amount equal to twice your level. Whenever you gain a level, your HP maximum increases by 2.",
-        source: 'PHB 2024'
-    }
-};
-
-
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 //  CONSTANTS
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 
 const ABILITIES = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
 const ABILITY_KEYS = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
 const STANDARD_ARRAY = [15, 14, 13, 12, 10, 8];
 const POINT_BUY_COSTS = { 8:0, 9:1, 10:2, 11:3, 12:4, 13:5, 14:7, 15:9 };
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
 //  CONSTANTS & STATE
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
 const AB = ['STR','DEX','CON','INT','WIS','CHA'];
 const AK = ['str','dex','con','int','wis','cha'];
 const STD_ARRAY = [15,14,13,12,10,8];
@@ -686,9 +634,9 @@ let state = {
     speciesFilter:'All'
 };
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
 //  NAVIGATION
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
 function goToStep(step){
     currentStep=step;
     document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
@@ -740,9 +688,9 @@ function saveStepData(step){
     if(step===4)readAbilityScores();
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
 //  STEP 1: SPECIES
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
 function getSpeciesSources(){
     const s=new Set();SPECIES.forEach(sp=>s.add(sp.source));return['All',...Array.from(s)];
 }
@@ -776,7 +724,7 @@ function renderSpecies(){
             <div class="card-title">${sp.name}</div>
             <div class="card-detail">${sp.desc}</div>
             <div class="card-tags">
-                <span class="card-tag tag-stat">${sp.size} Â· ${sp.speed} ft.</span>
+                <span class="card-tag tag-stat">${sp.size} Ã‚Â· ${sp.speed} ft.</span>
                 <span class="card-tag tag-source">${sp.source}</span>
             </div>
         </div>`).join('');
@@ -787,19 +735,19 @@ function selectSpecies(i){
     state.species=SPECIES[i];
     document.querySelectorAll('#species-cards .selection-card').forEach((c,j)=>c.classList.toggle('selected',j===i));
     const sp=SPECIES[i];
-    document.getElementById('species-info').innerHTML=`<div class="info-panel"><h3>${sp.name} Traits <span style="font-size:11px;color:#8B4513;font-weight:400">(${sp.source})</span></h3>${sp.traits.map(t=>`<div class="trait">â—† ${t}</div>`).join('')}</div>`;
+    document.getElementById('species-info').innerHTML=`<div class="info-panel"><h3>${sp.name} Traits <span style="font-size:11px;color:#8B4513;font-weight:400">(${sp.source})</span></h3>${sp.traits.map(t=>`<div class="trait">Ã¢â€”â€  ${t}</div>`).join('')}</div>`;
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
 //  STEP 2: CLASS & SUBCLASS
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
 function renderClasses(){
     document.getElementById('class-cards').innerHTML=CLASSES.map((cl,i)=>`
         <div class="selection-card" onclick="selectClass(${i})" id="cl-${i}">
             <div class="card-title">${cl.name}</div>
             <div class="card-detail">${cl.desc}</div>
             <div class="card-tags">
-                <span class="card-tag tag-stat">${cl.hitDie} Â· ${cl.primaryAbility}</span>
+                <span class="card-tag tag-stat">${cl.hitDie} Ã‚Â· ${cl.primaryAbility}</span>
                 <span class="card-tag tag-source">${cl.source}</span>
             </div>
         </div>`).join('');
@@ -847,9 +795,9 @@ function selectSubclass(j){
 }
 function onLevelChange(){if(state.classChoice)renderSubclasses()}
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
 //  STEP 3: BACKGROUND
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
 function renderBackgrounds(){
     document.getElementById('background-cards').innerHTML=BACKGROUNDS.map((bg,i)=>`
         <div class="selection-card" onclick="selectBackground(${i})" id="bg-${i}">
@@ -862,22 +810,15 @@ function selectBackground(i){
     state.background=BACKGROUNDS[i];
     document.querySelectorAll('#background-cards .selection-card').forEach((c,j)=>c.classList.toggle('selected',j===i));
     const bg=BACKGROUNDS[i];
-    const featInfo = FEATS[bg.feat] || { desc: bg.feat, source: 'PHB 2024' };
-    
     document.getElementById('background-info').innerHTML=`<div class="info-panel"><h3>${bg.name}</h3>
-        <div class="trait"><strong>Skill Proficiencies:</strong> ${bg.skillProfs.join(', ')}</div>
-        <div class="trait"><strong>Tool Proficiency:</strong> ${bg.toolProf}</div>
-        <div class="trait"><strong>Origin Feat:</strong> ${bg.feat}</div>
-        <div class="trait" style="margin-top:12px;padding:10px;background:rgba(139,69,19,0.05);border-left:3px solid #8B4513;border-radius:4px;"><strong>${bg.feat}:</strong> ${featInfo.desc}</div></div>`;
-}</h3>
         <div class="trait"><strong>Skill Proficiencies:</strong> ${bg.skillProfs.join(', ')}</div>
         <div class="trait"><strong>Tool Proficiency:</strong> ${bg.toolProf}</div>
         <div class="trait"><strong>Origin Feat:</strong> ${bg.feat}</div></div>`;
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
 //  STEP 4: ABILITY SCORES
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
 function calcMod(s){return Math.floor((s-10)/2)}
 function fmtMod(m){return m>=0?`+${m}`:`${m}`}
 
@@ -906,7 +847,7 @@ function initStdArray(){
         const k=AK[i],a=state.arrayAssignments[k];
         return `<div class="ability-box" onclick="tapSlot('${k}')">
             <div class="ab-label">${ab}</div>
-            <div class="ability-drop">${a!=null?`<div class="array-chip" onclick="event.stopPropagation();unassign('${k}')">${a}</div>`:'<span style="color:#bbb;font-size:13px">â€”</span>'}</div>
+            <div class="ability-drop">${a!=null?`<div class="array-chip" onclick="event.stopPropagation();unassign('${k}')">${a}</div>`:'<span style="color:#bbb;font-size:13px">Ã¢â‚¬â€</span>'}</div>
             <div class="ab-mod">${a!=null?fmtMod(calcMod(a)):''}</div></div>`;
     }).join('');
 }
@@ -928,7 +869,7 @@ function initPB(){
         const k=AK[i],v=state.abilities[k]||8;
         return `<div class="ability-box"><div class="ab-label">${ab}</div>
             <div style="display:flex;align-items:center;justify-content:center;gap:6px">
-                <button onclick="pbAdj('${k}',-1)" style="width:30px;height:30px;border:1px solid #c9a77c;border-radius:4px;background:#f5ede0;font-size:18px;font-weight:bold;cursor:pointer;color:#5a1a1a">âˆ’</button>
+                <button onclick="pbAdj('${k}',-1)" style="width:30px;height:30px;border:1px solid #c9a77c;border-radius:4px;background:#f5ede0;font-size:18px;font-weight:bold;cursor:pointer;color:#5a1a1a">Ã¢Ë†â€™</button>
                 <input type="number" id="pb-${k}" value="${v}" min="8" max="15" readonly style="width:48px;padding:6px 2px;text-align:center;font-size:20px;font-weight:bold;border:2px solid #ddd;border-radius:4px;background:white;font-family:'Crimson Text',serif">
                 <button onclick="pbAdj('${k}',1)" style="width:30px;height:30px;border:1px solid #c9a77c;border-radius:4px;background:#f5ede0;font-size:18px;font-weight:bold;cursor:pointer;color:#5a1a1a">+</button>
             </div><div class="ab-mod" id="pb-mod-${k}">${fmtMod(calcMod(v))}</div></div>`;
@@ -968,9 +909,9 @@ function readAbilityScores(){
     else{AK.forEach(k=>{const i=document.getElementById(`man-${k}`);state.abilities[k]=i?parseInt(i.value)||10:(state.abilities[k]||10)})}
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
 //  STEP 5: REVIEW
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
 function buildReview(){
     const sp=state.species,cl=state.classChoice,bg=state.background,lvl=state.level;
     const pb=Math.ceil(lvl/4)+1;
@@ -983,13 +924,13 @@ function buildReview(){
         <div class="review-section"><h3>Identity</h3>
             <div class="review-row"><span class="rlabel">Name</span><span class="rvalue">${state.name}</span></div>
             <div class="review-row"><span class="rlabel">Species</span><span class="rvalue">${sp.name} <small style="color:#8B4513">(${sp.source})</small></span></div>
-            <div class="review-row"><span class="rlabel">Size / Speed</span><span class="rvalue">${sp.size} Â· ${sp.speed} ft.</span></div>
+            <div class="review-row"><span class="rlabel">Size / Speed</span><span class="rvalue">${sp.size} Ã‚Â· ${sp.speed} ft.</span></div>
             ${state.alignment?`<div class="review-row"><span class="rlabel">Alignment</span><span class="rvalue">${state.alignment}</span></div>`:''}</div>
         <div class="review-section"><h3>Class</h3>
             <div class="review-row"><span class="rlabel">Class</span><span class="rvalue">${cl.name}</span></div>
             <div class="review-row"><span class="rlabel">Subclass</span><span class="rvalue">${scName}</span></div>
             <div class="review-row"><span class="rlabel">Level</span><span class="rvalue">${lvl}</span></div>
-            <div class="review-row"><span class="rlabel">Hit Die / HP</span><span class="rvalue">${cl.hitDie} Â· ${maxHP} HP</span></div>
+            <div class="review-row"><span class="rlabel">Hit Die / HP</span><span class="rvalue">${cl.hitDie} Ã‚Â· ${maxHP} HP</span></div>
             <div class="review-row"><span class="rlabel">Proficiency Bonus</span><span class="rvalue">+${pb}</span></div>
             <div class="review-row"><span class="rlabel">Saving Throws</span><span class="rvalue">${cl.savingThrows.map(s=>s.toUpperCase()).join(', ')}</span></div></div>
         <div class="review-section"><h3>Background</h3>
@@ -1005,9 +946,9 @@ function buildReview(){
         <div class="review-section"><h3>Species Traits</h3><ul class="review-traits">${sp.traits.map(t=>`<li>${t}</li>`).join('')}</ul></div>`;
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
 //  CREATE CHARACTER
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
 function createCharacter(){
     const sp=state.species,cl=state.classChoice,bg=state.background,lvl=state.level;
     const hd=parseInt(cl.hitDie.replace('d',''));
@@ -1030,7 +971,7 @@ function createCharacter(){
         `Background: ${bg.name}`,
         `Origin Feat: ${bg.feat}`,
         '',
-        `Class: ${cl.name}${scName?' â€” '+scName:''}`,
+        `Class: ${cl.name}${scName?' Ã¢â‚¬â€ '+scName:''}`,
         `Skills: ${cl.skillChoices}`,
     ];
 
@@ -1058,15 +999,15 @@ function createCharacter(){
     overlay.innerHTML=`<div style="background:linear-gradient(to bottom,#faf7f2,#f5f0e8);border:2px solid #8B4513;border-radius:12px;padding:30px;max-width:400px;width:100%;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.3)">
         <div style="font-family:'Cinzel',serif;font-size:24px;color:#5a1a1a;font-weight:700;margin-bottom:10px">Character Created!</div>
         <div style="font-size:16px;color:#666;margin-bottom:4px">${state.name}</div>
-        <div style="font-size:14px;color:#888;margin-bottom:24px">Level ${lvl} ${sp.name} ${cl.name}${scName?' â€” '+scName:''}</div>
+        <div style="font-size:14px;color:#888;margin-bottom:24px">Level ${lvl} ${sp.name} ${cl.name}${scName?' Ã¢â‚¬â€ '+scName:''}</div>
         <a href="index.html" style="display:block;padding:14px;background:linear-gradient(135deg,#4a7c59,#2d5016);color:#faf7f2;border:2px solid #2d5016;border-radius:8px;font-family:'Cinzel',serif;font-size:16px;font-weight:600;text-decoration:none;letter-spacing:1px;margin-bottom:12px;box-shadow:0 3px 8px rgba(45,80,22,.3)">Open Character Sheet</a>
-        <div style="font-size:12px;color:#999;margin-top:8px">Saved to localStorage â€” loads automatically in the sheet.</div></div>`;
+        <div style="font-size:12px;color:#999;margin-top:8px">Saved to localStorage Ã¢â‚¬â€ loads automatically in the sheet.</div></div>`;
     document.body.appendChild(overlay);
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
 //  INIT
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
 renderSpecies();
 renderClasses();
 renderBackgrounds();
