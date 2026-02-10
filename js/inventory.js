@@ -97,12 +97,13 @@ function showEquipResults(query) {
             }
             if (item.weight) detail += ' | ' + item.weight + ' lb.';
 
-            return '<div class="equip-result-item" onclick="addToInventory(' + JSON.stringify(JSON.stringify(item.name)) + ')">' +
+            const safeName = item.name.replace(/'/g, "\\'");
+            return '<div class="equip-result-item" onclick="addToInventory(\'' + safeName + '\')">' +
                 '<div><div class="equip-result-name">' + item.name + '</div>' +
                 '<div class="equip-result-detail">' + detail + '</div></div>' +
                 '<div style="display:flex;align-items:center;gap:8px">' +
                 '<span class="equip-result-cost">' + (item.cost || '') + '</span>' +
-                '<button class="equip-add-btn" onclick="event.stopPropagation();addToInventory(' + JSON.stringify(JSON.stringify(item.name)) + ')">+ ADD</button>' +
+                '<button class="equip-add-btn" onclick="event.stopPropagation();addToInventory(\'' + safeName + '\')">+ ADD</button>' +
                 '</div></div>';
         }).join('');
     }
