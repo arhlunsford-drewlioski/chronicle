@@ -296,6 +296,15 @@
             </div>
         </div>
 
+        <!-- Rest Buttons -->
+        <div style="margin-top: 20px; margin-bottom: 30px;">
+            <div class="section-title">Rest & Recovery</div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                <button onclick="shortRest()" style="padding: 15px; background: linear-gradient(135deg, #4a7c59 0%, #2d5016 100%); color: #faf7f2; border: 2px solid #2d5016; border-radius: 8px; font-family: 'Cinzel', serif; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.2); transition: all 0.2s;">SHORT REST</button>
+                <button onclick="longRest()" style="padding: 15px; background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%); color: #faf7f2; border: 2px solid #1e3a8a; border-radius: 8px; font-family: 'Cinzel', serif; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.2); transition: all 0.2s;">LONG REST</button>
+            </div>
+        </div>
+
         <!-- Combat Stats -->
         <div class="combat-section">
             <div class="combat-stats">
@@ -445,16 +454,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Rest Buttons -->
-        <div style="margin-top: 30px;">
-            <div class="section-title">Rest & Recovery</div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                <button onclick="shortRest()" style="padding: 15px; background: linear-gradient(135deg, #4a7c59 0%, #2d5016 100%); color: #faf7f2; border: 2px solid #2d5016; border-radius: 8px; font-family: 'Cinzel', serif; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.2); transition: all 0.2s;">SHORT REST</button>
-                <button onclick="longRest()" style="padding: 15px; background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%); color: #faf7f2; border: 2px solid #1e3a8a; border-radius: 8px; font-family: 'Cinzel', serif; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.2); transition: all 0.2s;">LONG REST</button>
-            </div>
-        </div>
-
         <!-- Coins -->
         <div class="collapsible-section" style="margin-top: 30px;">
             <div class="section-title section-toggle" onclick="toggleSection('coins')">
