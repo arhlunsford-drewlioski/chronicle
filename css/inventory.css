@@ -1,0 +1,274 @@
+/* ═══════════════════════════════════════════════════════════════════
+   INVENTORY & EQUIPMENT STYLES
+   Added for equipment browser, inventory, and equip system
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────────────────────────
+   EQUIPMENT BROWSER
+   ───────────────────────────────────────────────────────────────── */
+.equip-search-wrap {
+    position: relative;
+    margin-bottom: 12px;
+}
+.equip-search-wrap input {
+    width: 100%;
+    padding: 10px 12px 10px 36px;
+    border: 2px solid var(--brown-light);
+    border-radius: 4px;
+    font-size: 15px;
+    font-family: var(--font-body);
+    background: rgba(255,255,255,0.6);
+}
+.equip-search-wrap input:focus {
+    outline: none;
+    border-color: var(--brown-dark);
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 0 0 3px rgba(139,69,19,0.1);
+}
+.equip-search-wrap::before {
+    content: '\1F50D';
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    pointer-events: none;
+}
+
+.equip-filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+.equip-filter {
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--brown-light);
+    background: rgba(255,255,255,0.4);
+    font-family: var(--font-heading);
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #666;
+    letter-spacing: 0.5px;
+}
+.equip-filter:hover { border-color: var(--brown-primary); color: var(--brown-dark); }
+.equip-filter.active {
+    background: linear-gradient(135deg, var(--brown-primary), var(--brown-darker));
+    color: var(--parchment-light);
+    border-color: var(--brown-dark);
+}
+
+.equip-results {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 2px solid var(--brown-light);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.4);
+    display: none;
+}
+.equip-results.visible { display: block; }
+.equip-results::-webkit-scrollbar { width: 6px; }
+.equip-results::-webkit-scrollbar-thumb { background: var(--brown-light); border-radius: 3px; }
+
+.equip-result-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(139,69,19,0.1);
+    cursor: pointer;
+    transition: background 0.15s;
+    font-size: 14px;
+}
+.equip-result-item:hover { background: rgba(139,69,19,0.08); }
+.equip-result-item:last-child { border-bottom: none; }
+.equip-result-name { font-weight: 600; color: var(--brown-dark); }
+.equip-result-detail { font-size: 11px; color: #888; margin-top: 2px; }
+.equip-result-cost { font-size: 12px; color: #999; white-space: nowrap; }
+.equip-add-btn {
+    background: linear-gradient(135deg, var(--green-primary), var(--green-dark));
+    color: var(--parchment-light);
+    border: none;
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-family: var(--font-heading);
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+}
+.equip-add-btn:hover { transform: scale(1.05); }
+
+/* ─────────────────────────────────────────────────────────────────
+   INVENTORY LIST
+   ───────────────────────────────────────────────────────────────── */
+.inventory-section { margin-top: 16px; }
+.inventory-section h4 {
+    font-family: var(--font-heading);
+    font-size: 13px;
+    color: var(--brown-dark);
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.inventory-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    background: linear-gradient(135deg, #fff9f0, #f5ede0);
+    border: 1px solid var(--brown-light);
+    border-radius: 6px;
+    margin-bottom: 6px;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+.inventory-item.equipped {
+    border-color: var(--green-primary);
+    background: linear-gradient(135deg, #f0f8f0, #e5f0e5);
+    box-shadow: 0 0 0 1px rgba(74,124,89,0.15);
+}
+.inv-name { flex: 1; font-weight: 600; color: var(--brown-dark); }
+.inv-detail { font-size: 11px; color: #888; }
+.inv-qty {
+    width: 36px;
+    padding: 3px;
+    border: 1px solid var(--brown-light);
+    border-radius: 3px;
+    text-align: center;
+    font-size: 13px;
+    font-family: var(--font-body);
+    font-weight: 600;
+}
+.inv-equip-btn {
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-family: var(--font-heading);
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    border: 1px solid;
+    transition: all 0.2s;
+}
+.inv-equip-btn.equip {
+    background: linear-gradient(135deg, var(--green-primary), var(--green-dark));
+    color: var(--parchment-light);
+    border-color: var(--green-dark);
+}
+.inv-equip-btn.unequip {
+    background: linear-gradient(135deg, #e0d5c5, #d0c5b5);
+    color: var(--brown-dark);
+    border-color: var(--brown-light);
+}
+.inv-remove-btn {
+    background: none;
+    border: none;
+    color: #cc4444;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+.inv-remove-btn:hover { background: rgba(204,68,68,0.1); }
+
+/* ─────────────────────────────────────────────────────────────────
+   EQUIPPED SLOTS SUMMARY
+   ───────────────────────────────────────────────────────────────── */
+.equipped-slots {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+}
+.equipped-slot {
+    background: linear-gradient(135deg, #fff9f0, #f5ede0);
+    border: 2px solid var(--brown-primary);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+}
+.equipped-slot .slot-label {
+    font-family: var(--font-heading);
+    font-size: 10px;
+    font-weight: 600;
+    color: #888;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+}
+.equipped-slot .slot-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--brown-dark);
+    min-height: 20px;
+}
+.equipped-slot .slot-detail {
+    font-size: 12px;
+    color: var(--green-dark);
+    margin-top: 4px;
+}
+.equipped-slot.empty .slot-name { color: #bbb; font-style: italic; font-weight: 400; }
+
+/* ─────────────────────────────────────────────────────────────────
+   ATTACKS TABLE
+   ───────────────────────────────────────────────────────────────── */
+.attacks-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+.attacks-table th {
+    font-family: var(--font-heading);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--brown-dark);
+    letter-spacing: 0.5px;
+    padding: 8px 6px;
+    border-bottom: 2px solid var(--brown-primary);
+    text-align: left;
+}
+.attacks-table td {
+    padding: 8px 6px;
+    border-bottom: 1px solid rgba(139,69,19,0.15);
+}
+.attacks-table .atk-name { font-weight: 600; color: var(--brown-dark); }
+.attacks-table .atk-bonus { font-weight: 700; color: var(--green-dark); }
+.attacks-table .atk-damage { font-weight: 600; }
+.attacks-table .atk-type { font-size: 11px; color: #888; }
+
+.weight-tracker {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    background: linear-gradient(135deg, var(--cream), var(--cream-light));
+    border: 2px solid var(--brown-primary);
+    border-radius: 8px;
+    margin-top: 12px;
+    font-family: var(--font-heading);
+    font-size: 13px;
+    color: var(--brown-dark);
+}
+.weight-tracker .weight-num {
+    font-size: 18px;
+    font-weight: 700;
+}
+.weight-tracker.encumbered {
+    border-color: var(--red-dark);
+    color: var(--red-dark);
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   MOBILE
+   ───────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .inventory-item { flex-wrap: wrap; }
+    .inv-name { width: 100%; }
+    .equipped-slots { grid-template-columns: 1fr 1fr; }
+    .equip-result-item { flex-wrap: wrap; gap: 4px; }
+}
