@@ -196,7 +196,7 @@ function renderSpecies(){
             <div class="card-title">${sp.name}</div>
             <div class="card-detail">${sp.desc}</div>
             <div class="card-tags">
-                <span class="card-tag tag-stat">${sp.size} Ã‚Â· ${sp.speed} ft.</span>
+                <span class="card-tag tag-stat">${sp.size} • ${sp.speed} ft.</span>
                 <span class="card-tag tag-source">${sp.source}</span>
             </div>
         </div>`).join('');
@@ -219,7 +219,7 @@ function renderClasses(){
             <div class="card-title">${cl.name}</div>
             <div class="card-detail">${cl.desc}</div>
             <div class="card-tags">
-                <span class="card-tag tag-stat">${cl.hitDie} Ã‚Â· ${cl.primaryAbility}</span>
+                <span class="card-tag tag-stat">${cl.hitDie} • ${cl.primaryAbility}</span>
                 <span class="card-tag tag-source">${cl.source}</span>
             </div>
         </div>`).join('');
@@ -396,13 +396,13 @@ function buildReview(){
         <div class="review-section"><h3>Identity</h3>
             <div class="review-row"><span class="rlabel">Name</span><span class="rvalue">${state.name}</span></div>
             <div class="review-row"><span class="rlabel">Species</span><span class="rvalue">${sp.name} <small style="color:#8B4513">(${sp.source})</small></span></div>
-            <div class="review-row"><span class="rlabel">Size / Speed</span><span class="rvalue">${sp.size} Ã‚Â· ${sp.speed} ft.</span></div>
+            <div class="review-row"><span class="rlabel">Size / Speed</span><span class="rvalue">${sp.size} • ${sp.speed} ft.</span></div>
             ${state.alignment?`<div class="review-row"><span class="rlabel">Alignment</span><span class="rvalue">${state.alignment}</span></div>`:''}</div>
         <div class="review-section"><h3>Class</h3>
             <div class="review-row"><span class="rlabel">Class</span><span class="rvalue">${cl.name}</span></div>
             <div class="review-row"><span class="rlabel">Subclass</span><span class="rvalue">${scName}</span></div>
             <div class="review-row"><span class="rlabel">Level</span><span class="rvalue">${lvl}</span></div>
-            <div class="review-row"><span class="rlabel">Hit Die / HP</span><span class="rvalue">${cl.hitDie} Ã‚Â· ${maxHP} HP</span></div>
+            <div class="review-row"><span class="rlabel">Hit Die / HP</span><span class="rvalue">${cl.hitDie} • ${maxHP} HP</span></div>
             <div class="review-row"><span class="rlabel">Proficiency Bonus</span><span class="rvalue">+${pb}</span></div>
             <div class="review-row"><span class="rlabel">Saving Throws</span><span class="rvalue">${cl.savingThrows.map(s=>s.toUpperCase()).join(', ')}</span></div></div>
         <div class="review-section"><h3>Background</h3>
