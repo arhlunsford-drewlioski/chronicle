@@ -756,18 +756,19 @@
         // Event listeners
         document.getElementById('level').addEventListener('input', updateProficiencyBonus);
 
-        // Close equipment results when clicking outside
-        document.addEventListener('click', function(e) {
+        /document.addEventListener('click', function(e) {
             if (!e.target.closest('.equip-search-wrap') && !e.target.closest('.equip-results') && !e.target.closest('.equip-filter-row')) {
                 hideEquipResults();
             }
         });
-
+        
         // Initialize
         updateModifiers();
         updateProficiencyBonus();
         loadCharacter();
         initEquipmentBrowser();
     </script>
+    
+    <script src="js/data/class-features.js"></script>
 </body>
 </html>
