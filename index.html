@@ -320,7 +320,7 @@
                 </div>
                 <div class="combat-box">
                     <div class="combat-label">SIZE</div>
-                    <select id="size" style="width: 100%; padding: 8px; font-size: 16px; text-align: center; border: 2px solid #ddd; border-radius: 4px;">
+                    <select id="size" style="width: 100%; padding: 8px; font-size: 16px; font-family: 'Crimson Text', Georgia, serif; font-weight: 600; text-align: center; border: 2px solid #ddd; border-radius: 4px;">
                         <option>Tiny</option>
                         <option>Small</option>
                         <option selected>Medium</option>
@@ -344,11 +344,11 @@
                         <input type="text" id="hit-dice-type" value="1d8" style="width: 80px; padding: 6px; text-align: center; border: 2px solid #ddd; border-radius: 4px;">
                     </div>
                     <div style="display: flex; align-items: center; justify-content: center; gap: 15px;">
-                        <button onclick="spendHitDice()" style="padding: 8px 16px; background: #8B0000; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 600;">Spend</button>
-                        <div style="font-size: 24px; font-weight: bold;">
+                        <button onclick="spendHitDice()" style="padding: 8px 16px; background: #8B0000; color: white; border: none; border-radius: 4px; cursor: pointer; font-family: 'Cinzel', serif; font-weight: 600;">Spend</button>
+                        <div style="font-size: 24px; font-weight: bold; font-family: 'Crimson Text', Georgia, serif;">
                             <span id="current-hit-dice">1</span> / <span id="max-hit-dice">1</span>
                         </div>
-                        <button onclick="restoreHitDice()" style="padding: 8px 16px; background: #2d5016; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 600;">Restore</button>
+                        <button onclick="restoreHitDice()" style="padding: 8px 16px; background: #2d5016; color: white; border: none; border-radius: 4px; cursor: pointer; font-family: 'Cinzel', serif; font-weight: 600;">Restore</button>
                     </div>
                 </div>
             </div>
@@ -356,6 +356,7 @@
             <!-- Death Saves -->
             <div style="margin-top: 20px;">
                 <div class="combat-box" style="max-width: 400px;">
+                    <div class="combat-label" style="margin-bottom: 15px;">DEATH SAVES</div>
                     <div style="margin-bottom: 15px;">
                         <div style="font-weight: 600; margin-bottom: 8px; color: #2d5016; font-family: 'Cinzel', serif; font-size: 12px;">SUCCESSES</div>
                         <div style="display: flex; gap: 15px; justify-content: center; align-items: center;">
