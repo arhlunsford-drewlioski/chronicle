@@ -5,9 +5,18 @@ const CLASSES = [
         armorProf: { light: true, medium: true, heavy: false, shields: true },
         weaponProf: 'Simple weapons, Martial weapons',
         skillChoices: 'Choose 2: Animal Handling, Athletics, Intimidation, Nature, Perception, Survival',
+        skillOptions: ['Animal Handling', 'Athletics', 'Intimidation', 'Nature', 'Perception', 'Survival'],
+        numSkills: 2,
         desc: 'A fierce warrior who channels primal rage.',
         source: 'PHB 2024',
         subclassLevel: 3,
+        startingEquipment: [
+            'Greataxe',
+            '4 Handaxes',
+            "Explorer's Pack",
+            '15 Javelins'
+        ],
+        startingGold: 10,
         subclasses: [
             { name: 'Path of the Berserker', source: 'PHB 2024', desc: 'Frenzy fuels your battle fury, granting bonus attacks and resilience.' },
             { name: 'Path of the Wild Heart', source: 'PHB 2024', desc: 'Formerly Totem Warrior. Channel animal spirits for varied combat abilities.' },
@@ -25,9 +34,18 @@ const CLASSES = [
         armorProf: { light: true, medium: false, heavy: false, shields: false },
         weaponProf: 'Simple weapons',
         skillChoices: 'Choose any 3 skills',
+        skillOptions: ['Acrobatics','Animal Handling','Arcana','Athletics','Deception','History','Insight','Intimidation','Investigation','Medicine','Nature','Perception','Performance','Persuasion','Religion','Sleight of Hand','Stealth','Survival'],
+        numSkills: 3,
         desc: 'A versatile performer who weaves magic through music.',
         source: 'PHB 2024',
         subclassLevel: 3,
+        startingEquipment: [
+            'Leather Armor',
+            'Dagger',
+            'Musical Instrument (your choice)',
+            "Entertainer's Pack"
+        ],
+        startingGold: 10,
         subclasses: [
             { name: 'College of Dance', source: 'PHB 2024', desc: 'Channel magic through graceful movement and battle dances.' },
             { name: 'College of Glamour', source: 'PHB 2024', desc: 'Weave fey enchantments to charm and inspire through performance.' },
@@ -45,9 +63,19 @@ const CLASSES = [
         armorProf: { light: true, medium: true, heavy: false, shields: true },
         weaponProf: 'Simple weapons',
         skillChoices: 'Choose 2: History, Insight, Medicine, Persuasion, Religion',
+        skillOptions: ['History', 'Insight', 'Medicine', 'Persuasion', 'Religion'],
+        numSkills: 2,
         desc: 'A holy conduit of divine power and healing.',
         source: 'PHB 2024',
         subclassLevel: 3,
+        startingEquipment: [
+            'Chain Shirt',
+            'Shield',
+            'Mace',
+            'Holy Symbol',
+            "Priest's Pack"
+        ],
+        startingGold: 10,
         subclasses: [
             { name: 'Life Domain', source: 'PHB 2024', desc: 'Master healer whose spells restore extra HP and protect allies.' },
             { name: 'Light Domain', source: 'PHB 2024', desc: 'Wield radiant fire and protective light against darkness.' },
@@ -66,9 +94,20 @@ const CLASSES = [
         armorProf: { light: true, medium: false, heavy: false, shields: true },
         weaponProf: 'Simple weapons',
         skillChoices: 'Choose 2: Arcana, Animal Handling, Insight, Medicine, Nature, Perception, Religion, Survival',
+        skillOptions: ['Arcana', 'Animal Handling', 'Insight', 'Medicine', 'Nature', 'Perception', 'Religion', 'Survival'],
+        numSkills: 2,
         desc: 'A keeper of the old faith, shapeshifter and nature mage.',
         source: 'PHB 2024',
         subclassLevel: 3,
+        startingEquipment: [
+            'Leather Armor',
+            'Shield',
+            'Quarterstaff',
+            'Druidic Focus',
+            "Explorer's Pack",
+            "Herbalism Kit"
+        ],
+        startingGold: 10,
         subclasses: [
             { name: 'Circle of the Land', source: 'PHB 2024', desc: 'Draw on terrain-specific magic for an expanded spell list.' },
             { name: 'Circle of the Moon', source: 'PHB 2024', desc: 'Master shapeshifter who adopts powerful beast forms.' },
@@ -86,9 +125,18 @@ const CLASSES = [
         armorProf: { light: true, medium: true, heavy: true, shields: true },
         weaponProf: 'Simple weapons, Martial weapons',
         skillChoices: 'Choose 2: Acrobatics, Animal Handling, Athletics, History, Insight, Intimidation, Perception, Survival',
+        skillOptions: ['Acrobatics', 'Animal Handling', 'Athletics', 'History', 'Insight', 'Intimidation', 'Perception', 'Survival'],
+        numSkills: 2,
         desc: 'A master of martial combat and battlefield tactics.',
         source: 'PHB 2024',
         subclassLevel: 3,
+        startingEquipment: [
+            'Chain Mail',
+            'Greatsword or Longsword + Shield',
+            'Light Crossbow + 20 Bolts',
+            "Dungeoneer's Pack"
+        ],
+        startingGold: 10,
         subclasses: [
             { name: 'Battle Master', source: 'PHB 2024', desc: 'Tactical genius who uses superiority dice for combat maneuvers.' },
             { name: 'Champion', source: 'PHB 2024', desc: 'Raw physical power with improved critical hits and athleticism.' },
@@ -107,9 +155,17 @@ const CLASSES = [
         armorProf: { light: false, medium: false, heavy: false, shields: false },
         weaponProf: 'Simple weapons, Martial weapons (Melee, Light property)',
         skillChoices: 'Choose 2: Acrobatics, Athletics, History, Insight, Religion, Stealth',
+        skillOptions: ['Acrobatics', 'Athletics', 'History', 'Insight', 'Religion', 'Stealth'],
+        numSkills: 2,
         desc: 'A disciplined warrior who harnesses ki energy.',
         source: 'PHB 2024',
         subclassLevel: 3,
+        startingEquipment: [
+            'Spear',
+            '5 Daggers',
+            "Explorer's Pack"
+        ],
+        startingGold: 5,
         subclasses: [
             { name: 'Warrior of the Open Hand', source: 'PHB 2024', desc: 'Classic martial artist with enhanced Flurry of Blows effects.' },
             { name: 'Warrior of Shadow', source: 'PHB 2024', desc: 'Harness darkness for stealth, teleportation, and shadow strikes.' },
@@ -127,9 +183,20 @@ const CLASSES = [
         armorProf: { light: true, medium: true, heavy: true, shields: true },
         weaponProf: 'Simple weapons, Martial weapons',
         skillChoices: 'Choose 2: Athletics, Insight, Intimidation, Medicine, Persuasion, Religion',
+        skillOptions: ['Athletics', 'Insight', 'Intimidation', 'Medicine', 'Persuasion', 'Religion'],
+        numSkills: 2,
         desc: 'A holy knight bound by a sacred oath.',
         source: 'PHB 2024',
         subclassLevel: 3,
+        startingEquipment: [
+            'Chain Mail',
+            'Shield',
+            'Longsword',
+            'Holy Symbol',
+            '6 Javelins',
+            "Priest's Pack"
+        ],
+        startingGold: 10,
         subclasses: [
             { name: 'Oath of Devotion', source: 'PHB 2024', desc: 'The classic paladin — sacred weapon, holy aura, radiant smites.' },
             { name: 'Oath of Glory', source: 'PHB 2024', desc: 'Inspired by heroism, enhancing athleticism and speed.' },
@@ -147,9 +214,19 @@ const CLASSES = [
         armorProf: { light: true, medium: true, heavy: false, shields: true },
         weaponProf: 'Simple weapons, Martial weapons',
         skillChoices: 'Choose 3: Animal Handling, Athletics, Insight, Investigation, Nature, Perception, Stealth, Survival',
+        skillOptions: ['Animal Handling', 'Athletics', 'Insight', 'Investigation', 'Nature', 'Perception', 'Stealth', 'Survival'],
+        numSkills: 3,
         desc: 'A wilderness warrior and tracker.',
         source: 'PHB 2024',
         subclassLevel: 3,
+        startingEquipment: [
+            'Studded Leather Armor',
+            'Longbow + 20 Arrows',
+            '2 Shortswords',
+            "Explorer's Pack",
+            'Druidic Focus'
+        ],
+        startingGold: 10,
         subclasses: [
             { name: 'Beast Master', source: 'PHB 2024', desc: 'Bond with a primal beast companion that fights alongside you.' },
             { name: 'Fey Wanderer', source: 'PHB 2024', desc: 'Channel fey magic for charm, psychic damage, and misty escapes.' },
@@ -167,9 +244,20 @@ const CLASSES = [
         armorProf: { light: true, medium: false, heavy: false, shields: false },
         weaponProf: 'Simple weapons, Martial weapons (Finesse or Light)',
         skillChoices: 'Choose 4: Acrobatics, Athletics, Deception, Insight, Intimidation, Investigation, Perception, Performance, Persuasion, Sleight of Hand, Stealth',
+        skillOptions: ['Acrobatics', 'Athletics', 'Deception', 'Insight', 'Intimidation', 'Investigation', 'Perception', 'Performance', 'Persuasion', 'Sleight of Hand', 'Stealth'],
+        numSkills: 4,
         desc: 'A cunning scoundrel who relies on skill and guile.',
         source: 'PHB 2024',
         subclassLevel: 3,
+        startingEquipment: [
+            'Leather Armor',
+            '2 Daggers',
+            'Shortsword',
+            'Shortbow + 20 Arrows',
+            "Thieves' Tools",
+            "Burglar's Pack"
+        ],
+        startingGold: 10,
         subclasses: [
             { name: 'Arcane Trickster', source: 'PHB 2024', desc: 'Blend illusion and enchantment magic with roguish tricks.' },
             { name: 'Assassin', source: 'PHB 2024', desc: 'Master of disguise and poison with devastating surprise attacks.' },
@@ -188,9 +276,17 @@ const CLASSES = [
         armorProf: { light: false, medium: false, heavy: false, shields: false },
         weaponProf: 'Simple weapons',
         skillChoices: 'Choose 2: Arcana, Deception, Insight, Intimidation, Persuasion, Religion',
+        skillOptions: ['Arcana', 'Deception', 'Insight', 'Intimidation', 'Persuasion', 'Religion'],
+        numSkills: 2,
         desc: 'A spellcaster who draws on inherent magic.',
         source: 'PHB 2024',
         subclassLevel: 3,
+        startingEquipment: [
+            '2 Daggers',
+            'Arcane Focus',
+            "Explorer's Pack"
+        ],
+        startingGold: 10,
         subclasses: [
             { name: 'Aberrant Sorcery', source: 'PHB 2024', desc: 'Alien psionic power warps reality around you.' },
             { name: 'Clockwork Sorcery', source: 'PHB 2024', desc: 'Channel the order of Mechanus to restore balance and negate chaos.' },
@@ -208,9 +304,18 @@ const CLASSES = [
         armorProf: { light: true, medium: false, heavy: false, shields: false },
         weaponProf: 'Simple weapons',
         skillChoices: 'Choose 2: Arcana, Deception, History, Intimidation, Investigation, Nature, Religion',
+        skillOptions: ['Arcana', 'Deception', 'History', 'Intimidation', 'Investigation', 'Nature', 'Religion'],
+        numSkills: 2,
         desc: 'A wielder of eldritch power from an otherworldly patron.',
         source: 'PHB 2024',
         subclassLevel: 3,
+        startingEquipment: [
+            'Leather Armor',
+            'Arcane Focus',
+            '2 Daggers',
+            "Scholar's Pack"
+        ],
+        startingGold: 10,
         subclasses: [
             { name: 'Archfey Patron', source: 'PHB 2024', desc: 'Fey charm and misdirection — beguile, teleport, and confuse.' },
             { name: 'Celestial Patron', source: 'PHB 2024', desc: 'Heal allies with celestial light while wielding eldritch power.' },
@@ -228,9 +333,18 @@ const CLASSES = [
         armorProf: { light: false, medium: false, heavy: false, shields: false },
         weaponProf: 'Simple weapons',
         skillChoices: 'Choose 2: Arcana, History, Insight, Investigation, Medicine, Nature, Religion',
+        skillOptions: ['Arcana', 'History', 'Insight', 'Investigation', 'Medicine', 'Nature', 'Religion'],
+        numSkills: 2,
         desc: 'A scholarly mage who masters the arcane through study.',
         source: 'PHB 2024',
         subclassLevel: 3,
+        startingEquipment: [
+            'Quarterstaff',
+            'Arcane Focus',
+            "Scholar's Pack",
+            'Spellbook'
+        ],
+        startingGold: 10,
         subclasses: [
             { name: 'School of Abjuration', source: 'PHB 2024', desc: 'Protective wards and an arcane ward that absorbs damage.' },
             { name: 'School of Divination', source: 'PHB 2024', desc: 'See the future with Portent — replace any d20 roll.' },
@@ -245,6 +359,6 @@ const CLASSES = [
     }
 ];
 
-// Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+// ══════════════════════════════════════
 //  BACKGROUNDS (2024 PHB)
-// Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+// ══════════════════════════════════════
