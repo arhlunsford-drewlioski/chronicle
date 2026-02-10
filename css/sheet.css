@@ -381,3 +381,37 @@
         min-height: 80px;
     }
 }
+
+/* ─────────────────────────────────────────────────────────────────
+   PROFICIENCY BUBBLES
+   ───────────────────────────────────────────────────────────────── */
+#prof-light-armor,
+#prof-medium-armor,
+#prof-heavy-armor,
+#prof-shields {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #8B4513;
+    border-radius: 50%;
+    background: var(--parchment-light);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+}
+
+#prof-light-armor:checked,
+#prof-medium-armor:checked,
+#prof-heavy-armor:checked,
+#prof-shields:checked {
+    background: var(--green-primary);
+    border-color: var(--green-dark);
+}
+
+#prof-light-armor:hover,
+#prof-medium-armor:hover,
+#prof-heavy-armor:hover,
+#prof-shields:hover {
+    border-color: var(--green-primary);
+    box-shadow: 0 0 8px rgba(74, 124, 89, 0.3);
+}
