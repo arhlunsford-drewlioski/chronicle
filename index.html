@@ -295,16 +295,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Rest Buttons -->
-        <div style="margin-top: 20px; margin-bottom: 30px;">
-            <div class="section-title">Rest & Recovery</div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                <button onclick="shortRest()" style="padding: 15px; background: linear-gradient(135deg, #4a7c59 0%, #2d5016 100%); color: #faf7f2; border: 2px solid #2d5016; border-radius: 8px; font-family: 'Cinzel', serif; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.2); transition: all 0.2s;">SHORT REST</button>
-                <button onclick="longRest()" style="padding: 15px; background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%); color: #faf7f2; border: 2px solid #1e3a8a; border-radius: 8px; font-family: 'Cinzel', serif; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.2); transition: all 0.2s;">LONG REST</button>
-            </div>
-        </div>
-
         <!-- Combat Stats -->
         <div class="combat-section">
             <div class="combat-stats">
@@ -345,26 +335,25 @@
                 </div>
             </div>
 
-            <!-- Hit Dice -->
-            <div style="margin-top: 20px;">
-                <div class="combat-box" style="max-width: 400px;">
+            <!-- Hit Dice & Death Saves -->
+            <div style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px;">
+                <!-- Hit Dice -->
+                <div class="combat-box">
                     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
                         <div class="combat-label">HIT DICE TYPE</div>
                         <input type="text" id="hit-dice-type" value="1d8" style="width: 80px; padding: 6px; text-align: center; border: 2px solid #ddd; border-radius: 4px;">
                     </div>
                     <div style="display: flex; align-items: center; justify-content: center; gap: 15px;">
-                        <button onclick="spendHitDice()" style="padding: 8px 16px; background: #8B0000; color: white; border: none; border-radius: 4px; cursor: pointer; font-family: 'Cinzel', serif; font-weight: 600;">Spend</button>
+                        <button onclick="spendHitDice()" style="padding: 8px 16px; background: #5a1a1a; color: white; border: none; border-radius: 4px; cursor: pointer; font-family: 'Cinzel', serif; font-weight: 600;">Spend</button>
                         <div style="font-size: 24px; font-weight: bold; font-family: 'Crimson Text', Georgia, serif;">
                             <span id="current-hit-dice">1</span> / <span id="max-hit-dice">1</span>
                         </div>
                         <button onclick="restoreHitDice()" style="padding: 8px 16px; background: #2d5016; color: white; border: none; border-radius: 4px; cursor: pointer; font-family: 'Cinzel', serif; font-weight: 600;">Restore</button>
                     </div>
                 </div>
-            </div>
 
-            <!-- Death Saves -->
-            <div style="margin-top: 20px;">
-                <div class="combat-box" style="max-width: 400px;">
+                <!-- Death Saves -->
+                <div class="combat-box">
                     <div class="combat-label" style="margin-bottom: 15px;">DEATH SAVES</div>
                     <div style="margin-bottom: 15px;">
                         <div style="font-weight: 600; margin-bottom: 8px; color: #2d5016; font-family: 'Cinzel', serif; font-size: 12px;">SUCCESSES</div>
@@ -375,7 +364,7 @@
                         </div>
                     </div>
                     <div>
-                        <div style="font-weight: 600; margin-bottom: 8px; color: #8B0000; font-family: 'Cinzel', serif; font-size: 12px;">FAILURES</div>
+                        <div style="font-weight: 600; margin-bottom: 8px; color: #5a1a1a; font-family: 'Cinzel', serif; font-size: 12px;">FAILURES</div>
                         <div style="display: flex; gap: 15px; justify-content: center; align-items: center;">
                             <input type="checkbox" class="death-save-checkbox" data-type="failure" data-index="0">
                             <input type="checkbox" class="death-save-checkbox" data-type="failure" data-index="1">
@@ -424,6 +413,15 @@
             </div>
         </div>
 
+        <!-- Rest & Recovery -->
+        <div style="margin-top: 30px;">
+            <div class="section-title">Rest & Recovery</div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                <button onclick="shortRest()" style="padding: 15px; background: linear-gradient(135deg, #4a7c59 0%, #2d5016 100%); color: #faf7f2; border: 2px solid #2d5016; border-radius: 8px; font-family: 'Cinzel', serif; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.2); transition: all 0.2s;">SHORT REST</button>
+                <button onclick="longRest()" style="padding: 15px; background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%); color: #faf7f2; border: 2px solid #1e3a8a; border-radius: 8px; font-family: 'Cinzel', serif; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.2); transition: all 0.2s;">LONG REST</button>
+            </div>
+        </div>
+
         <!-- Proficiencies & Training -->
         <div class="collapsible-section" style="margin-top: 30px;">
             <div class="section-title section-toggle" onclick="toggleSection('proficiencies')">
@@ -432,7 +430,7 @@
             </div>
             <div class="section-body" id="proficiencies-body">
                 <div style="margin-bottom: 20px;">
-                    <div style="font-weight: 600; margin-bottom: 10px; color: #8B0000; font-family: 'Cinzel', serif;">Armor</div>
+                    <div style="font-weight: 600; margin-bottom: 10px; color: #5a1a1a; font-family: 'Cinzel', serif;">Armor</div>
                     <div style="display: flex; gap: 20px; flex-wrap: wrap;">
                         <label style="display: flex; align-items: center; gap: 8px;"><input type="checkbox" id="prof-light-armor"><span>Light Armor</span></label>
                         <label style="display: flex; align-items: center; gap: 8px;"><input type="checkbox" id="prof-medium-armor"><span>Medium Armor</span></label>
@@ -441,15 +439,15 @@
                     </div>
                 </div>
                 <div style="margin-bottom: 20px;">
-                    <div style="font-weight: 600; margin-bottom: 10px; color: #8B0000; font-family: 'Cinzel', serif;">Weapons</div>
+                    <div style="font-weight: 600; margin-bottom: 10px; color: #5a1a1a; font-family: 'Cinzel', serif;">Weapons</div>
                     <textarea id="weapon-profs" placeholder="e.g., Simple weapons, Martial weapons, Longsword, Rapier..." style="width: 100%; min-height: 60px; padding: 10px; border: 2px solid #ddd; border-radius: 4px; font-family: 'Crimson Text', Georgia, serif; font-size: 14px;"></textarea>
                 </div>
                 <div style="margin-bottom: 20px;">
-                    <div style="font-weight: 600; margin-bottom: 10px; color: #8B0000; font-family: 'Cinzel', serif;">Tools</div>
+                    <div style="font-weight: 600; margin-bottom: 10px; color: #5a1a1a; font-family: 'Cinzel', serif;">Tools</div>
                     <textarea id="tool-profs" placeholder="e.g., Thieves' tools, Smith's tools, Disguise kit..." style="width: 100%; min-height: 60px; padding: 10px; border: 2px solid #ddd; border-radius: 4px; font-family: 'Crimson Text', Georgia, serif; font-size: 14px;"></textarea>
                 </div>
                 <div style="margin-bottom: 20px;">
-                    <div style="font-weight: 600; margin-bottom: 10px; color: #8B0000; font-family: 'Cinzel', serif;">Languages</div>
+                    <div style="font-weight: 600; margin-bottom: 10px; color: #5a1a1a; font-family: 'Cinzel', serif;">Languages</div>
                     <textarea id="languages" placeholder="e.g., Common, Elvish, Dwarvish, Draconic..." style="width: 100%; min-height: 60px; padding: 10px; border: 2px solid #ddd; border-radius: 4px; font-family: 'Crimson Text', Georgia, serif; font-size: 14px;"></textarea>
                 </div>
             </div>
