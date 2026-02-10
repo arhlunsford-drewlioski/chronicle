@@ -7,10 +7,6 @@
     <link rel="stylesheet" href="css/theme.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/builder.css">
-    <!-- Data Files -->
-    <script src="js/data/species.js"></script>
-    <script src="js/data/classes.js"></script>
-    <script src="js/data/backgrounds.js"></script>
 </head>
 <body>
 <div class="sheet">
@@ -101,6 +97,11 @@
         <button class="btn btn-next" id="btn-next" onclick="nextStep()">Continue</button>
     </div>
 </div>
+
+<!-- Data Files - Load BEFORE main script -->
+<script src="js/data/species.js"></script>
+<script src="js/data/classes.js"></script>
+<script src="js/data/backgrounds.js"></script>
 
 <script>
 // Data moved to separate files - see js/data/
