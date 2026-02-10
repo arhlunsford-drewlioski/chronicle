@@ -3,7 +3,7 @@
 // Spelljammer, Deck of Many Things, Tortle Package, Heroes of Faerûn
 
 const SPECIES = [
-    // —— 2024 PHB ——
+    // -- 2024 PHB --
     { name: 'Aasimar', source: 'PHB 2024', size: 'Medium', speed: 30,
       traits: ['Darkvision (60 ft.)','Celestial Resistance: Resistance to Necrotic and Radiant damage.','Healing Hands: Heal PB × d4 HP as an action, once per Long Rest.','Light Bearer: You know the Light cantrip.','Celestial Revelation (3rd level): Choose Heavenly Wings, Inner Radiance, or Necrotic Shroud transformation once per Long Rest.'],
       desc: 'Blessed with a celestial spark, agents of light and mercy.' },
@@ -20,7 +20,7 @@ const SPECIES = [
       traits: ['Darkvision (60 ft.)','Gnomish Cunning: Advantage on INT, WIS, and CHA saving throws.','Gnomish Lineage: Choose Forest Gnome (Minor Illusion + Speak with Small Beasts) or Rock Gnome (Mending + Tinker).'],
       desc: 'Curious and inventive, brimming with arcane energy.' },
     { name: 'Goliath', source: 'PHB 2024', size: 'Medium', speed: 35,
-      traits: ['Giant Ancestry: Choose Cloud (use Misty Step PB/LR), Fire (fire retaliation PB/LR), Frost (cold resistance + cold retaliation), Hill (Bulwark — resist push/knock prone), Stone (endurance — reduce damage PB/LR), or Storm (Tempestuous — bonus action 10ft fly).','Large Form: Powerful Build (count as Large for carry/push/lift). Advantage on checks/saves to avoid grapple or being knocked prone.'],
+      traits: ['Giant Ancestry: Choose Cloud (use Misty Step PB/LR), Fire (fire retaliation PB/LR), Frost (cold resistance + cold retaliation), Hill (Bulwark - resist push/knock prone), Stone (endurance - reduce damage PB/LR), or Storm (Tempestuous - bonus action 10ft fly).','Large Form: Powerful Build (count as Large for carry/push/lift). Advantage on checks/saves to avoid grapple or being knocked prone.'],
       desc: 'Towering and competitive, born of giant-kin.' },
     { name: 'Halfling', source: 'PHB 2024', size: 'Small', speed: 30,
       traits: ['Brave: Advantage on saves vs. Frightened condition.','Halfling Nimbleness: Move through the space of any creature of a size larger than yours.','Luck: When you roll a 1 on a d20 Test, reroll and use new result.','Naturally Stealthy: You can Hide behind a creature at least one size larger than you.'],
@@ -35,7 +35,7 @@ const SPECIES = [
       traits: ['Darkvision (60 ft.)','Fiendish Legacy: Choose Abyssal (Poison Spray → Ray of Sickness → Hold Person), Chthonic (Chill Touch → False Life → Ray of Enfeeblement), or Infernal (Fire Bolt → Hellish Rebuke → Darkness).','Otherworldly Presence: You know the Thaumaturgy cantrip.'],
       desc: 'Touched by the Lower Planes, bearing an infernal heritage.' },
 
-    // —— Mordenkainen Presents: Monsters of the Multiverse ——
+    // -- Mordenkainen Presents: Monsters of the Multiverse --
     { name: 'Aarakocra', source: 'MotM', size: 'Medium', speed: 30,
       traits: ['Flight: Fly speed equal to walking speed (no medium/heavy armor).','Talons: Unarmed strikes deal 1d6 slashing.','Wind Caller: You can cast Gust of Wind (PB/LR) with this trait, using a spell slot after 3rd level.'],
       desc: 'Bird-like humanoids from the Elemental Plane of Air.' },
@@ -116,7 +116,7 @@ const SPECIES = [
       desc: 'Aquatic elves who guard the ocean depths.' },
     { name: 'Shadar-kai', source: 'MotM', size: 'Medium', speed: 30,
       traits: ['Darkvision (60 ft.)','Fey Ancestry: Advantage on saves vs. Charmed, magic can\'t put you to sleep.','Keen Senses: Proficiency in Perception.','Necrotic Resistance: Resistance to Necrotic damage.','Blessing of the Raven Queen: Bonus Action to teleport up to 30 ft. and gain resistance to all damage until start of next turn, PB uses per Long Rest.','Trance: Long Rest = 4 hours.'],
-      desc: 'Shadow elves touched by the Raven Queen's melancholy.' },
+      desc: 'Shadow elves touched by the Raven Queen\'s melancholy.' },
     { name: 'Shifter', source: 'MotM', size: 'Medium', speed: 30,
       traits: ['Darkvision (60 ft.)','Bestial Instincts: Proficiency in one of: Acrobatics, Athletics, Intimidation, Survival.','Shifting: Bonus Action to shift for 1 minute, PB uses per Long Rest. Gain temp HP = 2 × PB + character level. Choose subtype: Beasthide (+1 AC), Longtooth (fangs 1d6 + STR), Swiftstride (+10 ft. speed, reaction move), Wildhunt (advantage on WIS checks/saves).'],
       desc: 'Lycanthrope-descended shapeshifters with primal instincts.' },
@@ -133,7 +133,7 @@ const SPECIES = [
       traits: ['Darkvision (60 ft.)','Magic Resistance: Advantage on saves vs. spells and magical effects.','Poison Resilience: Resistance to Poison damage; advantage on saves vs. Poisoned.','Serpentine Spellcasting: You can cast Animal Friendship (snakes only, at will). At 3rd level, Suggestion (1/LR). At 5th level, Hypnotic Pattern (1/LR).'],
       desc: 'Serpent-blooded descendants of an ancient empire.' },
 
-    // —— Spelljammer: Adventures in Space ——
+    // -- Spelljammer: Adventures in Space --
     { name: 'Astral Elf', source: 'Spelljammer', size: 'Medium', speed: 30,
       traits: ['Darkvision (60 ft.)','Fey Ancestry: Advantage on saves vs. Charmed, magic can\'t put you to sleep.','Keen Senses: Proficiency in Perception.','Starlight Step: Bonus Action to teleport up to 30 ft., PB uses per Long Rest. After teleporting, one attack/spell has advantage.','Astral Fire: You can cast Dancing Lights and Light (at will). At 3rd level, Faerie Fire (1/LR). At 5th level, Moonbeam (1/LR).','Trance: Long Rest = 4 hours.'],
       desc: 'Elves who dwell in the Astral Plane, wielding starlight.' },
@@ -147,24 +147,24 @@ const SPECIES = [
       traits: ['Dexterous Feet: Can use feet as hands with a free object interaction.','Glide: Reduce fall speed, glide horizontally. Reaction to reduce falling damage by 1d6 × PB.','Hadozee Resilience: As a reaction, reduce non-psychic damage by 1d6 + PB (PB/LR).'],
       desc: 'Simian gliders with prehensile feet and resilient bodies.' },
     { name: 'Plasmoid', source: 'Spelljammer', size: 'Medium or Small', speed: 30,
-      traits: ['Ooze: Creature type is Ooze. Amorphous — squeeze through 1-inch spaces. Hold Breath 1 hour.','Darkvision (60 ft.)','Natural Resilience: Resistance to Acid and Poison damage. Advantage on saves vs. Poisoned.','Shape Self: Reshape body as an action to form pseudopods. Can have 1 extra pseudopod at a time.'],
+      traits: ['Ooze: Creature type is Ooze. Amorphous - squeeze through 1-inch spaces. Hold Breath 1 hour.','Darkvision (60 ft.)','Natural Resilience: Resistance to Acid and Poison damage. Advantage on saves vs. Poisoned.','Shape Self: Reshape body as an action to form pseudopods. Can have 1 extra pseudopod at a time.'],
       desc: 'Sentient ooze beings that can reshape their amorphous forms.' },
     { name: 'Thri-kreen', source: 'Spelljammer', size: 'Medium or Small', speed: 30,
       traits: ['Darkvision (60 ft.)','Chameleon Carapace: Change skin color. Advantage on Stealth checks if motionless for 1 minute.','Secondary Arms: 2 extra arms (can\'t wield shields or weapons with two-handed property).','Sleepless: Don\'t need to sleep; magic can\'t put you to sleep. Long Rest = 4 hours of inactivity. Immune to sleep effects.','Thri-kreen Telepathy: Telepathy with creatures within 120 ft. (no shared language needed).'],
       desc: 'Four-armed insectoid hunters with telepathic communication.' },
 
-    // —— Mythic Odysseys of Theros ——
+    // -- Mythic Odysseys of Theros --
     { name: 'Leonin', source: 'MOoT', size: 'Medium', speed: 35,
       traits: ['Darkvision (60 ft.)','Claws: Unarmed strikes deal 1d6 + STR slashing.','Hunter\'s Instincts: Proficiency in one of: Athletics, Intimidation, Perception, Survival.','Daunting Roar: Bonus Action to force creatures within 10 ft. to make WIS save (DC 8 + PB + CON) or be Frightened until end of your next turn, PB uses per Long Rest.'],
       desc: 'Nomadic lion-like warriors with fierce pride.' },
     { name: 'Satyr', source: 'MOoT', size: 'Medium', speed: 35,
       desc: 'Chaotic revelers from Theros. (Use MotM version for stats.)' },
 
-    // —— Strixhaven ——
+    // -- Strixhaven --
     { name: 'Owlin', source: 'Strixhaven', size: 'Medium or Small', speed: 30,
-      desc: 'Owl-folk of Strixhaven. (Use MotM version — identical stats.)' },
+      desc: 'Owl-folk of Strixhaven. (Use MotM version - identical stats.)' },
 
-    // —— Explorer's Guide to Wildemount ——
+    // -- Explorer's Guide to Wildemount --
     { name: 'Elf, Pallid', source: 'EGtW', size: 'Medium', speed: 30,
       traits: ['Darkvision (60 ft.)','Fey Ancestry: Advantage on saves vs. Charmed, magic can\'t put you to sleep.','Keen Senses: Proficiency in Perception.','Blessing of the Moonweaver: You can cast Light (at will). At 3rd level, Sleep (1/LR). At 5th level, Invisibility (self only, 1/LR).','Trance: Long Rest = 4 hours.'],
       desc: 'Reclusive elves from the Pallid Grove in Wildemount.' },
@@ -177,7 +177,7 @@ const SPECIES = [
       traits: ['Darkvision (60 ft.)','Aggressive: Bonus Action to move up to your speed toward a hostile you can see/hear.','Primal Intuition: Proficiency in two of: Animal Handling, Insight, Intimidation, Medicine, Nature, Perception, Survival.','Powerful Build: Count as Large for carry/push/lift.'],
       desc: 'Orcs from Exandria with primal instincts.' },
 
-    // —— Fizban's Treasury of Dragons ——
+    // -- Fizban's Treasury of Dragons --
     { name: 'Dragonborn, Chromatic', source: 'FToD', size: 'Medium', speed: 30,
       traits: ['Darkvision (60 ft.)','Chromatic Ancestry: Choose Black, Blue, Green, Red, or White. Gain resistance to that damage type.','Breath Weapon: 30-ft. line (Black, Blue, Green) or 15-ft. cone (Red, White). DEX save. 2d8 damage at 1st (scales). PB uses/LR.','Chromatic Warding (5th level): As an action, gain immunity to your ancestry type for 1 minute, PB uses/LR.'],
       desc: 'Dragonborn tied to chromatic dragons.' },
@@ -188,11 +188,11 @@ const SPECIES = [
       traits: ['Darkvision (60 ft.)','Metallic Ancestry: Choose Brass, Bronze, Copper, Gold, or Silver. Gain resistance to that damage type.','Breath Weapon: 15-ft. cone or 30-ft. line. DEX save. 2d8 damage at 1st. PB uses/LR.','Metallic Breath Weapon (5th level): Use breath weapon for utility effect (e.g., Bronze creates repulsion, Silver paralyzes). Can be used instead of damage breath.'],
       desc: 'Dragonborn tied to metallic dragons and their noble virtues.' },
 
-    // —— Mordenkainen/MotM additional ——
+    // -- Mordenkainen/MotM additional --
     { name: 'Aasimar', source: 'MotM', size: 'Medium', speed: 30,
       desc: 'Touched by celestial power. (Use PHB 2024 Aasimar for updated stats.)' },
     { name: 'Loxodon', source: 'MotM', size: 'Medium', speed: 30,
-      traits: ['Natural Armor: AC = 12 + CON modifier when not wearing armor.','Loxodon Serenity: Advantage on saves vs. Charmed and Frightened.','Keen Smell: Advantage on Perception, Investigation, and Survival checks involving smell.','Trunk: Prehensile trunk — lift up to 5 × STR lbs., breathe through while grappled, interact with objects.','Powerful Build: Count as Large for carry/push/lift.'],
+      traits: ['Natural Armor: AC = 12 + CON modifier when not wearing armor.','Loxodon Serenity: Advantage on saves vs. Charmed and Frightened.','Keen Smell: Advantage on Perception, Investigation, and Survival checks involving smell.','Trunk: Prehensile trunk - lift up to 5 × STR lbs., breathe through while grappled, interact with objects.','Powerful Build: Count as Large for carry/push/lift.'],
       desc: 'Elephant-like beings with calm wisdom and natural armor.' },
     { name: 'Owlin', source: 'MotM', size: 'Medium or Small', speed: 30,
       traits: ['Darkvision (120 ft.)','Flight: Fly speed = walking speed (no medium/heavy armor).','Silent Feathers: Proficiency in Stealth.'],
@@ -206,11 +206,11 @@ const SPECIES = [
       traits: ['Dual Mind: Advantage on WIS saving throws.','Mental Discipline: Resistance to Psychic damage.','Mind Link: Telepathy (10 × level) ft. with one creature at a time. Can communicate even without shared language.','Severed from Dreams: You don\'t dream; magic can\'t put you to sleep.'],
       desc: 'Humans bound to dream spirits, hunted by nightmares.' },
 
-    // —— Deck of Many Things ——
+    // -- Deck of Many Things --
     { name: 'Tiefling, Abyssal', source: 'Deck of Many Things', size: 'Medium', speed: 30,
       desc: 'Tied to the Abyss. (Use PHB 2024 Tiefling Abyssal Legacy variant.)' },
 
-    // —— Heroes of Faerûn additional ——
+    // -- Heroes of Faerûn additional --
     { name: 'Half-Elf', source: 'Heroes of Faerûn', size: 'Medium', speed: 30,
       traits: ['Darkvision (60 ft.)','Fey Ancestry: Advantage on saves vs. Charmed, magic can\'t put you to sleep.','Skill Versatility: Proficiency in two skills of your choice.','Languages: Common, Elvish, one extra language.'],
       desc: 'Blending human ambition and elven grace. (Consider using 2024 Elf or Human with variant traits.)' },
