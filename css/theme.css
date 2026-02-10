@@ -27,18 +27,19 @@
     --parchment-dark: #ede0d0;
     --parchment-darker: #f4e8d8;
     
-    --brown-dark: #5a1a1a;
-    --brown-primary: #8B4513;
+    /* Primary Action Colors */
+    --brown-dark: #5a1a1a;      /* Main red/brown - modifiers, negative actions */
+    --brown-primary: #8B4513;   /* Borders, accents */
     --brown-light: #c9a77c;
     --brown-darker: #5a2d0d;
     
-    --green-dark: #2d5016;
+    --green-dark: #2d5016;      /* Main green - positive actions, success */
     --green-primary: #4a7c59;
     
-    --blue-dark: #1e3a8a;
+    --blue-dark: #1e3a8a;       /* Main blue - rest/recovery */
     --blue-primary: #1e40af;
     
-    --red-dark: #8B0000;
+    --red-dark: #5a1a1a;        /* Alias for brown-dark (consistency) */
     
     --cream: #fff8dc;
     --cream-light: #f5e6c8;
