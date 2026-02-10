@@ -3,10 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chronicle â€“ Character Builder</title>
+    <title>Chronicle - Character Builder</title>
     <link rel="stylesheet" href="css/theme.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/builder.css">
+    <style>
+        /* ASI Assignment Styles */
+        .asi-mode-tabs { display: flex; gap: 0; margin-bottom: 16px; border: 2px solid var(--brown-primary); border-radius: 8px; overflow: hidden; }
+        .asi-mode-tab { flex: 1; padding: 10px 8px; text-align: center; font-family: var(--font-heading); font-size: 12px; font-weight: 600; cursor: pointer; background: linear-gradient(135deg, #f5ede0, var(--parchment-dark)); color: #666; border-right: 1px solid var(--brown-light); transition: all 0.2s; letter-spacing: 0.5px; }
+        .asi-mode-tab:last-child { border-right: none; }
+        .asi-mode-tab:hover { background: #ecdbc5; }
+        .asi-mode-tab.active { background: linear-gradient(135deg, var(--brown-primary), var(--brown-darker)); color: var(--parchment-light); }
+        .asi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 10px; margin-top: 12px; }
+        .asi-box { text-align: center; padding: 10px 6px; background: linear-gradient(135deg, #fff9f0, #f5ede0); border: 2px solid var(--brown-light); border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+        .asi-box:hover { border-color: var(--brown-primary); }
+        .asi-box.has-bonus { border-color: var(--green-primary); background: linear-gradient(135deg, #f0f8f0, #e0f0e0); }
+        .asi-box .asi-label { font-family: var(--font-heading); font-size: 10px; font-weight: 700; color: var(--brown-dark); letter-spacing: 1px; margin-bottom: 4px; }
+        .asi-box .asi-bonus { font-size: 20px; font-weight: 700; color: var(--green-dark); min-height: 28px; }
+
+        /* Skill Picker Styles */
+        .skill-picker { margin-top: 16px; }
+        .skill-picker h4 { font-family: var(--font-heading); font-size: 13px; color: var(--brown-dark); margin-bottom: 8px; letter-spacing: 1px; }
+        .skill-picker-count { font-size: 12px; color: #666; margin-bottom: 10px; }
+        .skill-picker-count.over { color: var(--red-dark); font-weight: 600; }
+        .skill-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 6px; }
+        .skill-option { display: flex; align-items: center; gap: 8px; padding: 8px 10px; background: rgba(255,255,255,0.4); border: 1px solid var(--brown-light); border-radius: 4px; cursor: pointer; font-size: 13px; transition: all 0.2s; }
+        .skill-option:hover { background: rgba(139,69,19,0.08); }
+        .skill-option.selected { background: linear-gradient(135deg, #f0f8f0, #e0f0e0); border-color: var(--green-primary); }
+        .skill-option.from-bg { background: linear-gradient(135deg, #f0f0ff, #e8e8f8); border-color: #8888cc; opacity: 0.7; }
+        .skill-option input { accent-color: var(--green-dark); width: 16px; height: 16px; }
+
+        /* Equipment Display */
+        .equipment-list { margin-top: 12px; }
+        .equipment-list li { padding: 4px 0; font-size: 14px; color: #444; }
+        .equipment-list li::before { content: '\25C6 '; color: var(--brown-primary); font-size: 10px; }
+    </style>
 </head>
 <body>
 <div class="sheet">
@@ -25,9 +56,9 @@
         <div class="progress-step" data-step="5"><div class="progress-dot">5</div><div class="progress-label">Review</div></div>
     </div>
 
-    <!-- STEP 1 -->
+    <!-- STEP 1: Identity -->
     <div class="step active" id="step-1">
-        <div class="step-title">Name & Species</div>
+        <div class="step-title">Name &amp; Species</div>
         <div class="step-desc">Who are you, adventurer?</div>
         <div class="form-group"><label>Character Name</label><input type="text" id="b-name" placeholder="Enter your character's name"></div>
         <div class="form-group"><label>Choose Your Species</label></div>
@@ -38,13 +69,17 @@
         <div id="species-info"></div>
     </div>
 
-    <!-- STEP 2 -->
+    <!-- STEP 2: Class -->
     <div class="step" id="step-2">
         <div class="step-title">Class</div>
         <div class="step-desc">Choose your path of adventure.</div>
         <div class="card-grid" id="class-cards"></div>
         <div id="class-info"></div>
         <div id="subclass-area"></div>
+
+        <!-- Class Skill Picker -->
+        <div id="class-skill-picker"></div>
+
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px">
             <div class="form-group"><label>Starting Level</label>
                 <select id="b-level" onchange="onLevelChange()">
@@ -63,18 +98,30 @@
         </div>
     </div>
 
-    <!-- STEP 3 -->
+    <!-- STEP 3: Background + ASI -->
     <div class="step" id="step-3">
         <div class="step-title">Background</div>
         <div class="step-desc">Where did your journey begin?</div>
         <div class="card-grid" id="background-cards"></div>
         <div id="background-info"></div>
+
+        <!-- ASI Assignment (2024 rules: background gives +2/+1 or +1/+1/+1) -->
+        <div id="asi-section" style="display:none; margin-top: 20px;">
+            <div style="font-family: var(--font-heading); font-size: 16px; font-weight: 700; color: var(--brown-dark); margin-bottom: 6px; letter-spacing: 1px;">Ability Score Increases</div>
+            <div style="font-size: 13px; color: #666; margin-bottom: 12px; font-style: italic;">Per 2024 rules, your background grants ability score bonuses. Choose how to distribute them.</div>
+            <div class="asi-mode-tabs">
+                <div class="asi-mode-tab active" data-mode="twoone" onclick="setASIMode('twoone')">+2 / +1</div>
+                <div class="asi-mode-tab" data-mode="oneoneone" onclick="setASIMode('oneoneone')">+1 / +1 / +1</div>
+            </div>
+            <div id="asi-instructions" style="font-size: 12px; color: #888; margin-bottom: 8px;">Tap an ability to assign +2, then tap another for +1.</div>
+            <div class="asi-row" id="asi-row"></div>
+        </div>
     </div>
 
-    <!-- STEP 4 -->
+    <!-- STEP 4: Ability Scores -->
     <div class="step" id="step-4">
         <div class="step-title">Ability Scores</div>
-        <div class="step-desc">Define your character's capabilities.</div>
+        <div class="step-desc">Define your character's base capabilities. ASI bonuses from your background will be added automatically.</div>
         <div class="method-tabs">
             <div class="method-tab active" data-method="standard" onclick="setAbilityMethod('standard')">Standard Array</div>
             <div class="method-tab" data-method="pointbuy" onclick="setAbilityMethod('pointbuy')">Point Buy</div>
@@ -82,10 +129,10 @@
         </div>
         <div id="method-standard"><div class="warning-box">Tap a score from the pool, then tap an ability slot to assign it. Tap an assigned score to return it.</div><div class="array-pool" id="array-pool"></div><div class="ability-row" id="array-abilities"></div></div>
         <div id="method-pointbuy" style="display:none"><div class="points-remaining" id="points-display">Points Remaining: <span class="pts-num" id="pts-remaining">27</span> / 27</div><div class="ability-row" id="pointbuy-abilities"></div></div>
-        <div id="method-manual" style="display:none"><div class="warning-box">Enter your rolled or assigned scores directly.</div><div class="ability-row" id="manual-abilities"></div></div>
+        <div id="method-manual" style="display:none"><div class="warning-box">Enter your rolled or assigned scores directly (before ASI bonuses).</div><div class="ability-row" id="manual-abilities"></div></div>
     </div>
 
-    <!-- STEP 5 -->
+    <!-- STEP 5: Review -->
     <div class="step" id="step-5">
         <div class="step-title">Review Your Character</div>
         <div class="step-desc">Everything look right? Create your character to open it in the Chronicle sheet.</div>
@@ -98,388 +145,753 @@
     </div>
 </div>
 
-<!-- Data Files - Load BEFORE main script -->
+<!-- Data Files -->
 <script src="js/data/species.js"></script>
 <script src="js/data/classes.js"></script>
 <script src="js/data/backgrounds.js"></script>
 
 <script>
-// Data moved to separate files - see js/data/
+// ═══════════════════════════════════════
+//  CONSTANTS & STATE
+// ═══════════════════════════════════════
+const AB = ['STR','DEX','CON','INT','WIS','CHA'];
+const AK = ['str','dex','con','int','wis','cha'];
+const STD_ARRAY = [15,14,13,12,10,8];
+const PB_COST = {8:0,9:1,10:2,11:3,12:4,13:5,14:7,15:9};
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+const SKILL_MAP = {'Acrobatics':0,'Animal Handling':1,'Arcana':2,'Athletics':3,'Deception':4,'History':5,'Insight':6,'Intimidation':7,'Investigation':8,'Medicine':9,'Nature':10,'Perception':11,'Performance':12,'Persuasion':13,'Religion':14,'Sleight of Hand':15,'Stealth':16,'Survival':17};
+
+let currentStep = 1;
+let state = {
+    name: '', species: null, classChoice: null, subclass: null, level: 1, alignment: '',
+    background: null, abilityMethod: 'standard',
+    abilities: {str:10, dex:10, con:10, int:10, wis:10, cha:10},
+    arrayAssignments: {}, selectedChip: null,
+    speciesFilter: 'All',
+    // NEW: ASI tracking
+    asiMode: 'twoone',    // 'twoone' or 'oneoneone'
+    asiAssignments: {},    // e.g. {str: 2, dex: 1}
+    // NEW: Class skill picks
+    classSkills: [],       // skill names picked for class
+    // NEW: Equipment
+    equipment: []
+};
+
+// ═══════════════════════════════════════
 //  NAVIGATION
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
-function goToStep(step){
-    currentStep=step;
-    document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
-    document.getElementById(`step-${step}`).classList.add('active');
-    document.querySelectorAll('.progress-step').forEach(ps=>{
-        const s=parseInt(ps.dataset.step);
+// ═══════════════════════════════════════
+function goToStep(step) {
+    currentStep = step;
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step-' + step).classList.add('active');
+    document.querySelectorAll('.progress-step').forEach(ps => {
+        const s = parseInt(ps.dataset.step);
         ps.classList.remove('active','done');
         ps.querySelector('.progress-dot').classList.remove('active','done');
-        if(s===step){ps.classList.add('active');ps.querySelector('.progress-dot').classList.add('active')}
-        else if(s<step){ps.classList.add('done');ps.querySelector('.progress-dot').classList.add('done')}
+        if (s === step) { ps.classList.add('active'); ps.querySelector('.progress-dot').classList.add('active'); }
+        else if (s < step) { ps.classList.add('done'); ps.querySelector('.progress-dot').classList.add('done'); }
     });
-    for(let i=1;i<5;i++){document.getElementById(`line-${i}-${i+1}`).classList.toggle('done',i<step)}
-    document.getElementById('btn-back').style.display=step===1?'none':'';
-    const btn=document.getElementById('btn-next');
-    if(step===5){btn.textContent='Create Character';btn.className='btn btn-create';btn.onclick=createCharacter;buildReview()}
-    else{btn.textContent='Continue';btn.className='btn btn-next';btn.onclick=nextStep}
-    if(step===4)initAbilityStep();
-    window.scrollTo({top:0,behavior:'smooth'});
+    for (let i = 1; i < 5; i++) {
+        document.getElementById('line-' + i + '-' + (i+1)).classList.toggle('done', i < step);
+    }
+    document.getElementById('btn-back').style.display = step === 1 ? 'none' : '';
+    const btn = document.getElementById('btn-next');
+    if (step === 5) {
+        btn.textContent = 'Create Character';
+        btn.className = 'btn btn-create';
+        btn.onclick = createCharacter;
+        buildReview();
+    } else {
+        btn.textContent = 'Continue';
+        btn.className = 'btn btn-next';
+        btn.onclick = nextStep;
+    }
+    if (step === 4) initAbilityStep();
+    window.scrollTo({top: 0, behavior: 'smooth'});
 }
-function nextStep(){if(!validateStep(currentStep))return;saveStepData(currentStep);goToStep(currentStep+1)}
-function prevStep(){if(currentStep>1){saveStepData(currentStep);goToStep(currentStep-1)}}
 
-function validateStep(step){
-    if(step===1){
-        if(!document.getElementById('b-name').value.trim()){alert('Please enter a character name.');return false}
-        if(!state.species){alert('Please choose a species.');return false}
+function nextStep() {
+    if (!validateStep(currentStep)) return;
+    saveStepData(currentStep);
+    goToStep(currentStep + 1);
+}
+function prevStep() {
+    if (currentStep > 1) { saveStepData(currentStep); goToStep(currentStep - 1); }
+}
+
+function validateStep(step) {
+    if (step === 1) {
+        if (!document.getElementById('b-name').value.trim()) { alert('Please enter a character name.'); return false; }
+        if (!state.species) { alert('Please choose a species.'); return false; }
         return true;
     }
-    if(step===2){
-        if(!state.classChoice){alert('Please choose a class.');return false}
-        const lvl=parseInt(document.getElementById('b-level').value)||1;
-        if(lvl>=state.classChoice.subclassLevel&&!state.subclass){alert(`Please choose a subclass (required at level ${state.classChoice.subclassLevel}+).`);return false}
+    if (step === 2) {
+        if (!state.classChoice) { alert('Please choose a class.'); return false; }
+        const lvl = parseInt(document.getElementById('b-level').value) || 1;
+        if (lvl >= state.classChoice.subclassLevel && !state.subclass) {
+            alert('Please choose a subclass (required at level ' + state.classChoice.subclassLevel + '+).');
+            return false;
+        }
+        // Validate class skill picks
+        const cl = state.classChoice;
+        if (cl.skillOptions && state.classSkills.length !== cl.numSkills) {
+            alert('Please choose exactly ' + cl.numSkills + ' class skills.');
+            return false;
+        }
         return true;
     }
-    if(step===3){if(!state.background){alert('Please choose a background.');return false}return true}
-    if(step===4){
+    if (step === 3) {
+        if (!state.background) { alert('Please choose a background.'); return false; }
+        // Validate ASI
+        const totalASI = Object.values(state.asiAssignments).reduce((a,b) => a+b, 0);
+        const expected = state.asiMode === 'twoone' ? 3 : 3;
+        if (totalASI !== expected) { alert('Please assign all your ability score increases (' + (state.asiMode === 'twoone' ? '+2 and +1' : '+1/+1/+1') + ').'); return false; }
+        return true;
+    }
+    if (step === 4) {
         readAbilityScores();
-        const vals=Object.values(state.abilities);
-        if(vals.some(v=>isNaN(v)||v<1||v>30)){alert('All ability scores must be between 1 and 30.');return false}
-        if(state.abilityMethod==='standard'&&Object.keys(state.arrayAssignments).length<6){alert('Please assign all 6 scores.');return false}
-        if(state.abilityMethod==='pointbuy'&&calcPointsSpent()>27){alert('Too many points spent!');return false}
+        const vals = Object.values(state.abilities);
+        if (vals.some(v => isNaN(v) || v < 1 || v > 30)) { alert('All ability scores must be between 1 and 30.'); return false; }
+        if (state.abilityMethod === 'standard' && Object.keys(state.arrayAssignments).length < 6) { alert('Please assign all 6 scores.'); return false; }
+        if (state.abilityMethod === 'pointbuy' && calcPointsSpent() > 27) { alert('Too many points spent!'); return false; }
         return true;
     }
     return true;
 }
-function saveStepData(step){
-    if(step===1)state.name=document.getElementById('b-name').value.trim();
-    if(step===2){state.level=parseInt(document.getElementById('b-level').value)||1;state.alignment=document.getElementById('b-alignment').value.trim()}
-    if(step===4)readAbilityScores();
+
+function saveStepData(step) {
+    if (step === 1) state.name = document.getElementById('b-name').value.trim();
+    if (step === 2) {
+        state.level = parseInt(document.getElementById('b-level').value) || 1;
+        state.alignment = document.getElementById('b-alignment').value.trim();
+    }
+    if (step === 4) readAbilityScores();
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ═══════════════════════════════════════
 //  STEP 1: SPECIES
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
-function getSpeciesSources(){
-    const s=new Set();SPECIES.forEach(sp=>s.add(sp.source));return['All',...Array.from(s)];
+// ═══════════════════════════════════════
+function getSpeciesSources() {
+    const s = new Set();
+    SPECIES.forEach(sp => s.add(sp.source));
+    return ['All', ...Array.from(s)];
 }
-function renderSpeciesFilters(){
-    const c=document.getElementById('species-filters');
-    c.innerHTML=getSpeciesSources().map(s=>`<div class="filter-pill${s==='All'?' active':''}" onclick="setSpeciesFilter('${s}')">${s}</div>`).join('');
+function renderSpeciesFilters() {
+    const c = document.getElementById('species-filters');
+    c.innerHTML = getSpeciesSources().map(s =>
+        '<div class="filter-pill' + (s === 'All' ? ' active' : '') + '" onclick="setSpeciesFilter(\'' + s.replace(/'/g, "\\'") + '\')">' + s + '</div>'
+    ).join('');
 }
-function setSpeciesFilter(f){
-    state.speciesFilter=f;
-    document.querySelectorAll('#species-filters .filter-pill').forEach(p=>p.classList.toggle('active',p.textContent===f));
+function setSpeciesFilter(f) {
+    state.speciesFilter = f;
+    document.querySelectorAll('#species-filters .filter-pill').forEach(p =>
+        p.classList.toggle('active', p.textContent === f)
+    );
     filterSpecies();
 }
-function filterSpecies(){
-    const q=(document.getElementById('species-search').value||'').toLowerCase();
-    const f=state.speciesFilter;
-    let shown=0;
-    document.querySelectorAll('#species-cards .selection-card').forEach((card,i)=>{
-        const sp=SPECIES[i];
-        const matchQ=sp.name.toLowerCase().includes(q)||sp.desc.toLowerCase().includes(q)||(sp.source||'').toLowerCase().includes(q);
-        const matchF=f==='All'||sp.source===f;
-        const vis=matchQ&&matchF;
-        card.classList.toggle('hidden',!vis);
-        if(vis)shown++;
+function filterSpecies() {
+    const q = (document.getElementById('species-search').value || '').toLowerCase();
+    const f = state.speciesFilter;
+    let shown = 0;
+    document.querySelectorAll('#species-cards .selection-card').forEach((card, i) => {
+        const sp = SPECIES[i];
+        const matchQ = sp.name.toLowerCase().includes(q) || sp.desc.toLowerCase().includes(q) || (sp.source || '').toLowerCase().includes(q);
+        const matchF = f === 'All' || sp.source === f;
+        const vis = matchQ && matchF;
+        card.classList.toggle('hidden', !vis);
+        if (vis) shown++;
     });
-    document.getElementById('species-count').textContent=`Showing ${shown} of ${SPECIES.length} species`;
+    document.getElementById('species-count').textContent = 'Showing ' + shown + ' of ' + SPECIES.length + ' species';
 }
-function renderSpecies(){
-    const c=document.getElementById('species-cards');
-    c.innerHTML=SPECIES.map((sp,i)=>`
-        <div class="selection-card" onclick="selectSpecies(${i})" id="sp-${i}">
-            <div class="card-title">${sp.name}</div>
-            <div class="card-detail">${sp.desc}</div>
-            <div class="card-tags">
-                <span class="card-tag tag-stat">${sp.size} • ${sp.speed} ft.</span>
-                <span class="card-tag tag-source">${sp.source}</span>
-            </div>
-        </div>`).join('');
+function renderSpecies() {
+    const c = document.getElementById('species-cards');
+    c.innerHTML = SPECIES.map((sp, i) =>
+        '<div class="selection-card" onclick="selectSpecies(' + i + ')" id="sp-' + i + '">' +
+        '<div class="card-title">' + sp.name + '</div>' +
+        '<div class="card-detail">' + sp.desc + '</div>' +
+        '<div class="card-tags">' +
+        '<span class="card-tag tag-stat">' + sp.size + ' &bull; ' + sp.speed + ' ft.</span>' +
+        '<span class="card-tag tag-source">' + sp.source + '</span>' +
+        '</div></div>'
+    ).join('');
     renderSpeciesFilters();
     filterSpecies();
 }
-function selectSpecies(i){
-    state.species=SPECIES[i];
-    document.querySelectorAll('#species-cards .selection-card').forEach((c,j)=>c.classList.toggle('selected',j===i));
-    const sp=SPECIES[i];
-    document.getElementById('species-info').innerHTML=`<div class="info-panel"><h3>${sp.name} Traits <span style="font-size:11px;color:#8B4513;font-weight:400">(${sp.source})</span></h3>${sp.traits.map(t=>`<div class="trait">Ã¢â€”â€  ${t}</div>`).join('')}</div>`;
+function selectSpecies(i) {
+    state.species = SPECIES[i];
+    document.querySelectorAll('#species-cards .selection-card').forEach((c, j) =>
+        c.classList.toggle('selected', j === i)
+    );
+    const sp = SPECIES[i];
+    let traitsHTML = '';
+    if (sp.traits && sp.traits.length) {
+        traitsHTML = sp.traits.map(t => '<div class="trait">\u25C6 ' + t + '</div>').join('');
+    }
+    document.getElementById('species-info').innerHTML =
+        '<div class="info-panel"><h3>' + sp.name + ' Traits <span style="font-size:11px;color:#8B4513;font-weight:400">(' + sp.source + ')</span></h3>' +
+        traitsHTML + '</div>';
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
-//  STEP 2: CLASS & SUBCLASS
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
-function renderClasses(){
-    document.getElementById('class-cards').innerHTML=CLASSES.map((cl,i)=>`
-        <div class="selection-card" onclick="selectClass(${i})" id="cl-${i}">
-            <div class="card-title">${cl.name}</div>
-            <div class="card-detail">${cl.desc}</div>
-            <div class="card-tags">
-                <span class="card-tag tag-stat">${cl.hitDie} • ${cl.primaryAbility}</span>
-                <span class="card-tag tag-source">${cl.source}</span>
-            </div>
-        </div>`).join('');
+// ═══════════════════════════════════════
+//  STEP 2: CLASS, SUBCLASS, SKILLS
+// ═══════════════════════════════════════
+function renderClasses() {
+    document.getElementById('class-cards').innerHTML = CLASSES.map((cl, i) =>
+        '<div class="selection-card" onclick="selectClass(' + i + ')" id="cl-' + i + '">' +
+        '<div class="card-title">' + cl.name + '</div>' +
+        '<div class="card-detail">' + cl.desc + '</div>' +
+        '<div class="card-tags">' +
+        '<span class="card-tag tag-stat">' + cl.hitDie + ' &bull; ' + cl.primaryAbility + '</span>' +
+        '<span class="card-tag tag-source">' + cl.source + '</span>' +
+        '</div></div>'
+    ).join('');
 }
-function selectClass(i){
-    state.classChoice=CLASSES[i];state.subclass=null;
-    document.querySelectorAll('#class-cards .selection-card').forEach((c,j)=>c.classList.toggle('selected',j===i));
-    const cl=CLASSES[i];
-    const armorList=[];
-    if(cl.armorProf.light)armorList.push('Light');if(cl.armorProf.medium)armorList.push('Medium');
-    if(cl.armorProf.heavy)armorList.push('Heavy');if(cl.armorProf.shields)armorList.push('Shields');
-    document.getElementById('class-info').innerHTML=`<div class="info-panel"><h3>${cl.name}</h3>
-        <div class="trait"><strong>Hit Die:</strong> ${cl.hitDie}</div>
-        <div class="trait"><strong>Primary Ability:</strong> ${cl.primaryAbility}</div>
-        <div class="trait"><strong>Saving Throws:</strong> ${cl.savingThrows.map(s=>s.toUpperCase()).join(', ')}</div>
-        <div class="trait"><strong>Armor:</strong> ${armorList.length?armorList.join(', '):'None'}</div>
-        <div class="trait"><strong>Weapons:</strong> ${cl.weaponProf}</div>
-        <div class="trait"><strong>Skills:</strong> ${cl.skillChoices}</div></div>`;
+function selectClass(i) {
+    state.classChoice = CLASSES[i];
+    state.subclass = null;
+    state.classSkills = [];
+    document.querySelectorAll('#class-cards .selection-card').forEach((c, j) =>
+        c.classList.toggle('selected', j === i)
+    );
+    const cl = CLASSES[i];
+    const armorList = [];
+    if (cl.armorProf.light) armorList.push('Light');
+    if (cl.armorProf.medium) armorList.push('Medium');
+    if (cl.armorProf.heavy) armorList.push('Heavy');
+    if (cl.armorProf.shields) armorList.push('Shields');
+
+    let equipHTML = '';
+    if (cl.startingEquipment && cl.startingEquipment.length) {
+        equipHTML = '<div class="trait" style="margin-top:8px"><strong>Starting Equipment:</strong></div>' +
+            '<ul class="equipment-list" style="list-style:none;padding:0;margin:4px 0 0 0">' +
+            cl.startingEquipment.map(e => '<li>' + e + '</li>').join('') +
+            '</ul>' +
+            '<div class="trait" style="margin-top:4px"><strong>Starting Gold:</strong> ' + (cl.startingGold || 10) + ' GP</div>';
+    }
+
+    document.getElementById('class-info').innerHTML =
+        '<div class="info-panel"><h3>' + cl.name + '</h3>' +
+        '<div class="trait"><strong>Hit Die:</strong> ' + cl.hitDie + '</div>' +
+        '<div class="trait"><strong>Primary Ability:</strong> ' + cl.primaryAbility + '</div>' +
+        '<div class="trait"><strong>Saving Throws:</strong> ' + cl.savingThrows.map(s => s.toUpperCase()).join(', ') + '</div>' +
+        '<div class="trait"><strong>Armor:</strong> ' + (armorList.length ? armorList.join(', ') : 'None') + '</div>' +
+        '<div class="trait"><strong>Weapons:</strong> ' + cl.weaponProf + '</div>' +
+        equipHTML +
+        '</div>';
     renderSubclasses();
+    renderClassSkillPicker();
 }
-function renderSubclasses(){
-    const cl=state.classChoice;if(!cl)return;
-    const lvl=parseInt(document.getElementById('b-level').value)||1;
-    const area=document.getElementById('subclass-area');
-    if(lvl<cl.subclassLevel){
-        area.innerHTML=`<div class="warning-box" style="margin-top:16px">Subclass selection unlocks at level ${cl.subclassLevel}. Set your starting level to ${cl.subclassLevel}+ to choose a subclass.</div>`;
+
+function renderClassSkillPicker() {
+    const cl = state.classChoice;
+    if (!cl || !cl.skillOptions) { document.getElementById('class-skill-picker').innerHTML = ''; return; }
+
+    // Get background skills so we can show them as already taken
+    const bgSkills = state.background ? state.background.skillProfs : [];
+
+    const picker = document.getElementById('class-skill-picker');
+    picker.innerHTML =
+        '<div class="skill-picker">' +
+        '<h4>Choose ' + cl.numSkills + ' Class Skills</h4>' +
+        '<div class="skill-picker-count" id="class-skill-count">Selected: ' + state.classSkills.length + ' / ' + cl.numSkills + '</div>' +
+        '<div class="skill-grid">' +
+        cl.skillOptions.map(sk => {
+            const fromBg = bgSkills.includes(sk);
+            const picked = state.classSkills.includes(sk);
+            const cls = 'skill-option' + (picked ? ' selected' : '') + (fromBg ? ' from-bg' : '');
+            return '<label class="' + cls + '" id="csk-' + sk.replace(/\s/g,'') + '">' +
+                '<input type="checkbox" ' + (picked ? 'checked' : '') + ' ' + (fromBg ? 'disabled' : '') +
+                ' onchange="toggleClassSkill(\'' + sk.replace(/'/g, "\\'") + '\', this)">' +
+                sk + (fromBg ? ' <small>(from background)</small>' : '') + '</label>';
+        }).join('') +
+        '</div></div>';
+}
+
+function toggleClassSkill(skill, checkbox) {
+    const cl = state.classChoice;
+    if (checkbox.checked) {
+        if (state.classSkills.length >= cl.numSkills) {
+            checkbox.checked = false;
+            alert('You can only choose ' + cl.numSkills + ' class skills.');
+            return;
+        }
+        state.classSkills.push(skill);
+    } else {
+        state.classSkills = state.classSkills.filter(s => s !== skill);
+    }
+    // Update visual state
+    cl.skillOptions.forEach(sk => {
+        const label = document.getElementById('csk-' + sk.replace(/\s/g,''));
+        if (label && !label.classList.contains('from-bg')) {
+            label.classList.toggle('selected', state.classSkills.includes(sk));
+        }
+    });
+    const countEl = document.getElementById('class-skill-count');
+    countEl.textContent = 'Selected: ' + state.classSkills.length + ' / ' + cl.numSkills;
+    countEl.classList.toggle('over', state.classSkills.length > cl.numSkills);
+}
+
+function renderSubclasses() {
+    const cl = state.classChoice;
+    if (!cl) return;
+    const lvl = parseInt(document.getElementById('b-level').value) || 1;
+    const area = document.getElementById('subclass-area');
+    if (lvl < cl.subclassLevel) {
+        area.innerHTML = '<div class="warning-box" style="margin-top:16px">Subclass selection unlocks at level ' + cl.subclassLevel + '. Set your starting level to ' + cl.subclassLevel + '+ to choose a subclass.</div>';
         return;
     }
-    area.innerHTML=`<div class="subclass-section"><h4>Choose ${cl.name} Subclass (Level ${cl.subclassLevel}+)</h4>
-        <div class="subclass-grid">${cl.subclasses.map((sc,j)=>`
-            <div class="subclass-card" onclick="selectSubclass(${j})" id="sc-${j}">
-                <div class="sc-name">${sc.name}</div>
-                <div class="sc-desc">${sc.desc}</div>
-                <div class="sc-source">${sc.source}</div>
-            </div>`).join('')}
-        </div></div>`;
-    if(state.subclass){
-        const idx=cl.subclasses.findIndex(s=>s.name===state.subclass.name);
-        if(idx>=0)document.getElementById(`sc-${idx}`).classList.add('selected');
+    area.innerHTML = '<div class="subclass-section"><h4>Choose ' + cl.name + ' Subclass (Level ' + cl.subclassLevel + '+)</h4>' +
+        '<div class="subclass-grid">' + cl.subclasses.map((sc, j) =>
+            '<div class="subclass-card" onclick="selectSubclass(' + j + ')" id="sc-' + j + '">' +
+            '<div class="sc-name">' + sc.name + '</div>' +
+            '<div class="sc-desc">' + sc.desc + '</div>' +
+            '<div class="sc-source">' + sc.source + '</div></div>'
+        ).join('') + '</div></div>';
+    if (state.subclass) {
+        const idx = cl.subclasses.findIndex(s => s.name === state.subclass.name);
+        if (idx >= 0) document.getElementById('sc-' + idx).classList.add('selected');
     }
 }
-function selectSubclass(j){
-    state.subclass=state.classChoice.subclasses[j];
-    document.querySelectorAll('.subclass-card').forEach((c,k)=>c.classList.toggle('selected',k===j));
+function selectSubclass(j) {
+    state.subclass = state.classChoice.subclasses[j];
+    document.querySelectorAll('.subclass-card').forEach((c, k) => c.classList.toggle('selected', k === j));
 }
-function onLevelChange(){if(state.classChoice)renderSubclasses()}
+function onLevelChange() { if (state.classChoice) renderSubclasses(); }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
-//  STEP 3: BACKGROUND
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
-function renderBackgrounds(){
-    document.getElementById('background-cards').innerHTML=BACKGROUNDS.map((bg,i)=>`
-        <div class="selection-card" onclick="selectBackground(${i})" id="bg-${i}">
-            <div class="card-title">${bg.name}</div>
-            <div class="card-detail">${bg.desc}</div>
-            <div class="card-tags"><span class="card-tag tag-stat">${bg.feat}</span></div>
-        </div>`).join('');
+// ═══════════════════════════════════════
+//  STEP 3: BACKGROUND + ASI
+// ═══════════════════════════════════════
+function renderBackgrounds() {
+    document.getElementById('background-cards').innerHTML = BACKGROUNDS.map((bg, i) =>
+        '<div class="selection-card" onclick="selectBackground(' + i + ')" id="bg-' + i + '">' +
+        '<div class="card-title">' + bg.name + '</div>' +
+        '<div class="card-detail">' + bg.desc + '</div>' +
+        '<div class="card-tags"><span class="card-tag tag-stat">' + bg.feat + '</span></div></div>'
+    ).join('');
 }
-function selectBackground(i){
-    state.background=BACKGROUNDS[i];
-    document.querySelectorAll('#background-cards .selection-card').forEach((c,j)=>c.classList.toggle('selected',j===i));
-    const bg=BACKGROUNDS[i];
-    document.getElementById('background-info').innerHTML=`<div class="info-panel"><h3>${bg.name}</h3>
-        <div class="trait"><strong>Skill Proficiencies:</strong> ${bg.skillProfs.join(', ')}</div>
-        <div class="trait"><strong>Tool Proficiency:</strong> ${bg.toolProf}</div>
-        <div class="trait"><strong>Origin Feat:</strong> ${bg.feat}</div></div>`;
+function selectBackground(i) {
+    state.background = BACKGROUNDS[i];
+    state.asiAssignments = {}; // Reset ASI when changing background
+    document.querySelectorAll('#background-cards .selection-card').forEach((c, j) =>
+        c.classList.toggle('selected', j === i)
+    );
+    const bg = BACKGROUNDS[i];
+    document.getElementById('background-info').innerHTML =
+        '<div class="info-panel"><h3>' + bg.name + '</h3>' +
+        '<div class="trait"><strong>Skill Proficiencies:</strong> ' + bg.skillProfs.join(', ') + '</div>' +
+        '<div class="trait"><strong>Tool Proficiency:</strong> ' + bg.toolProf + '</div>' +
+        '<div class="trait"><strong>Origin Feat:</strong> ' + bg.feat + '</div></div>';
+    // Show ASI section
+    document.getElementById('asi-section').style.display = 'block';
+    renderASI();
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// --- ASI Assignment ---
+function setASIMode(mode) {
+    state.asiMode = mode;
+    state.asiAssignments = {};
+    document.querySelectorAll('.asi-mode-tab').forEach(t =>
+        t.classList.toggle('active', t.dataset.mode === mode)
+    );
+    if (mode === 'twoone') {
+        document.getElementById('asi-instructions').textContent = 'Tap an ability to assign +2, then tap another for +1.';
+    } else {
+        document.getElementById('asi-instructions').textContent = 'Tap three different abilities to assign +1 each.';
+    }
+    renderASI();
+}
+
+function renderASI() {
+    const row = document.getElementById('asi-row');
+    row.innerHTML = AB.map((ab, i) => {
+        const k = AK[i];
+        const bonus = state.asiAssignments[k] || 0;
+        return '<div class="asi-box' + (bonus > 0 ? ' has-bonus' : '') + '" onclick="tapASI(\'' + k + '\')">' +
+            '<div class="asi-label">' + ab + '</div>' +
+            '<div class="asi-bonus">' + (bonus > 0 ? '+' + bonus : '-') + '</div></div>';
+    }).join('');
+}
+
+function tapASI(key) {
+    const mode = state.asiMode;
+    const current = state.asiAssignments[key] || 0;
+
+    if (mode === 'twoone') {
+        // If tapping something that already has a value, remove it
+        if (current > 0) {
+            delete state.asiAssignments[key];
+            renderASI();
+            return;
+        }
+        // Check what's already assigned
+        const vals = Object.values(state.asiAssignments);
+        const has2 = vals.includes(2);
+        const has1 = vals.includes(1);
+        if (!has2) {
+            state.asiAssignments[key] = 2;
+        } else if (!has1) {
+            state.asiAssignments[key] = 1;
+        } else {
+            // Already full, do nothing (user should tap to remove first)
+            return;
+        }
+    } else {
+        // +1/+1/+1 mode
+        if (current > 0) {
+            delete state.asiAssignments[key];
+            renderASI();
+            return;
+        }
+        const count = Object.keys(state.asiAssignments).length;
+        if (count >= 3) return;
+        state.asiAssignments[key] = 1;
+    }
+    renderASI();
+}
+
+// ═══════════════════════════════════════
 //  STEP 4: ABILITY SCORES
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
-function calcMod(s){return Math.floor((s-10)/2)}
-function fmtMod(m){return m>=0?`+${m}`:`${m}`}
+// ═══════════════════════════════════════
+function calcMod(s) { return Math.floor((s - 10) / 2); }
+function fmtMod(m) { return m >= 0 ? '+' + m : '' + m; }
 
-function setAbilityMethod(m){
-    state.abilityMethod=m;
-    document.querySelectorAll('.method-tab').forEach(t=>t.classList.toggle('active',t.dataset.method===m));
-    document.getElementById('method-standard').style.display=m==='standard'?'':'none';
-    document.getElementById('method-pointbuy').style.display=m==='pointbuy'?'':'none';
-    document.getElementById('method-manual').style.display=m==='manual'?'':'none';
+function setAbilityMethod(m) {
+    state.abilityMethod = m;
+    document.querySelectorAll('.method-tab').forEach(t => t.classList.toggle('active', t.dataset.method === m));
+    document.getElementById('method-standard').style.display = m === 'standard' ? '' : 'none';
+    document.getElementById('method-pointbuy').style.display = m === 'pointbuy' ? '' : 'none';
+    document.getElementById('method-manual').style.display = m === 'manual' ? '' : 'none';
     initAbilityStep();
 }
-function initAbilityStep(){
-    if(state.abilityMethod==='standard')initStdArray();
-    else if(state.abilityMethod==='pointbuy')initPB();
+
+function initAbilityStep() {
+    if (state.abilityMethod === 'standard') initStdArray();
+    else if (state.abilityMethod === 'pointbuy') initPB();
     else initManual();
 }
 
+// Helper: get ASI bonus for display
+function getASIBonus(key) {
+    return state.asiAssignments[key] || 0;
+}
+
+function asiTag(key) {
+    const b = getASIBonus(key);
+    if (b > 0) return ' <span style="color:var(--green-dark);font-size:12px;font-weight:600">(+' + b + ' ASI)</span>';
+    return '';
+}
+
 // Standard Array
-function initStdArray(){
-    state.selectedChip=null;
-    const assigned=Object.values(state.arrayAssignments);
-    const avail=[...STD_ARRAY];
-    assigned.forEach(v=>{const i=avail.indexOf(v);if(i>-1)avail.splice(i,1)});
-    document.getElementById('array-pool').innerHTML=avail.map(v=>`<div class="array-chip" onclick="tapChip(${v},this)">${v}</div>`).join('');
-    document.getElementById('array-abilities').innerHTML=AB.map((ab,i)=>{
-        const k=AK[i],a=state.arrayAssignments[k];
-        return `<div class="ability-box" onclick="tapSlot('${k}')">
-            <div class="ab-label">${ab}</div>
-            <div class="ability-drop">${a!=null?`<div class="array-chip" onclick="event.stopPropagation();unassign('${k}')">${a}</div>`:'<span style="color:#bbb;font-size:13px">—</span>'}</div>
-            <div class="ab-mod">${a!=null?fmtMod(calcMod(a)):''}</div></div>`;
+function initStdArray() {
+    state.selectedChip = null;
+    const assigned = Object.values(state.arrayAssignments);
+    const avail = [...STD_ARRAY];
+    assigned.forEach(v => { const i = avail.indexOf(v); if (i > -1) avail.splice(i, 1); });
+    document.getElementById('array-pool').innerHTML = avail.map(v =>
+        '<div class="array-chip" onclick="tapChip(' + v + ',this)">' + v + '</div>'
+    ).join('');
+    document.getElementById('array-abilities').innerHTML = AB.map((ab, i) => {
+        const k = AK[i], a = state.arrayAssignments[k];
+        const bonus = getASIBonus(k);
+        const total = a != null ? a + bonus : null;
+        return '<div class="ability-box" onclick="tapSlot(\'' + k + '\')">' +
+            '<div class="ab-label">' + ab + asiTag(k) + '</div>' +
+            '<div class="ability-drop">' + (a != null ?
+                '<div class="array-chip" onclick="event.stopPropagation();unassign(\'' + k + '\')">' + a + '</div>' :
+                '<span style="color:#bbb;font-size:13px">\u2014</span>') +
+            '</div>' +
+            '<div class="ab-mod">' + (total != null ? fmtMod(calcMod(total)) + (bonus > 0 ? ' <small>(' + a + '+' + bonus + '=' + total + ')</small>' : '') : '') + '</div></div>';
     }).join('');
 }
-function tapChip(v,el){
-    document.querySelectorAll('#array-pool .array-chip').forEach(c=>c.classList.remove('selected-chip'));
-    el.classList.add('selected-chip');state.selectedChip=v;
+function tapChip(v, el) {
+    document.querySelectorAll('#array-pool .array-chip').forEach(c => c.classList.remove('selected-chip'));
+    el.classList.add('selected-chip');
+    state.selectedChip = v;
 }
-function tapSlot(k){
-    if(state.selectedChip!=null){
-        if(state.arrayAssignments[k]!=null)delete state.arrayAssignments[k];
-        state.arrayAssignments[k]=state.selectedChip;state.selectedChip=null;initStdArray();
-    }else if(state.arrayAssignments[k]!=null)unassign(k);
+function tapSlot(k) {
+    if (state.selectedChip != null) {
+        if (state.arrayAssignments[k] != null) delete state.arrayAssignments[k];
+        state.arrayAssignments[k] = state.selectedChip;
+        state.selectedChip = null;
+        initStdArray();
+    } else if (state.arrayAssignments[k] != null) {
+        unassign(k);
+    }
 }
-function unassign(k){delete state.arrayAssignments[k];state.selectedChip=null;initStdArray()}
+function unassign(k) { delete state.arrayAssignments[k]; state.selectedChip = null; initStdArray(); }
 
 // Point Buy
-function initPB(){
-    document.getElementById('pointbuy-abilities').innerHTML=AB.map((ab,i)=>{
-        const k=AK[i],v=state.abilities[k]||8;
-        return `<div class="ability-box"><div class="ab-label">${ab}</div>
-            <div style="display:flex;align-items:center;justify-content:center;gap:6px">
-                <button onclick="pbAdj('${k}',-1)" style="width:30px;height:30px;border:1px solid #c9a77c;border-radius:4px;background:#f5ede0;font-size:18px;font-weight:bold;cursor:pointer;color:#5a1a1a">Ã¢Ë†â€™</button>
-                <input type="number" id="pb-${k}" value="${v}" min="8" max="15" readonly style="width:48px;padding:6px 2px;text-align:center;font-size:20px;font-weight:bold;border:2px solid #ddd;border-radius:4px;background:white;font-family:'Crimson Text',serif">
-                <button onclick="pbAdj('${k}',1)" style="width:30px;height:30px;border:1px solid #c9a77c;border-radius:4px;background:#f5ede0;font-size:18px;font-weight:bold;cursor:pointer;color:#5a1a1a">+</button>
-            </div><div class="ab-mod" id="pb-mod-${k}">${fmtMod(calcMod(v))}</div></div>`;
+function initPB() {
+    document.getElementById('pointbuy-abilities').innerHTML = AB.map((ab, i) => {
+        const k = AK[i], v = state.abilities[k] || 8;
+        const bonus = getASIBonus(k);
+        const total = v + bonus;
+        return '<div class="ability-box"><div class="ab-label">' + ab + asiTag(k) + '</div>' +
+            '<div style="display:flex;align-items:center;justify-content:center;gap:6px">' +
+            '<button onclick="pbAdj(\'' + k + '\',-1)" style="width:30px;height:30px;border:1px solid #c9a77c;border-radius:4px;background:#f5ede0;font-size:18px;font-weight:bold;cursor:pointer;color:#5a1a1a">\u2212</button>' +
+            '<input type="number" id="pb-' + k + '" value="' + v + '" min="8" max="15" readonly style="width:48px;padding:6px 2px;text-align:center;font-size:20px;font-weight:bold;border:2px solid #ddd;border-radius:4px;background:white;font-family:\'Crimson Text\',serif">' +
+            '<button onclick="pbAdj(\'' + k + '\',1)" style="width:30px;height:30px;border:1px solid #c9a77c;border-radius:4px;background:#f5ede0;font-size:18px;font-weight:bold;cursor:pointer;color:#5a1a1a">+</button>' +
+            '</div><div class="ab-mod" id="pb-mod-' + k + '">' + fmtMod(calcMod(total)) +
+            (bonus > 0 ? ' <small>(' + v + '+' + bonus + ')</small>' : '') + '</div></div>';
     }).join('');
     updatePBDisplay();
 }
-function pbAdj(k,d){
-    const inp=document.getElementById(`pb-${k}`);
-    let v=Math.max(8,Math.min(15,(parseInt(inp.value)||8)+d));
-    inp.value=v;state.abilities[k]=v;
-    document.getElementById(`pb-mod-${k}`).textContent=fmtMod(calcMod(v));
+function pbAdj(k, d) {
+    const inp = document.getElementById('pb-' + k);
+    let v = Math.max(8, Math.min(15, (parseInt(inp.value) || 8) + d));
+    inp.value = v;
+    state.abilities[k] = v;
+    const bonus = getASIBonus(k);
+    const total = v + bonus;
+    document.getElementById('pb-mod-' + k).innerHTML = fmtMod(calcMod(total)) +
+        (bonus > 0 ? ' <small>(' + v + '+' + bonus + ')</small>' : '');
     updatePBDisplay();
 }
-function calcPointsSpent(){
-    let t=0;AK.forEach(k=>{const v=state.abilities[k]||8;t+=PB_COST[Math.max(8,Math.min(15,v))]||0});return t;
+function calcPointsSpent() {
+    let t = 0;
+    AK.forEach(k => { const v = state.abilities[k] || 8; t += PB_COST[Math.max(8, Math.min(15, v))] || 0; });
+    return t;
 }
-function updatePBDisplay(){
-    AK.forEach(k=>{const inp=document.getElementById(`pb-${k}`);if(inp)state.abilities[k]=parseInt(inp.value)||8});
-    const r=27-calcPointsSpent();
-    document.getElementById('pts-remaining').textContent=r;
-    document.getElementById('points-display').classList.toggle('over-budget',r<0);
+function updatePBDisplay() {
+    AK.forEach(k => { const inp = document.getElementById('pb-' + k); if (inp) state.abilities[k] = parseInt(inp.value) || 8; });
+    const r = 27 - calcPointsSpent();
+    document.getElementById('pts-remaining').textContent = r;
+    document.getElementById('points-display').classList.toggle('over-budget', r < 0);
 }
 
 // Manual
-function initManual(){
-    document.getElementById('manual-abilities').innerHTML=AB.map((ab,i)=>{
-        const k=AK[i],v=state.abilities[k]||10;
-        return `<div class="ability-box"><div class="ab-label">${ab}</div>
-            <input type="number" id="man-${k}" value="${v}" min="1" max="30" oninput="document.getElementById('man-mod-${k}').textContent=fmtMod(calcMod(parseInt(this.value)||10))">
-            <div class="ab-mod" id="man-mod-${k}">${fmtMod(calcMod(v))}</div></div>`;
+function initManual() {
+    document.getElementById('manual-abilities').innerHTML = AB.map((ab, i) => {
+        const k = AK[i], v = state.abilities[k] || 10;
+        const bonus = getASIBonus(k);
+        return '<div class="ability-box"><div class="ab-label">' + ab + asiTag(k) + '</div>' +
+            '<input type="number" id="man-' + k + '" value="' + v + '" min="1" max="30" oninput="updateManualMod(\'' + k + '\')">' +
+            '<div class="ab-mod" id="man-mod-' + k + '">' + fmtMod(calcMod(v + bonus)) +
+            (bonus > 0 ? ' <small>(' + v + '+' + bonus + ')</small>' : '') + '</div></div>';
     }).join('');
 }
-
-function readAbilityScores(){
-    if(state.abilityMethod==='standard'){AK.forEach(k=>{state.abilities[k]=state.arrayAssignments[k]||10})}
-    else if(state.abilityMethod==='pointbuy'){AK.forEach(k=>{const i=document.getElementById(`pb-${k}`);state.abilities[k]=i?parseInt(i.value)||8:(state.abilities[k]||8)})}
-    else{AK.forEach(k=>{const i=document.getElementById(`man-${k}`);state.abilities[k]=i?parseInt(i.value)||10:(state.abilities[k]||10)})}
+function updateManualMod(k) {
+    const v = parseInt(document.getElementById('man-' + k).value) || 10;
+    const bonus = getASIBonus(k);
+    const total = v + bonus;
+    document.getElementById('man-mod-' + k).innerHTML = fmtMod(calcMod(total)) +
+        (bonus > 0 ? ' <small>(' + v + '+' + bonus + ')</small>' : '');
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+function readAbilityScores() {
+    if (state.abilityMethod === 'standard') {
+        AK.forEach(k => { state.abilities[k] = state.arrayAssignments[k] || 10; });
+    } else if (state.abilityMethod === 'pointbuy') {
+        AK.forEach(k => {
+            const inp = document.getElementById('pb-' + k);
+            state.abilities[k] = inp ? parseInt(inp.value) || 8 : (state.abilities[k] || 8);
+        });
+    } else {
+        AK.forEach(k => {
+            const inp = document.getElementById('man-' + k);
+            state.abilities[k] = inp ? parseInt(inp.value) || 10 : (state.abilities[k] || 10);
+        });
+    }
+}
+
+// Get final ability score (base + ASI)
+function getFinalAbility(k) {
+    return (state.abilities[k] || 10) + (state.asiAssignments[k] || 0);
+}
+
+// ═══════════════════════════════════════
 //  STEP 5: REVIEW
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
-function buildReview(){
-    const sp=state.species,cl=state.classChoice,bg=state.background,lvl=state.level;
-    const pb=Math.ceil(lvl/4)+1;
-    const hd=parseInt(cl.hitDie.replace('d',''));
-    const conMod=calcMod(state.abilities.con);
-    const maxHP=hd+conMod+((lvl-1)*(Math.floor(hd/2)+1+conMod));
-    const scName=state.subclass?state.subclass.name:'None (below subclass level)';
+// ═══════════════════════════════════════
+function buildReview() {
+    const sp = state.species, cl = state.classChoice, bg = state.background, lvl = state.level;
+    const pb = Math.ceil(lvl / 4) + 1;
+    const hd = parseInt(cl.hitDie.replace('d', ''));
+    const conMod = calcMod(getFinalAbility('con'));
+    const maxHP = hd + conMod + ((lvl - 1) * (Math.floor(hd / 2) + 1 + conMod));
+    const scName = state.subclass ? state.subclass.name : 'None (below subclass level)';
 
-    document.getElementById('review-content').innerHTML=`
-        <div class="review-section"><h3>Identity</h3>
-            <div class="review-row"><span class="rlabel">Name</span><span class="rvalue">${state.name}</span></div>
-            <div class="review-row"><span class="rlabel">Species</span><span class="rvalue">${sp.name} <small style="color:#8B4513">(${sp.source})</small></span></div>
-            <div class="review-row"><span class="rlabel">Size / Speed</span><span class="rvalue">${sp.size} • ${sp.speed} ft.</span></div>
-            ${state.alignment?`<div class="review-row"><span class="rlabel">Alignment</span><span class="rvalue">${state.alignment}</span></div>`:''}</div>
-        <div class="review-section"><h3>Class</h3>
-            <div class="review-row"><span class="rlabel">Class</span><span class="rvalue">${cl.name}</span></div>
-            <div class="review-row"><span class="rlabel">Subclass</span><span class="rvalue">${scName}</span></div>
-            <div class="review-row"><span class="rlabel">Level</span><span class="rvalue">${lvl}</span></div>
-            <div class="review-row"><span class="rlabel">Hit Die / HP</span><span class="rvalue">${cl.hitDie} • ${maxHP} HP</span></div>
-            <div class="review-row"><span class="rlabel">Proficiency Bonus</span><span class="rvalue">+${pb}</span></div>
-            <div class="review-row"><span class="rlabel">Saving Throws</span><span class="rvalue">${cl.savingThrows.map(s=>s.toUpperCase()).join(', ')}</span></div></div>
-        <div class="review-section"><h3>Background</h3>
-            <div class="review-row"><span class="rlabel">Background</span><span class="rvalue">${bg.name}</span></div>
-            <div class="review-row"><span class="rlabel">Skills</span><span class="rvalue">${bg.skillProfs.join(', ')}</span></div>
-            <div class="review-row"><span class="rlabel">Tool</span><span class="rvalue">${bg.toolProf}</span></div>
-            <div class="review-row"><span class="rlabel">Origin Feat</span><span class="rvalue">${bg.feat}</span></div></div>
-        <div class="review-section"><h3>Ability Scores</h3>
-            <div class="review-abilities">${AB.map((ab,i)=>{
-                const s=state.abilities[AK[i]];
-                return `<div class="review-ab"><div class="ab-name">${ab}</div><div class="ab-score">${s}</div><div class="ab-modifier">${fmtMod(calcMod(s))}</div></div>`;
-            }).join('')}</div></div>
-        <div class="review-section"><h3>Species Traits</h3><ul class="review-traits">${sp.traits.map(t=>`<li>${t}</li>`).join('')}</ul></div>`;
+    // Collect all proficient skills
+    const allSkills = new Set();
+    bg.skillProfs.forEach(s => allSkills.add(s));
+    state.classSkills.forEach(s => allSkills.add(s));
+
+    // ASI summary
+    const asiParts = [];
+    AK.forEach((k, i) => {
+        const b = state.asiAssignments[k];
+        if (b) asiParts.push(AB[i] + ' +' + b);
+    });
+
+    document.getElementById('review-content').innerHTML =
+        '<div class="review-section"><h3>Identity</h3>' +
+        '<div class="review-row"><span class="rlabel">Name</span><span class="rvalue">' + state.name + '</span></div>' +
+        '<div class="review-row"><span class="rlabel">Species</span><span class="rvalue">' + sp.name + ' <small style="color:#8B4513">(' + sp.source + ')</small></span></div>' +
+        '<div class="review-row"><span class="rlabel">Size / Speed</span><span class="rvalue">' + sp.size + ' &bull; ' + sp.speed + ' ft.</span></div>' +
+        (state.alignment ? '<div class="review-row"><span class="rlabel">Alignment</span><span class="rvalue">' + state.alignment + '</span></div>' : '') +
+        '</div>' +
+
+        '<div class="review-section"><h3>Class</h3>' +
+        '<div class="review-row"><span class="rlabel">Class</span><span class="rvalue">' + cl.name + '</span></div>' +
+        '<div class="review-row"><span class="rlabel">Subclass</span><span class="rvalue">' + scName + '</span></div>' +
+        '<div class="review-row"><span class="rlabel">Level</span><span class="rvalue">' + lvl + '</span></div>' +
+        '<div class="review-row"><span class="rlabel">Hit Die / HP</span><span class="rvalue">' + cl.hitDie + ' &bull; ' + maxHP + ' HP</span></div>' +
+        '<div class="review-row"><span class="rlabel">Proficiency Bonus</span><span class="rvalue">+' + pb + '</span></div>' +
+        '<div class="review-row"><span class="rlabel">Saving Throws</span><span class="rvalue">' + cl.savingThrows.map(s => s.toUpperCase()).join(', ') + '</span></div>' +
+        '</div>' +
+
+        '<div class="review-section"><h3>Background</h3>' +
+        '<div class="review-row"><span class="rlabel">Background</span><span class="rvalue">' + bg.name + '</span></div>' +
+        '<div class="review-row"><span class="rlabel">Origin Feat</span><span class="rvalue">' + bg.feat + '</span></div>' +
+        '<div class="review-row"><span class="rlabel">ASI</span><span class="rvalue">' + asiParts.join(', ') + '</span></div>' +
+        '</div>' +
+
+        '<div class="review-section"><h3>Skills (Proficient)</h3>' +
+        '<div class="review-row"><span class="rlabel">From Background</span><span class="rvalue">' + bg.skillProfs.join(', ') + '</span></div>' +
+        '<div class="review-row"><span class="rlabel">From Class</span><span class="rvalue">' + (state.classSkills.length ? state.classSkills.join(', ') : 'None selected') + '</span></div>' +
+        '</div>' +
+
+        '<div class="review-section"><h3>Ability Scores (with ASI)</h3>' +
+        '<div class="review-abilities">' + AB.map((ab, i) => {
+            const base = state.abilities[AK[i]];
+            const bonus = state.asiAssignments[AK[i]] || 0;
+            const final = base + bonus;
+            return '<div class="review-ab"><div class="ab-name">' + ab + '</div><div class="ab-score">' + final +
+                (bonus > 0 ? '<small style="display:block;font-size:11px;color:var(--green-dark)">(' + base + '+' + bonus + ')</small>' : '') +
+                '</div><div class="ab-modifier">' + fmtMod(calcMod(final)) + '</div></div>';
+        }).join('') + '</div></div>' +
+
+        '<div class="review-section"><h3>Starting Equipment</h3>' +
+        '<ul class="equipment-list" style="list-style:none;padding:0">' +
+        (cl.startingEquipment || []).map(e => '<li>' + e + '</li>').join('') +
+        '<li>' + (cl.startingGold || 10) + ' GP</li>' +
+        '</ul></div>' +
+
+        '<div class="review-section"><h3>Species Traits</h3>' +
+        '<ul class="review-traits">' + (sp.traits || []).map(t => '<li>' + t + '</li>').join('') + '</ul></div>';
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ═══════════════════════════════════════
 //  CREATE CHARACTER
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
-function createCharacter(){
-    const sp=state.species,cl=state.classChoice,bg=state.background,lvl=state.level;
-    const hd=parseInt(cl.hitDie.replace('d',''));
-    const conMod=calcMod(state.abilities.con);
-    const maxHP=hd+conMod+((lvl-1)*(Math.floor(hd/2)+1+conMod));
-    const pb=Math.ceil(lvl/4)+1;
-    const wisMod=calcMod(state.abilities.wis);
+// ═══════════════════════════════════════
+function createCharacter() {
+    const sp = state.species, cl = state.classChoice, bg = state.background, lvl = state.level;
+    const hd = parseInt(cl.hitDie.replace('d', ''));
 
-    const skillMap={'Acrobatics':0,'Animal Handling':1,'Arcana':2,'Athletics':3,'Deception':4,'History':5,'Insight':6,'Intimidation':7,'Investigation':8,'Medicine':9,'Nature':10,'Perception':11,'Performance':12,'Persuasion':13,'Religion':14,'Sleight of Hand':15,'Stealth':16,'Survival':17};
-    const profSkills=new Set();
-    bg.skillProfs.forEach(s=>{if(skillMap[s]!==undefined)profSkills.add(String(skillMap[s]))});
-    const percProf=profSkills.has('11');
-    const passivePerception=10+wisMod+(percProf?pb:0);
+    // Final abilities = base + ASI
+    const finalAbilities = {};
+    AK.forEach(k => { finalAbilities[k] = getFinalAbility(k); });
 
-    const scName=state.subclass?state.subclass.name:'';
-    const notesLines=[
-        `Species: ${sp.name} (${sp.source})`,
-        `Traits: ${sp.traits.join('; ')}`,
+    const conMod = calcMod(finalAbilities.con);
+    const maxHP = hd + conMod + ((lvl - 1) * (Math.floor(hd / 2) + 1 + conMod));
+    const pb = Math.ceil(lvl / 4) + 1;
+    const wisMod = calcMod(finalAbilities.wis);
+    const dexMod = calcMod(finalAbilities.dex);
+
+    // Merge all skill proficiencies
+    const profSkills = new Set();
+    bg.skillProfs.forEach(s => { if (SKILL_MAP[s] !== undefined) profSkills.add(String(SKILL_MAP[s])); });
+    state.classSkills.forEach(s => { if (SKILL_MAP[s] !== undefined) profSkills.add(String(SKILL_MAP[s])); });
+
+    const percProf = profSkills.has('11');
+    const passivePerception = 10 + wisMod + (percProf ? pb : 0);
+
+    const scName = state.subclass ? state.subclass.name : '';
+
+    // Build equipment list for notes
+    const equipList = (cl.startingEquipment || []).join(', ');
+
+    // Build comprehensive notes
+    const notesLines = [
+        '=== SPECIES: ' + sp.name + ' (' + sp.source + ') ===',
+        ...(sp.traits || []).map(t => '- ' + t),
         '',
-        `Background: ${bg.name}`,
-        `Origin Feat: ${bg.feat}`,
+        '=== BACKGROUND: ' + bg.name + ' ===',
+        'Origin Feat: ' + bg.feat,
+        'Tool Proficiency: ' + bg.toolProf,
         '',
-        `Class: ${cl.name}${scName?' — '+scName:''}`,
-        `Skills: ${cl.skillChoices}`,
+        '=== CLASS: ' + cl.name + (scName ? ' - ' + scName : '') + ' ===',
+        'Hit Die: ' + cl.hitDie,
+        '',
+        '=== STARTING EQUIPMENT ===',
+        ...(cl.startingEquipment || []).map(e => '- ' + e),
+        'Starting Gold: ' + (cl.startingGold || 10) + ' GP',
     ];
 
-    const character={
-        name:state.name, species:sp.name, class:cl.name, subclass:scName,
-        background:bg.name, alignment:state.alignment, level:String(lvl), xp:'0', size:sp.size,
-        abilities:{str:String(state.abilities.str),dex:String(state.abilities.dex),con:String(state.abilities.con),int:String(state.abilities.int),wis:String(state.abilities.wis),cha:String(state.abilities.cha)},
-        combat:{currentHP:String(maxHP),maxHP:String(maxHP),tempHP:'0',hitDiceType:`1${cl.hitDie}`,currentHitDice:String(lvl),exhaustion:0,inspiration:false,acOverride:'',initiativeOverride:'',speedOverride:String(sp.speed),passivePerceptionOverride:''},
-        deathSaves:{successes:[false,false,false],failures:[false,false,false]},
-        proficiencies:{
-            saves:AK.map(ab=>({ability:ab,proficient:cl.savingThrows.includes(ab)})),
-            skills:Array.from({length:18},(_,i)=>({index:String(i),proficient:profSkills.has(String(i))})),
-            armor:{light:cl.armorProf.light,medium:cl.armorProf.medium,heavy:cl.armorProf.heavy,shields:cl.armorProf.shields},
-            weapons:cl.weaponProf, tools:bg.toolProf, languages:'Common'
+    const character = {
+        name: state.name,
+        species: sp.name,
+        class: cl.name,
+        subclass: scName,
+        background: bg.name,
+        alignment: state.alignment,
+        level: String(lvl),
+        xp: '0',
+        size: sp.size || 'Medium',
+        abilities: {
+            str: String(finalAbilities.str),
+            dex: String(finalAbilities.dex),
+            con: String(finalAbilities.con),
+            int: String(finalAbilities.int),
+            wis: String(finalAbilities.wis),
+            cha: String(finalAbilities.cha)
         },
-        coins:{cp:'0',sp:'0',ep:'0',gp:'0',pp:'0'},
-        conditions:['blinded','charmed','deafened','frightened','grappled','incapacitated','invisible','paralyzed','petrified','poisoned','prone','restrained','stunned','unconscious'].map(c=>({condition:c,active:false})),
-        notes:notesLines.join('\n')
+        combat: {
+            currentHP: String(maxHP),
+            maxHP: String(maxHP),
+            tempHP: '0',
+            hitDiceType: '1' + cl.hitDie,
+            currentHitDice: String(lvl),
+            exhaustion: 0,
+            inspiration: false,
+            acOverride: '',
+            initiativeOverride: '',
+            speedOverride: String(sp.speed || 30),
+            passivePerceptionOverride: ''
+        },
+        deathSaves: {
+            successes: [false, false, false],
+            failures: [false, false, false]
+        },
+        proficiencies: {
+            saves: AK.map(ab => ({ability: ab, proficient: cl.savingThrows.includes(ab)})),
+            skills: Array.from({length: 18}, (_, i) => ({index: String(i), proficient: profSkills.has(String(i))})),
+            armor: {
+                light: cl.armorProf.light,
+                medium: cl.armorProf.medium,
+                heavy: cl.armorProf.heavy,
+                shields: cl.armorProf.shields
+            },
+            weapons: cl.weaponProf,
+            tools: bg.toolProf,
+            languages: 'Common'
+        },
+        coins: {
+            cp: '0', sp: '0', ep: '0',
+            gp: String(cl.startingGold || 10),
+            pp: '0'
+        },
+        conditions: ['blinded','charmed','deafened','frightened','grappled','incapacitated','invisible','paralyzed','petrified','poisoned','prone','restrained','stunned','unconscious'].map(c => ({condition: c, active: false})),
+        notes: notesLines.join('\n')
     };
 
-    localStorage.setItem('dndCharacter',JSON.stringify(character));
+    localStorage.setItem('dndCharacter', JSON.stringify(character));
 
-    const overlay=document.createElement('div');
-    overlay.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px';
-    overlay.innerHTML=`<div style="background:linear-gradient(to bottom,#faf7f2,#f5f0e8);border:2px solid #8B4513;border-radius:12px;padding:30px;max-width:400px;width:100%;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.3)">
-        <div style="font-family:'Cinzel',serif;font-size:24px;color:#5a1a1a;font-weight:700;margin-bottom:10px">Character Created!</div>
-        <div style="font-size:16px;color:#666;margin-bottom:4px">${state.name}</div>
-        <div style="font-size:14px;color:#888;margin-bottom:24px">Level ${lvl} ${sp.name} ${cl.name}${scName?' — '+scName:''}</div>
-        <a href="index.html" style="display:block;padding:14px;background:linear-gradient(135deg,#4a7c59,#2d5016);color:#faf7f2;border:2px solid #2d5016;border-radius:8px;font-family:'Cinzel',serif;font-size:16px;font-weight:600;text-decoration:none;letter-spacing:1px;margin-bottom:12px;box-shadow:0 3px 8px rgba(45,80,22,.3)">Open Character Sheet</a>
-        <div style="font-size:12px;color:#999;margin-top:8px">Saved to localStorage — loads automatically in the sheet.</div></div>`;
+    // Success overlay
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px';
+    overlay.innerHTML =
+        '<div style="background:linear-gradient(to bottom,#faf7f2,#f5f0e8);border:2px solid #8B4513;border-radius:12px;padding:30px;max-width:400px;width:100%;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.3)">' +
+        '<div style="font-family:\'Cinzel\',serif;font-size:24px;color:#5a1a1a;font-weight:700;margin-bottom:10px">Character Created!</div>' +
+        '<div style="font-size:16px;color:#666;margin-bottom:4px">' + state.name + '</div>' +
+        '<div style="font-size:14px;color:#888;margin-bottom:24px">Level ' + lvl + ' ' + sp.name + ' ' + cl.name + (scName ? ' - ' + scName : '') + '</div>' +
+        '<a href="index.html" style="display:block;padding:14px;background:linear-gradient(135deg,#4a7c59,#2d5016);color:#faf7f2;border:2px solid #2d5016;border-radius:8px;font-family:\'Cinzel\',serif;font-size:16px;font-weight:600;text-decoration:none;letter-spacing:1px;margin-bottom:12px;box-shadow:0 3px 8px rgba(45,80,22,.3)">Open Character Sheet</a>' +
+        '<div style="font-size:12px;color:#999;margin-top:8px">Saved to localStorage - loads automatically in the sheet.</div></div>';
     document.body.appendChild(overlay);
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ═══════════════════════════════════════
 //  INIT
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ═══════════════════════════════════════
 renderSpecies();
 renderClasses();
 renderBackgrounds();
