@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="css/theme.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/sheet.css">
-    <link rel="stylesheet" href="css/inventory.css">
+    <script src="js/data/spells.js"></script>
 </head>
 <body>
     <div class="sheet">
-        <h1>D&amp;D Character Sheet</h1>
+        <h1>D&D Character Sheet</h1>
 
         <!-- Top Actions -->
         <div class="top-actions">
@@ -23,14 +23,38 @@
         
         <!-- Character Info -->
         <div class="character-info">
-            <div class="input-group"><label>Character Name</label><input type="text" id="charName" placeholder="Enter name"></div>
-            <div class="input-group"><label>Species</label><input type="text" id="species" placeholder="e.g., Human"></div>
-            <div class="input-group"><label>Class</label><input type="text" id="class" placeholder="e.g., Fighter"></div>
-            <div class="input-group"><label>Subclass</label><input type="text" id="subclass" placeholder="e.g., Champion"></div>
-            <div class="input-group"><label>Level</label><input type="number" id="level" value="1" min="1" max="20"></div>
-            <div class="input-group"><label>Background</label><input type="text" id="background" placeholder="e.g., Soldier"></div>
-            <div class="input-group"><label>Alignment</label><input type="text" id="alignment" placeholder="e.g., Lawful Good"></div>
-            <div class="input-group"><label>Experience Points</label><input type="number" id="xp" value="0" min="0"></div>
+            <div class="input-group">
+                <label>Character Name</label>
+                <input type="text" id="charName" placeholder="Enter name">
+            </div>
+            <div class="input-group">
+                <label>Species</label>
+                <input type="text" id="species" placeholder="e.g., Human">
+            </div>
+            <div class="input-group">
+                <label>Class</label>
+                <input type="text" id="class" placeholder="e.g., Fighter">
+            </div>
+            <div class="input-group">
+                <label>Subclass</label>
+                <input type="text" id="subclass" placeholder="e.g., Champion">
+            </div>
+            <div class="input-group">
+                <label>Level</label>
+                <input type="number" id="level" value="1" min="1" max="20">
+            </div>
+            <div class="input-group">
+                <label>Background</label>
+                <input type="text" id="background" placeholder="e.g., Soldier">
+            </div>
+            <div class="input-group">
+                <label>Alignment</label>
+                <input type="text" id="alignment" placeholder="e.g., Lawful Good">
+            </div>
+            <div class="input-group">
+                <label>Experience Points</label>
+                <input type="number" id="xp" value="0" min="0">
+            </div>
         </div>
 
         <!-- HP Section -->
@@ -39,7 +63,8 @@
                 <div class="combat-box">
                     <div class="combat-label">CURRENT HP</div>
                     <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
-                        <input type="number" class="combat-value" id="current-hp" value="10" min="0" style="max-width: 80px; font-size: 20px;">
+                        <input type="number" class="combat-value" id="current-hp" value="10" min="0" 
+                               style="max-width: 80px; font-size: 20px;">
                     </div>
                     <div class="hp-control">
                         <button class="hp-button" onclick="adjustHP('current', -1)">-</button>
@@ -54,7 +79,8 @@
                 <div class="combat-box">
                     <div class="combat-label">TEMP HP</div>
                     <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
-                        <input type="number" class="combat-value" id="temp-hp" value="0" min="0" style="max-width: 80px; font-size: 20px;">
+                        <input type="number" class="combat-value" id="temp-hp" value="0" min="0" 
+                               style="max-width: 80px; font-size: 20px;">
                     </div>
                     <div class="hp-control">
                         <button class="hp-button" onclick="adjustHP('temp', -1)">-</button>
@@ -71,105 +97,248 @@
                     <div class="stat-name">STRENGTH</div>
                     <div class="stat-value" onclick="makeEditable(this, 'str')" id="str-display">10</div>
                     <input type="number" id="str" value="10" min="1" max="30" style="display: none;">
-                    <div class="stat-modifier-container"><div class="stat-modifier-label">MODIFIER</div><div class="stat-modifier" id="str-mod">+0</div></div>
+                    <div class="stat-modifier-container">
+                        <div class="stat-modifier-label">MODIFIER</div>
+                        <div class="stat-modifier" id="str-mod">+0</div>
+                    </div>
                 </div>
                 <div class="stat-skills">
-                    <div class="stat-skill-item save-item"><input type="checkbox" class="prof-checkbox" data-save="str" onchange="updateSaves()"><span class="skill-name" style="flex: 1; margin-left: 8px;">Save</span><span class="skill-bonus" id="save-str">+0</span></div>
-                    <div class="stat-skill-item"><input type="checkbox" class="prof-checkbox" data-skill="3" onchange="updateSkills()"><span class="skill-name" style="flex: 1; margin-left: 8px;">Athletics</span><span class="skill-bonus" id="skill-3">+0</span></div>
+                    <div class="stat-skill-item save-item">
+                        <input type="checkbox" class="prof-checkbox" data-save="str" onchange="updateSaves()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Save</span>
+                        <span class="skill-bonus" id="save-str">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="3" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Athletics</span>
+                        <span class="skill-bonus" id="skill-3">+0</span>
+                    </div>
                 </div>
             </div>
+
             <div class="stat-box">
                 <div class="stat-header">
                     <div class="stat-name">DEXTERITY</div>
                     <div class="stat-value" onclick="makeEditable(this, 'dex')" id="dex-display">10</div>
                     <input type="number" id="dex" value="10" min="1" max="30" style="display: none;">
-                    <div class="stat-modifier-container"><div class="stat-modifier-label">MODIFIER</div><div class="stat-modifier" id="dex-mod">+0</div></div>
+                    <div class="stat-modifier-container">
+                        <div class="stat-modifier-label">MODIFIER</div>
+                        <div class="stat-modifier" id="dex-mod">+0</div>
+                    </div>
                 </div>
                 <div class="stat-skills">
-                    <div class="stat-skill-item save-item"><input type="checkbox" class="prof-checkbox" data-save="dex" onchange="updateSaves()"><span class="skill-name" style="flex: 1; margin-left: 8px;">Save</span><span class="skill-bonus" id="save-dex">+0</span></div>
-                    <div class="stat-skill-item"><input type="checkbox" class="prof-checkbox" data-skill="0" onchange="updateSkills()"><span class="skill-name" style="flex: 1; margin-left: 8px;">Acrobatics</span><span class="skill-bonus" id="skill-0">+0</span></div>
-                    <div class="stat-skill-item"><input type="checkbox" class="prof-checkbox" data-skill="15" onchange="updateSkills()"><span class="skill-name" style="flex: 1; margin-left: 8px;">Sleight of Hand</span><span class="skill-bonus" id="skill-15">+0</span></div>
-                    <div class="stat-skill-item"><input type="checkbox" class="prof-checkbox" data-skill="16" onchange="updateSkills()"><span class="skill-name" style="flex: 1; margin-left: 8px;">Stealth</span><span class="skill-bonus" id="skill-16">+0</span></div>
+                    <div class="stat-skill-item save-item">
+                        <input type="checkbox" class="prof-checkbox" data-save="dex" onchange="updateSaves()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Save</span>
+                        <span class="skill-bonus" id="save-dex">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="0" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Acrobatics</span>
+                        <span class="skill-bonus" id="skill-0">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="15" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Sleight of Hand</span>
+                        <span class="skill-bonus" id="skill-15">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="16" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Stealth</span>
+                        <span class="skill-bonus" id="skill-16">+0</span>
+                    </div>
                 </div>
             </div>
+
             <div class="stat-box">
                 <div class="stat-header">
                     <div class="stat-name">CONSTITUTION</div>
                     <div class="stat-value" onclick="makeEditable(this, 'con')" id="con-display">10</div>
                     <input type="number" id="con" value="10" min="1" max="30" style="display: none;">
-                    <div class="stat-modifier-container"><div class="stat-modifier-label">MODIFIER</div><div class="stat-modifier" id="con-mod">+0</div></div>
+                    <div class="stat-modifier-container">
+                        <div class="stat-modifier-label">MODIFIER</div>
+                        <div class="stat-modifier" id="con-mod">+0</div>
+                    </div>
                 </div>
                 <div class="stat-skills">
-                    <div class="stat-skill-item save-item"><input type="checkbox" class="prof-checkbox" data-save="con" onchange="updateSaves()"><span class="skill-name" style="flex: 1; margin-left: 8px;">Save</span><span class="skill-bonus" id="save-con">+0</span></div>
+                    <div class="stat-skill-item save-item">
+                        <input type="checkbox" class="prof-checkbox" data-save="con" onchange="updateSaves()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Save</span>
+                        <span class="skill-bonus" id="save-con">+0</span>
+                    </div>
                 </div>
             </div>
+
             <div class="stat-box">
                 <div class="stat-header">
                     <div class="stat-name">INTELLIGENCE</div>
                     <div class="stat-value" onclick="makeEditable(this, 'int')" id="int-display">10</div>
                     <input type="number" id="int" value="10" min="1" max="30" style="display: none;">
-                    <div class="stat-modifier-container"><div class="stat-modifier-label">MODIFIER</div><div class="stat-modifier" id="int-mod">+0</div></div>
+                    <div class="stat-modifier-container">
+                        <div class="stat-modifier-label">MODIFIER</div>
+                        <div class="stat-modifier" id="int-mod">+0</div>
+                    </div>
                 </div>
                 <div class="stat-skills">
-                    <div class="stat-skill-item save-item"><input type="checkbox" class="prof-checkbox" data-save="int" onchange="updateSaves()"><span class="skill-name" style="flex: 1; margin-left: 8px;">Save</span><span class="skill-bonus" id="save-int">+0</span></div>
-                    <div class="stat-skill-item"><input type="checkbox" class="prof-checkbox" data-skill="2" onchange="updateSkills()"><span class="skill-name" style="flex: 1; margin-left: 8px;">Arcana</span><span class="skill-bonus" id="skill-2">+0</span></div>
-                    <div class="stat-skill-item"><input type="checkbox" class="prof-checkbox" data-skill="5" onchange="updateSkills()"><span class="skill-name" style="flex: 1; margin-left: 8px;">History</span><span class="skill-bonus" id="skill-5">+0</span></div>
-                    <div class="stat-skill-item"><input type="checkbox" class="prof-checkbox" data-skill="8" onchange="updateSkills()"><span class="skill-name" style="flex: 1; margin-left: 8px;">Investigation</span><span class="skill-bonus" id="skill-8">+0</span></div>
-                    <div class="stat-skill-item"><input type="checkbox" class="prof-checkbox" data-skill="10" onchange="updateSkills()"><span class="skill-name" style="flex: 1; margin-left: 8px;">Nature</span><span class="skill-bonus" id="skill-10">+0</span></div>
-                    <div class="stat-skill-item"><input type="checkbox" class="prof-checkbox" data-skill="14" onchange="updateSkills()"><span class="skill-name" style="flex: 1; margin-left: 8px;">Religion</span><span class="skill-bonus" id="skill-14">+0</span></div>
+                    <div class="stat-skill-item save-item">
+                        <input type="checkbox" class="prof-checkbox" data-save="int" onchange="updateSaves()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Save</span>
+                        <span class="skill-bonus" id="save-int">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="2" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Arcana</span>
+                        <span class="skill-bonus" id="skill-2">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="5" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">History</span>
+                        <span class="skill-bonus" id="skill-5">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="8" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Investigation</span>
+                        <span class="skill-bonus" id="skill-8">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="10" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Nature</span>
+                        <span class="skill-bonus" id="skill-10">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="14" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Religion</span>
+                        <span class="skill-bonus" id="skill-14">+0</span>
+                    </div>
                 </div>
             </div>
+
             <div class="stat-box">
                 <div class="stat-header">
                     <div class="stat-name">WISDOM</div>
                     <div class="stat-value" onclick="makeEditable(this, 'wis')" id="wis-display">10</div>
                     <input type="number" id="wis" value="10" min="1" max="30" style="display: none;">
-                    <div class="stat-modifier-container"><div class="stat-modifier-label">MODIFIER</div><div class="stat-modifier" id="wis-mod">+0</div></div>
+                    <div class="stat-modifier-container">
+                        <div class="stat-modifier-label">MODIFIER</div>
+                        <div class="stat-modifier" id="wis-mod">+0</div>
+                    </div>
                 </div>
                 <div class="stat-skills">
-                    <div class="stat-skill-item save-item"><input type="checkbox" class="prof-checkbox" data-save="wis" onchange="updateSaves()"><span class="skill-name" style="flex: 1; margin-left: 8px;">Save</span><span class="skill-bonus" id="save-wis">+0</span></div>
-                    <div class="stat-skill-item"><input type="checkbox" class="prof-checkbox" data-skill="1" onchange="updateSkills()"><span class="skill-name" style="flex: 1; margin-left: 8px;">Animal Handling</span><span class="skill-bonus" id="skill-1">+0</span></div>
-                    <div class="stat-skill-item"><input type="checkbox" class="prof-checkbox" data-skill="6" onchange="updateSkills()"><span class="skill-name" style="flex: 1; margin-left: 8px;">Insight</span><span class="skill-bonus" id="skill-6">+0</span></div>
-                    <div class="stat-skill-item"><input type="checkbox" class="prof-checkbox" data-skill="9" onchange="updateSkills()"><span class="skill-name" style="flex: 1; margin-left: 8px;">Medicine</span><span class="skill-bonus" id="skill-9">+0</span></div>
-                    <div class="stat-skill-item"><input type="checkbox" class="prof-checkbox" data-skill="11" onchange="updateSkills()"><span class="skill-name" style="flex: 1; margin-left: 8px;">Perception</span><span class="skill-bonus" id="skill-11">+0</span></div>
-                    <div class="stat-skill-item"><input type="checkbox" class="prof-checkbox" data-skill="17" onchange="updateSkills()"><span class="skill-name" style="flex: 1; margin-left: 8px;">Survival</span><span class="skill-bonus" id="skill-17">+0</span></div>
+                    <div class="stat-skill-item save-item">
+                        <input type="checkbox" class="prof-checkbox" data-save="wis" onchange="updateSaves()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Save</span>
+                        <span class="skill-bonus" id="save-wis">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="1" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Animal Handling</span>
+                        <span class="skill-bonus" id="skill-1">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="6" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Insight</span>
+                        <span class="skill-bonus" id="skill-6">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="9" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Medicine</span>
+                        <span class="skill-bonus" id="skill-9">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="11" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Perception</span>
+                        <span class="skill-bonus" id="skill-11">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="17" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Survival</span>
+                        <span class="skill-bonus" id="skill-17">+0</span>
+                    </div>
                 </div>
             </div>
+
             <div class="stat-box">
                 <div class="stat-header">
                     <div class="stat-name">CHARISMA</div>
                     <div class="stat-value" onclick="makeEditable(this, 'cha')" id="cha-display">10</div>
                     <input type="number" id="cha" value="10" min="1" max="30" style="display: none;">
-                    <div class="stat-modifier-container"><div class="stat-modifier-label">MODIFIER</div><div class="stat-modifier" id="cha-mod">+0</div></div>
+                    <div class="stat-modifier-container">
+                        <div class="stat-modifier-label">MODIFIER</div>
+                        <div class="stat-modifier" id="cha-mod">+0</div>
+                    </div>
                 </div>
                 <div class="stat-skills">
-                    <div class="stat-skill-item save-item"><input type="checkbox" class="prof-checkbox" data-save="cha" onchange="updateSaves()"><span class="skill-name" style="flex: 1; margin-left: 8px;">Save</span><span class="skill-bonus" id="save-cha">+0</span></div>
-                    <div class="stat-skill-item"><input type="checkbox" class="prof-checkbox" data-skill="4" onchange="updateSkills()"><span class="skill-name" style="flex: 1; margin-left: 8px;">Deception</span><span class="skill-bonus" id="skill-4">+0</span></div>
-                    <div class="stat-skill-item"><input type="checkbox" class="prof-checkbox" data-skill="7" onchange="updateSkills()"><span class="skill-name" style="flex: 1; margin-left: 8px;">Intimidation</span><span class="skill-bonus" id="skill-7">+0</span></div>
-                    <div class="stat-skill-item"><input type="checkbox" class="prof-checkbox" data-skill="12" onchange="updateSkills()"><span class="skill-name" style="flex: 1; margin-left: 8px;">Performance</span><span class="skill-bonus" id="skill-12">+0</span></div>
-                    <div class="stat-skill-item"><input type="checkbox" class="prof-checkbox" data-skill="13" onchange="updateSkills()"><span class="skill-name" style="flex: 1; margin-left: 8px;">Persuasion</span><span class="skill-bonus" id="skill-13">+0</span></div>
+                    <div class="stat-skill-item save-item">
+                        <input type="checkbox" class="prof-checkbox" data-save="cha" onchange="updateSaves()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Save</span>
+                        <span class="skill-bonus" id="save-cha">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="4" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Deception</span>
+                        <span class="skill-bonus" id="skill-4">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="7" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Intimidation</span>
+                        <span class="skill-bonus" id="skill-7">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="12" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Performance</span>
+                        <span class="skill-bonus" id="skill-12">+0</span>
+                    </div>
+                    <div class="stat-skill-item">
+                        <input type="checkbox" class="prof-checkbox" data-skill="13" onchange="updateSkills()">
+                        <span class="skill-name" style="flex: 1; margin-left: 8px;">Persuasion</span>
+                        <span class="skill-bonus" id="skill-13">+0</span>
+                    </div>
                 </div>
             </div>
         </div>
-
         <!-- Combat Stats -->
         <div class="combat-section">
             <div class="combat-stats">
-                <div class="combat-box"><div class="combat-label">PROFICIENCY BONUS</div><div class="combat-value" id="prof-bonus">+2</div></div>
-                <div class="combat-box"><div class="combat-label">ARMOR CLASS</div><div class="combat-value editable-stat" id="ac" onclick="makeStatEditable('ac')">10</div><input type="hidden" id="ac-override" value=""></div>
-                <div class="combat-box"><div class="combat-label">INITIATIVE</div><div class="combat-value editable-stat" id="initiative" onclick="makeStatEditable('initiative')">+0</div><input type="hidden" id="initiative-override" value=""></div>
-                <div class="combat-box"><div class="combat-label">SPEED</div><div class="combat-value editable-stat" id="speed" onclick="makeStatEditable('speed')">30</div><input type="hidden" id="speed-override" value=""></div>
+                <div class="combat-box">
+                    <div class="combat-label">PROFICIENCY BONUS</div>
+                    <div class="combat-value" id="prof-bonus">+2</div>
+                </div>
+                <div class="combat-box">
+                    <div class="combat-label">ARMOR CLASS</div>
+                    <div class="combat-value editable-stat" id="ac" onclick="makeStatEditable('ac')">10</div>
+                    <input type="hidden" id="ac-override" value="">
+                </div>
+                <div class="combat-box">
+                    <div class="combat-label">INITIATIVE</div>
+                    <div class="combat-value editable-stat" id="initiative" onclick="makeStatEditable('initiative')">+0</div>
+                    <input type="hidden" id="initiative-override" value="">
+                </div>
+                <div class="combat-box">
+                    <div class="combat-label">SPEED</div>
+                    <div class="combat-value editable-stat" id="speed" onclick="makeStatEditable('speed')">30</div>
+                    <input type="hidden" id="speed-override" value="">
+                </div>
                 <div class="combat-box">
                     <div class="combat-label">SIZE</div>
                     <select id="size" style="width: 100%; padding: 8px; font-size: 16px; font-family: 'Crimson Text', Georgia, serif; font-weight: 600; text-align: center; border: 2px solid #ddd; border-radius: 4px;">
-                        <option>Tiny</option><option>Small</option><option selected>Medium</option><option>Large</option><option>Huge</option><option>Gargantuan</option>
+                        <option>Tiny</option>
+                        <option>Small</option>
+                        <option selected>Medium</option>
+                        <option>Large</option>
+                        <option>Huge</option>
+                        <option>Gargantuan</option>
                     </select>
                 </div>
-                <div class="combat-box"><div class="combat-label">PASSIVE PERCEPTION</div><div class="combat-value editable-stat" id="passive-perception" onclick="makeStatEditable('passive-perception')">10</div><input type="hidden" id="passive-perception-override" value=""></div>
+                <div class="combat-box">
+                    <div class="combat-label">PASSIVE PERCEPTION</div>
+                    <div class="combat-value editable-stat" id="passive-perception" onclick="makeStatEditable('passive-perception')">10</div>
+                    <input type="hidden" id="passive-perception-override" value="">
+                </div>
             </div>
 
             <!-- Hit Dice & Death Saves -->
             <div style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px;">
+                <!-- Hit Dice -->
                 <div class="combat-box">
                     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
                         <div class="combat-label">HIT DICE TYPE</div>
@@ -177,10 +346,14 @@
                     </div>
                     <div style="display: flex; align-items: center; justify-content: center; gap: 15px;">
                         <button onclick="spendHitDice()" style="padding: 8px 16px; background: #5a1a1a; color: white; border: none; border-radius: 4px; cursor: pointer; font-family: 'Cinzel', serif; font-weight: 600;">Spend</button>
-                        <div style="font-size: 24px; font-weight: bold; font-family: 'Crimson Text', Georgia, serif;"><span id="current-hit-dice">1</span> / <span id="max-hit-dice">1</span></div>
+                        <div style="font-size: 24px; font-weight: bold; font-family: 'Crimson Text', Georgia, serif;">
+                            <span id="current-hit-dice">1</span> / <span id="max-hit-dice">1</span>
+                        </div>
                         <button onclick="restoreHitDice()" style="padding: 8px 16px; background: #2d5016; color: white; border: none; border-radius: 4px; cursor: pointer; font-family: 'Cinzel', serif; font-weight: 600;">Restore</button>
                     </div>
                 </div>
+
+                <!-- Death Saves -->
                 <div class="combat-box">
                     <div class="combat-label" style="margin-bottom: 15px;">DEATH SAVES</div>
                     <div style="margin-bottom: 15px;">
@@ -207,7 +380,10 @@
                 <div class="combat-box" style="padding: 15px;">
                     <div class="combat-label" style="margin-bottom: 10px;">HEROIC INSPIRATION</div>
                     <div style="text-align: center;">
-                        <button id="inspiration-toggle" onclick="toggleInspiration()" style="background: linear-gradient(135deg, #e0e0e0 0%, #d0d0d0 100%); border: 2px solid #8B4513; border-radius: 20px; padding: 8px 20px; font-family: 'Cinzel', serif; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">NOT INSPIRED</button>
+                        <button id="inspiration-toggle" onclick="toggleInspiration()" 
+                                style="background: linear-gradient(135deg, #e0e0e0 0%, #d0d0d0 100%); border: 2px solid #8B4513; border-radius: 20px; padding: 8px 20px; font-family: 'Cinzel', serif; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                            NOT INSPIRED
+                        </button>
                         <input type="checkbox" id="inspiration" style="display: none;">
                     </div>
                 </div>
@@ -226,8 +402,13 @@
                             <div class="exhaustion-box" onclick="toggleExhaustion(9)"></div>
                             <div class="exhaustion-box" onclick="toggleExhaustion(10)"></div>
                         </div>
-                        <div style="display: flex; justify-content: space-between; font-size: 10px; color: #666; font-weight: 600; margin-top: 5px;"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span></div>
-                        <div style="text-align: center; margin-top: 8px;"><span style="font-weight: 700; color: #8B4513; font-size: 14px;">Level: <span id="exhaustion-level">None</span></span><span style="font-size: 11px; color: #666; margin-left: 10px;">(10 = Death)</span></div>
+                        <div style="display: flex; justify-content: space-between; font-size: 10px; color: #666; font-weight: 600; margin-top: 5px;">
+                            <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                        </div>
+                        <div style="text-align: center; margin-top: 8px;">
+                            <span style="font-weight: 700; color: #8B4513; font-size: 14px;">Level: <span id="exhaustion-level">None</span></span>
+                            <span style="font-size: 11px; color: #666; margin-left: 10px;">(10 = Death)</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -235,45 +416,60 @@
 
         <!-- Rest & Recovery -->
         <div style="margin-top: 30px;">
-            <div class="section-title">Rest &amp; Recovery</div>
+            <div class="section-title">Rest & Recovery</div>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
                 <button onclick="shortRest()" style="padding: 15px; background: linear-gradient(135deg, #4a7c59 0%, #2d5016 100%); color: #faf7f2; border: 2px solid #2d5016; border-radius: 8px; font-family: 'Cinzel', serif; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.2); transition: all 0.2s;">SHORT REST</button>
                 <button onclick="longRest()" style="padding: 15px; background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%); color: #faf7f2; border: 2px solid #1e3a8a; border-radius: 8px; font-family: 'Cinzel', serif; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.2); transition: all 0.2s;">LONG REST</button>
             </div>
         </div>
 
-        <!-- ═══════ NEW: Attacks & Weapons ═══════ -->
-        <div style="margin-top: 30px;">
-            <div class="section-title">Attacks &amp; Weapons</div>
-            <div class="equipped-slots">
-                <div class="equipped-slot empty" id="slot-armor"><div class="slot-label">ARMOR</div><div class="slot-name">None</div></div>
-                <div class="equipped-slot empty" id="slot-shield"><div class="slot-label">SHIELD</div><div class="slot-name">None</div></div>
-                <div class="equipped-slot empty" id="slot-weapons"><div class="slot-label">WEAPONS</div><div class="slot-name">None</div></div>
+        <!-- Spells & Magic Section -->
+        <div class="collapsible-section" id="spells-section" style="margin-top: 30px; display: none;">
+            <div class="section-title section-toggle" onclick="toggleSection('spells')">
+                <span class="toggle-icon" id="spells-icon">▼</span> Spells & Magic
             </div>
-            <table class="attacks-table">
-                <thead><tr><th>Weapon</th><th>Attack</th><th>Damage</th><th>Properties</th></tr></thead>
-                <tbody id="attacks-body"><tr><td colspan="4" style="text-align:center;color:#999;font-style:italic;padding:16px">No weapons equipped.</td></tr></tbody>
-            </table>
-        </div>
-
-        <!-- ═══════ NEW: Equipment & Inventory ═══════ -->
-        <div class="collapsible-section" style="margin-top: 30px;">
-            <div class="section-title section-toggle" onclick="toggleSection('equipment')">
-                <span class="toggle-icon" id="equipment-icon">&#9660;</span> Equipment &amp; Inventory
-            </div>
-            <div class="section-body" id="equipment-body">
-                <div class="equip-search-wrap">
-                    <input type="text" id="equip-search" placeholder="Search weapons, armor, gear..." autocomplete="off">
+            <div class="section-body" id="spells-body">
+                <!-- Spell Slots -->
+                <div style="margin-bottom: 20px;">
+                    <h3 style="font-family: var(--font-heading); font-size: 16px; color: var(--brown-dark); margin-bottom: 12px;">Spell Slots</h3>
+                    <div class="spell-slots-grid" id="spell-slots-container"></div>
                 </div>
-                <div class="equip-filter-row" id="equip-filter-row"></div>
-                <div class="equip-results" id="equip-results"></div>
-                <div style="margin-top:8px;text-align:right">
-                    <button onclick="addCustomItem()" style="background:none;border:1px solid var(--brown-light);border-radius:4px;padding:6px 12px;font-family:var(--font-heading);font-size:11px;font-weight:600;cursor:pointer;color:var(--brown-primary);letter-spacing:0.5px">+ Custom Item</button>
-                </div>
-                <div class="weight-tracker" id="weight-tracker">Carrying: <span class="weight-num">0</span> / 150 lb.</div>
-                <div class="inventory-section">
-                    <h4>Inventory</h4>
-                    <div id="inventory-list"><div style="text-align:center;padding:20px;color:#999;font-style:italic">No items in inventory. Use the search above to add equipment.</div></div>
+                
+                <!-- Spellbook -->
+                <div>
+                    <h3 style="font-family: var(--font-heading); font-size: 16px; color: var(--brown-dark); margin-bottom: 12px;">Spellbook</h3>
+                    
+                    <!-- Search & Filters -->
+                    <div style="display: grid; grid-template-columns: 1fr auto auto; gap: 10px; margin-bottom: 15px;">
+                        <input type="text" id="spell-search" placeholder="Search spells..." style="padding: 8px 12px; border: 2px solid var(--brown-light); border-radius: 4px; font-size: 14px;">
+                        <select id="spell-level-filter" style="padding: 8px 12px; border: 2px solid var(--brown-light); border-radius: 4px; font-size: 14px;">
+                            <option value="">All Levels</option>
+                            <option value="0">Cantrips</option>
+                            <option value="1">1st Level</option>
+                            <option value="2">2nd Level</option>
+                            <option value="3">3rd Level</option>
+                            <option value="4">4th Level</option>
+                            <option value="5">5th Level</option>
+                            <option value="6">6th Level</option>
+                            <option value="7">7th Level</option>
+                            <option value="8">8th Level</option>
+                            <option value="9">9th Level</option>
+                        </select>
+                        <select id="spell-school-filter" style="padding: 8px 12px; border: 2px solid var(--brown-light); border-radius: 4px; font-size: 14px;">
+                            <option value="">All Schools</option>
+                            <option value="Abjuration">Abjuration</option>
+                            <option value="Conjuration">Conjuration</option>
+                            <option value="Divination">Divination</option>
+                            <option value="Enchantment">Enchantment</option>
+                            <option value="Evocation">Evocation</option>
+                            <option value="Illusion">Illusion</option>
+                            <option value="Necromancy">Necromancy</option>
+                            <option value="Transmutation">Transmutation</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Spell List -->
+                    <div id="spellbook-container"></div>
                 </div>
             </div>
         </div>
@@ -281,7 +477,7 @@
         <!-- Conditions -->
         <div class="collapsible-section" style="margin-top: 30px;">
             <div class="section-title section-toggle" onclick="toggleSection('conditions')">
-                <span class="toggle-icon" id="conditions-icon">&#9660;</span> Conditions
+                <span class="toggle-icon" id="conditions-icon">▼</span> Conditions
             </div>
             <div class="section-body" id="conditions-body">
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
@@ -306,7 +502,8 @@
         <!-- Proficiencies & Training -->
         <div class="collapsible-section" style="margin-top: 30px;">
             <div class="section-title section-toggle" onclick="toggleSection('proficiencies')">
-                <span class="toggle-icon" id="proficiencies-icon">&#9660;</span> Equipment Training &amp; Proficiencies
+                <span class="toggle-icon" id="proficiencies-icon">▼</span>
+                Equipment Training & Proficiencies
             </div>
             <div class="section-body" id="proficiencies-body">
                 <div style="margin-bottom: 20px;">
@@ -332,11 +529,10 @@
                 </div>
             </div>
         </div>
-
         <!-- Coins -->
         <div class="collapsible-section" style="margin-top: 30px;">
             <div class="section-title section-toggle" onclick="toggleSection('coins')">
-                <span class="toggle-icon" id="coins-icon">&#9660;</span> Coins
+                <span class="toggle-icon" id="coins-icon">▼</span> Coins
             </div>
             <div class="section-body" id="coins-body">
                 <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;">
@@ -352,7 +548,7 @@
         <!-- Notes & Features -->
         <div class="collapsible-section" style="margin-top: 30px;">
             <div class="section-title section-toggle" onclick="toggleSection('notes')">
-                <span class="toggle-icon" id="notes-icon">&#9660;</span> Notes &amp; Features
+                <span class="toggle-icon" id="notes-icon">▼</span> Notes & Features
             </div>
             <div class="section-body" id="notes-body">
                 <textarea id="notes" placeholder="Racial traits, class features, important notes..." style="width: 100%; min-height: 150px; padding: 15px; border: 2px solid #8B4513; border-radius: 8px; font-family: 'Crimson Text', Georgia, serif; font-size: 14px; background: linear-gradient(135deg, #fff9f0 0%, #f5ede0 100%); resize: vertical;"></textarea>
@@ -361,10 +557,6 @@
 
         <button class="save-button" onclick="saveCharacter()">Save Character</button>
     </div>
-
-    <!-- Data & Inventory Scripts -->
-    <script src="js/data/equipment.js"></script>
-    <script src="js/inventory.js"></script>
 
     <script>
         const skills = [
@@ -389,6 +581,320 @@
         ];
 
         let currentExhaustion = 0;
+
+        // ═══════════════════════════════════════════════════════════════════
+        //  SPELL SYSTEM STATE & DATA
+        // ═══════════════════════════════════════════════════════════════════
+        
+        window.currentSpells = {
+            knownSpells: [],
+            preparedSpells: [],
+            spellSlots: {
+                1: { current: 0, max: 0 },
+                2: { current: 0, max: 0 },
+                3: { current: 0, max: 0 },
+                4: { current: 0, max: 0 },
+                5: { current: 0, max: 0 },
+                6: { current: 0, max: 0 },
+                7: { current: 0, max: 0 },
+                8: { current: 0, max: 0 },
+                9: { current: 0, max: 0 }
+            }
+        };
+
+        // Spell slot progression tables
+        const SPELL_SLOTS = {
+            // Full casters: Bard, Cleric, Druid, Sorcerer, Wizard
+            full: {
+                1: [2,0,0,0,0,0,0,0,0],
+                2: [3,0,0,0,0,0,0,0,0],
+                3: [4,2,0,0,0,0,0,0,0],
+                4: [4,3,0,0,0,0,0,0,0],
+                5: [4,3,2,0,0,0,0,0,0],
+                6: [4,3,3,0,0,0,0,0,0],
+                7: [4,3,3,1,0,0,0,0,0],
+                8: [4,3,3,2,0,0,0,0,0],
+                9: [4,3,3,3,1,0,0,0,0],
+                10: [4,3,3,3,2,0,0,0,0],
+                11: [4,3,3,3,2,1,0,0,0],
+                12: [4,3,3,3,2,1,0,0,0],
+                13: [4,3,3,3,2,1,1,0,0],
+                14: [4,3,3,3,2,1,1,0,0],
+                15: [4,3,3,3,2,1,1,1,0],
+                16: [4,3,3,3,2,1,1,1,0],
+                17: [4,3,3,3,2,1,1,1,1],
+                18: [4,3,3,3,3,1,1,1,1],
+                19: [4,3,3,3,3,2,1,1,1],
+                20: [4,3,3,3,3,2,2,1,1]
+            },
+            // Half casters: Paladin, Ranger (start at 2, max 5th level slots)
+            half: {
+                1: [0,0,0,0,0,0,0,0,0],
+                2: [2,0,0,0,0,0,0,0,0],
+                3: [3,0,0,0,0,0,0,0,0],
+                4: [3,0,0,0,0,0,0,0,0],
+                5: [4,2,0,0,0,0,0,0,0],
+                6: [4,2,0,0,0,0,0,0,0],
+                7: [4,3,0,0,0,0,0,0,0],
+                8: [4,3,0,0,0,0,0,0,0],
+                9: [4,3,2,0,0,0,0,0,0],
+                10: [4,3,2,0,0,0,0,0,0],
+                11: [4,3,3,0,0,0,0,0,0],
+                12: [4,3,3,0,0,0,0,0,0],
+                13: [4,3,3,1,0,0,0,0,0],
+                14: [4,3,3,1,0,0,0,0,0],
+                15: [4,3,3,2,0,0,0,0,0],
+                16: [4,3,3,2,0,0,0,0,0],
+                17: [4,3,3,3,1,0,0,0,0],
+                18: [4,3,3,3,1,0,0,0,0],
+                19: [4,3,3,3,2,0,0,0,0],
+                20: [4,3,3,3,2,0,0,0,0]
+            },
+            // Warlock - Pact Magic (all slots same level, restore on short rest)
+            warlock: {
+                1: [1,0,0,0,0,0,0,0,0],
+                2: [2,0,0,0,0,0,0,0,0],
+                3: [0,2,0,0,0,0,0,0,0],
+                4: [0,2,0,0,0,0,0,0,0],
+                5: [0,0,2,0,0,0,0,0,0],
+                6: [0,0,2,0,0,0,0,0,0],
+                7: [0,0,0,2,0,0,0,0,0],
+                8: [0,0,0,2,0,0,0,0,0],
+                9: [0,0,0,0,2,0,0,0,0],
+                10: [0,0,0,0,2,0,0,0,0],
+                11: [0,0,0,0,0,3,0,0,0],
+                12: [0,0,0,0,0,3,0,0,0],
+                13: [0,0,0,0,0,3,0,0,0],
+                14: [0,0,0,0,0,3,0,0,0],
+                15: [0,0,0,0,0,3,0,0,0],
+                16: [0,0,0,0,0,3,0,0,0],
+                17: [0,0,0,0,0,0,4,0,0],
+                18: [0,0,0,0,0,0,4,0,0],
+                19: [0,0,0,0,0,0,4,0,0],
+                20: [0,0,0,0,0,0,4,0,0]
+            }
+        };
+
+        // ═══════════════════════════════════════════════════════════════════
+        //  SPELL SLOT FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════════
+        
+        function updateSpellSlots() {
+            const className = (document.getElementById('class').value || '').toLowerCase();
+            const level = parseInt(document.getElementById('level').value) || 1;
+            
+            // Determine caster type
+            let casterType = null;
+            if (['bard', 'cleric', 'druid', 'sorcerer', 'wizard'].includes(className)) {
+                casterType = 'full';
+            } else if (['paladin', 'ranger'].includes(className)) {
+                casterType = 'half';
+            } else if (className === 'warlock') {
+                casterType = 'warlock';
+            }
+            
+            // Show/hide spell section
+            const spellSection = document.getElementById('spells-section');
+            if (casterType) {
+                spellSection.style.display = '';
+                
+                // Get slot progression for this class/level
+                const slots = SPELL_SLOTS[casterType][level] || [0,0,0,0,0,0,0,0,0];
+                
+                // Update spell slot maxes
+                for (let i = 1; i <= 9; i++) {
+                    const max = slots[i - 1];
+                    window.currentSpells.spellSlots[i].max = max;
+                    
+                    // Don't reset current if we already have slots (preserve usage)
+                    if (window.currentSpells.spellSlots[i].current > max) {
+                        window.currentSpells.spellSlots[i].current = max;
+                    }
+                }
+                
+                renderSpellSlots();
+                loadSpellbook();
+            } else {
+                spellSection.style.display = 'none';
+            }
+        }
+
+        function renderSpellSlots() {
+            const container = document.getElementById('spell-slots-container');
+            if (!container) return;
+            
+            let html = '';
+            
+            for (let level = 1; level <= 9; level++) {
+                const slot = window.currentSpells.spellSlots[level];
+                if (slot.max === 0) continue; // Skip levels with no slots
+                
+                html += `
+                    <div class="spell-slot-level">
+                        <div class="spell-slot-label">Level ${level}</div>
+                        <div class="spell-slot-circles">
+                            ${Array.from({length: slot.max}, (_, i) => `
+                                <div class="spell-slot-circle ${i < slot.current ? 'filled' : ''}" 
+                                     onclick="toggleSpellSlot(${level}, ${i})"
+                                     data-level="${level}" data-index="${i}">
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="spell-slot-count">${slot.current}/${slot.max}</div>
+                    </div>
+                `;
+            }
+            
+            container.innerHTML = html || '<p style="color: #999; font-style: italic;">No spell slots available at this level.</p>';
+        }
+
+        function toggleSpellSlot(level, index) {
+            const slot = window.currentSpells.spellSlots[level];
+            
+            // If clicking a filled circle, empty it and all after it
+            if (index < slot.current) {
+                slot.current = index;
+            }
+            // If clicking first empty circle, fill up to and including it
+            else if (index === slot.current) {
+                slot.current = index + 1;
+            }
+            
+            renderSpellSlots();
+        }
+
+        // ═══════════════════════════════════════════════════════════════════
+        //  SPELLBOOK FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════════
+        
+        function loadSpellbook() {
+            // This will be called when class/level changes
+            // For now, just render what we have
+            renderSpellbook();
+        }
+
+        function renderSpellbook() {
+            const container = document.getElementById('spellbook-container');
+            if (!container) return;
+            
+            // Get filter values
+            const searchTerm = (document.getElementById('spell-search')?.value || '').toLowerCase();
+            const levelFilter = document.getElementById('spell-level-filter')?.value || '';
+            const schoolFilter = document.getElementById('spell-school-filter')?.value || '';
+            
+            // Filter spells
+            let spellsToShow = window.currentSpells.knownSpells;
+            
+            if (searchTerm) {
+                spellsToShow = spellsToShow.filter(spell => 
+                    spell.name.toLowerCase().includes(searchTerm) ||
+                    (spell.description || '').toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            if (levelFilter !== '') {
+                spellsToShow = spellsToShow.filter(spell => spell.level === parseInt(levelFilter));
+            }
+            
+            if (schoolFilter) {
+                spellsToShow = spellsToShow.filter(spell => spell.school === schoolFilter);
+            }
+            
+            // Group by level
+            const byLevel = {};
+            for (let i = 0; i <= 9; i++) byLevel[i] = [];
+            
+            spellsToShow.forEach(spell => {
+                if (spell.level >= 0 && spell.level <= 9) {
+                    byLevel[spell.level].push(spell);
+                }
+            });
+            
+            // Render
+            let html = '';
+            
+            for (let level = 0; level <= 9; level++) {
+                const spells = byLevel[level];
+                if (spells.length === 0) continue;
+                
+                const levelName = level === 0 ? 'Cantrips' : `Level ${level}`;
+                
+                html += `<div class="spell-level-group">
+                    <h4>${levelName}</h4>
+                    <div class="spell-list">`;
+                
+                spells.forEach(spell => {
+                    const isPrepared = window.currentSpells.preparedSpells.includes(spell.name);
+                    const isCantrip = spell.level === 0;
+                    
+                    html += `
+                        <div class="spell-card ${isPrepared ? 'prepared' : ''}" data-spell="${spell.name}">
+                            <div class="spell-card-header" onclick="toggleSpellDetails('${spell.name}')">
+                                ${!isCantrip ? `<input type="checkbox" class="spell-prepare-check" 
+                                    ${isPrepared ? 'checked' : ''} 
+                                    onclick="event.stopPropagation(); togglePrepared('${spell.name}')" />` : ''}
+                                <div class="spell-card-title">${spell.name}</div>
+                                <div class="spell-card-school">${spell.school}</div>
+                            </div>
+                            <div class="spell-card-details" style="display: none;">
+                                <div class="spell-meta">
+                                    <span><strong>Casting Time:</strong> ${spell.castingTime}</span>
+                                    <span><strong>Range:</strong> ${spell.range}</span>
+                                    <span><strong>Components:</strong> ${spell.components}</span>
+                                    <span><strong>Duration:</strong> ${spell.duration}</span>
+                                </div>
+                                <div class="spell-description">${spell.description}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += `</div></div>`;
+            }
+            
+            if (!html) {
+                html = '<p style="color: #999; font-style: italic; text-align: center; padding: 20px;">No spells found. Add spells to your spellbook!</p>';
+            }
+            
+            container.innerHTML = html;
+        }
+
+        function toggleSpellDetails(spellName) {
+            const card = document.querySelector(`.spell-card[data-spell="${spellName}"]`);
+            if (!card) return;
+            
+            const details = card.querySelector('.spell-card-details');
+            if (details) {
+                details.style.display = details.style.display === 'none' ? 'block' : 'none';
+            }
+        }
+
+        function togglePrepared(spellName) {
+            const index = window.currentSpells.preparedSpells.indexOf(spellName);
+            
+            if (index > -1) {
+                window.currentSpells.preparedSpells.splice(index, 1);
+            } else {
+                window.currentSpells.preparedSpells.push(spellName);
+            }
+            
+            renderSpellbook();
+        }
+
+        // Add event listeners for spell filters
+        document.addEventListener('DOMContentLoaded', () => {
+            const spellSearch = document.getElementById('spell-search');
+            const levelFilter = document.getElementById('spell-level-filter');
+            const schoolFilter = document.getElementById('spell-school-filter');
+            
+            if (spellSearch) spellSearch.addEventListener('input', renderSpellbook);
+            if (levelFilter) levelFilter.addEventListener('change', renderSpellbook);
+            if (schoolFilter) schoolFilter.addEventListener('change', renderSpellbook);
+        });
+
+        // ═══════════════════════════════════════════════════════════════════
+        //  END SPELL SYSTEM
+        // ═══════════════════════════════════════════════════════════════════
 
         function toggleInspiration() {
             const checkbox = document.getElementById('inspiration');
@@ -416,6 +922,15 @@
 
         function shortRest() {
             if (confirm('Take a short rest? This will allow you to spend hit dice to recover HP.')) {
+                // Restore Warlock spell slots on short rest
+                const className = (document.getElementById('class').value || '').toLowerCase();
+                if (className === 'warlock') {
+                    for (let level = 1; level <= 9; level++) {
+                        window.currentSpells.spellSlots[level].current = window.currentSpells.spellSlots[level].max;
+                    }
+                    renderSpellSlots();
+                }
+                
                 alert('Short Rest: You can now spend hit dice using the buttons above. Remember to restore any class features that recharge on a short rest!');
             }
         }
@@ -431,13 +946,20 @@
                 document.getElementById('temp-hp').value = 0;
                 document.querySelectorAll('.death-save-checkbox').forEach(cb => cb.checked = false);
                 if (currentExhaustion > 0) toggleExhaustion(currentExhaustion - 1);
-                alert('Long Rest complete! HP and hit dice restored. Remember to reset spell slots and daily abilities!');
+                
+                // Restore all spell slots on long rest
+                for (let level = 1; level <= 9; level++) {
+                    window.currentSpells.spellSlots[level].current = window.currentSpells.spellSlots[level].max;
+                }
+                renderSpellSlots();
+                
+                alert('Long Rest complete! HP, hit dice, and spell slots restored. Remember to reset daily abilities!');
             }
         }
 
         function toggleSection(sectionId) {
-            document.getElementById(sectionId + '-body').classList.toggle('collapsed');
-            document.getElementById(sectionId + '-icon').classList.toggle('collapsed');
+            document.getElementById(`${sectionId}-body`).classList.toggle('collapsed');
+            document.getElementById(`${sectionId}-icon`).classList.toggle('collapsed');
         }
 
         function adjustHP(type, amount) {
@@ -450,141 +972,140 @@
         function makeStatEditable(statId) {
             const displayElement = document.getElementById(statId === 'max-hp' ? 'max-hp-display' : statId);
             const isMaxHP = statId === 'max-hp';
-            const currentValue = isMaxHP ? document.getElementById('max-hp').value : (document.getElementById(statId + '-override').value || displayElement.textContent);
+            const currentValue = isMaxHP ? document.getElementById('max-hp').value : (document.getElementById(`${statId}-override`).value || displayElement.textContent);
             const inputType = isMaxHP ? 'number' : 'text';
-            displayElement.innerHTML = '<input type="' + inputType + '" value="' + currentValue + '" ' + (isMaxHP ? 'min="1"' : '') + ' style="width: 80px; border: none; text-align: center; font-size: 24px; font-weight: bold; background: transparent; outline: none;" onblur="finishStatEdit(\'' + statId + '\')" onkeypress="if(event.key===\'Enter\') this.blur();" id="' + statId + '-temp">';
-            var tempInput = document.getElementById(statId + '-temp');
+            displayElement.innerHTML = `<input type="${inputType}" value="${currentValue}" ${isMaxHP?'min="1"':''} style="width: 80px; border: none; text-align: center; font-size: 24px; font-weight: bold; background: transparent; outline: none;" onblur="finishStatEdit('${statId}')" onkeypress="if(event.key==='Enter') this.blur();" id="${statId}-temp">`;
+            const tempInput = document.getElementById(`${statId}-temp`);
             tempInput.focus(); tempInput.select();
         }
 
         function finishStatEdit(statId) {
-            var tempInput = document.getElementById(statId + '-temp');
-            var newValue = tempInput.value.trim();
+            const tempInput = document.getElementById(`${statId}-temp`);
+            const newValue = tempInput.value.trim();
             if (statId === 'max-hp') {
                 document.getElementById('max-hp').value = newValue || 10;
                 document.getElementById('max-hp-display').textContent = newValue || 10;
             } else {
-                var overrideInput = document.getElementById(statId + '-override');
+                const overrideInput = document.getElementById(`${statId}-override`);
                 if (newValue === '') { overrideInput.value = ''; updateCombatStats(); }
                 else { overrideInput.value = newValue; document.getElementById(statId).textContent = newValue; }
             }
         }
 
         function makeEditable(displayElement, inputId) {
-            var input = document.getElementById(inputId);
-            displayElement.innerHTML = '<input type="number" value="' + input.value + '" min="1" max="30" style="width: 100%; border: none; text-align: center; font-size: 24px; font-weight: bold; background: transparent; outline: none;" onblur="finishEdit(\'' + inputId + '\')" onkeypress="if(event.key===\'Enter\') this.blur();" id="' + inputId + '-temp">';
-            var tempInput = document.getElementById(inputId + '-temp');
+            const input = document.getElementById(inputId);
+            displayElement.innerHTML = `<input type="number" value="${input.value}" min="1" max="30" style="width: 100%; border: none; text-align: center; font-size: 24px; font-weight: bold; background: transparent; outline: none;" onblur="finishEdit('${inputId}')" onkeypress="if(event.key==='Enter') this.blur();" id="${inputId}-temp">`;
+            const tempInput = document.getElementById(`${inputId}-temp`);
             tempInput.focus(); tempInput.select();
         }
 
         function finishEdit(inputId) {
-            var tempInput = document.getElementById(inputId + '-temp');
+            const tempInput = document.getElementById(`${inputId}-temp`);
             document.getElementById(inputId).value = tempInput.value;
-            document.getElementById(inputId + '-display').textContent = tempInput.value;
+            document.getElementById(`${inputId}-display`).textContent = tempInput.value;
             updateModifiers();
-            // Recalc equipment-based AC when DEX changes
-            recalcFromEquipment();
         }
 
         function setExhaustion(level) {
             currentExhaustion = level;
             document.getElementById('exhaustion-level').textContent = level;
-            document.querySelectorAll('.exhaustion-box').forEach(function(box, index) { box.classList.toggle('filled', index < level); });
+            document.querySelectorAll('.exhaustion-box').forEach((box, index) => { box.classList.toggle('filled', index < level); });
         }
 
         function calculateModifier(score) { return Math.floor((score - 10) / 2); }
         function getProficiencyBonus(level) { return Math.ceil(level / 4) + 1; }
 
         function updateModifiers() {
-            ['str', 'dex', 'con', 'int', 'wis', 'cha'].forEach(function(ability) {
-                var score = parseInt(document.getElementById(ability).value) || 10;
-                var modifier = calculateModifier(score);
-                document.getElementById(ability + '-mod').textContent = modifier >= 0 ? '+' + modifier : '' + modifier;
+            ['str', 'dex', 'con', 'int', 'wis', 'cha'].forEach(ability => {
+                const score = parseInt(document.getElementById(ability).value) || 10;
+                const modifier = calculateModifier(score);
+                document.getElementById(`${ability}-mod`).textContent = modifier >= 0 ? `+${modifier}` : `${modifier}`;
             });
             updateCombatStats(); updateSaves(); updateSkills();
         }
 
         function updateCombatStats() {
-            var dexMod = calculateModifier(parseInt(document.getElementById('dex').value) || 10);
-            if (!document.getElementById('initiative-override').value) document.getElementById('initiative').textContent = dexMod >= 0 ? '+' + dexMod : '' + dexMod;
-            // AC: use equipment system if no manual override
-            if (!document.getElementById('ac-override').value) {
-                recalcFromEquipment();
-            }
+            const dexMod = calculateModifier(parseInt(document.getElementById('dex').value) || 10);
+            if (!document.getElementById('initiative-override').value) document.getElementById('initiative').textContent = dexMod >= 0 ? `+${dexMod}` : `${dexMod}`;
+            if (!document.getElementById('ac-override').value) document.getElementById('ac').textContent = 10 + dexMod;
             if (!document.getElementById('speed-override').value) document.getElementById('speed').textContent = '30';
             updatePassivePerception();
         }
 
         function updatePassivePerception() {
             if (!document.getElementById('passive-perception-override').value) {
-                var profBonus = getProficiencyBonus(parseInt(document.getElementById('level').value) || 1);
-                var wisMod = calculateModifier(parseInt(document.getElementById('wis').value) || 10);
-                var perceptionCheckbox = document.querySelector('input[data-skill="11"]');
-                var isProficient = perceptionCheckbox ? perceptionCheckbox.checked : false;
+                const profBonus = getProficiencyBonus(parseInt(document.getElementById('level').value) || 1);
+                const wisMod = calculateModifier(parseInt(document.getElementById('wis').value) || 10);
+                const perceptionCheckbox = document.querySelector('input[data-skill="11"]');
+                const isProficient = perceptionCheckbox ? perceptionCheckbox.checked : false;
                 document.getElementById('passive-perception').textContent = 10 + wisMod + (isProficient ? profBonus : 0);
             }
         }
 
         function updateHitDiceMax() {
-            var level = parseInt(document.getElementById('level').value) || 1;
+            const level = parseInt(document.getElementById('level').value) || 1;
             document.getElementById('max-hit-dice').textContent = level;
-            var current = parseInt(document.getElementById('current-hit-dice').textContent);
+            const current = parseInt(document.getElementById('current-hit-dice').textContent);
             if (current > level) document.getElementById('current-hit-dice').textContent = level;
         }
 
         function spendHitDice() {
-            var el = document.getElementById('current-hit-dice');
-            var current = parseInt(el.textContent);
+            const el = document.getElementById('current-hit-dice');
+            let current = parseInt(el.textContent);
             if (current > 0) el.textContent = current - 1;
         }
 
         function restoreHitDice() {
-            var el = document.getElementById('current-hit-dice');
-            var max = parseInt(document.getElementById('max-hit-dice').textContent);
-            var current = parseInt(el.textContent);
+            const el = document.getElementById('current-hit-dice');
+            const max = parseInt(document.getElementById('max-hit-dice').textContent);
+            let current = parseInt(el.textContent);
             if (current < max) el.textContent = current + 1;
         }
 
         function updateProficiencyBonus() {
-            var level = parseInt(document.getElementById('level').value) || 1;
-            document.getElementById('prof-bonus').textContent = '+' + getProficiencyBonus(level);
-            updateHitDiceMax(); updateSaves(); updateSkills();
-            renderAttacks(); // re-render attacks when prof bonus changes
+            const level = parseInt(document.getElementById('level').value) || 1;
+            document.getElementById('prof-bonus').textContent = `+${getProficiencyBonus(level)}`;
+            updateHitDiceMax(); 
+            updateSaves(); 
+            updateSkills();
+            updateSpellSlots(); // Update spell slots when level changes
         }
 
         function updateSaves() {
-            var profBonus = getProficiencyBonus(parseInt(document.getElementById('level').value) || 1);
-            ['str', 'dex', 'con', 'int', 'wis', 'cha'].forEach(function(ability) {
-                var modifier = calculateModifier(parseInt(document.getElementById(ability).value) || 10);
-                var isProficient = document.querySelector('input[data-save="' + ability + '"]').checked;
-                var total = modifier + (isProficient ? profBonus : 0);
-                document.getElementById('save-' + ability).textContent = total >= 0 ? '+' + total : '' + total;
+            const profBonus = getProficiencyBonus(parseInt(document.getElementById('level').value) || 1);
+            ['str', 'dex', 'con', 'int', 'wis', 'cha'].forEach(ability => {
+                const modifier = calculateModifier(parseInt(document.getElementById(ability).value) || 10);
+                const isProficient = document.querySelector(`input[data-save="${ability}"]`).checked;
+                const total = modifier + (isProficient ? profBonus : 0);
+                document.getElementById(`save-${ability}`).textContent = total >= 0 ? `+${total}` : `${total}`;
             });
         }
 
         function updateSkills() {
-            var profBonus = getProficiencyBonus(parseInt(document.getElementById('level').value) || 1);
-            skills.forEach(function(skill, index) {
-                var modifier = calculateModifier(parseInt(document.getElementById(skill.ability).value) || 10);
-                var checkbox = document.querySelector('input[data-skill="' + index + '"]');
+            const profBonus = getProficiencyBonus(parseInt(document.getElementById('level').value) || 1);
+            skills.forEach((skill, index) => {
+                const modifier = calculateModifier(parseInt(document.getElementById(skill.ability).value) || 10);
+                const checkbox = document.querySelector(`input[data-skill="${index}"]`);
                 if (checkbox) {
-                    var total = modifier + (checkbox.checked ? profBonus : 0);
-                    var bonusElement = document.getElementById('skill-' + index);
-                    if (bonusElement) bonusElement.textContent = total >= 0 ? '+' + total : '' + total;
+                    const total = modifier + (checkbox.checked ? profBonus : 0);
+                    const bonusElement = document.getElementById(`skill-${index}`);
+                    if (bonusElement) bonusElement.textContent = total >= 0 ? `+${total}` : `${total}`;
                 }
             });
             updatePassivePerception();
         }
 
-        // == Export / Import ==
+        // ═══════════════════════════════════════════════════════════════════
+        //  Export / Import
+        // ═══════════════════════════════════════════════════════════════════
         function exportCharacter() {
-            saveCharacter(true);
-            var data = localStorage.getItem('dndCharacter');
+            saveCharacter(true); // save first
+            const data = localStorage.getItem('dndCharacter');
             if (!data) { alert('No character to export.'); return; }
-            var char = JSON.parse(data);
-            var filename = (char.name || 'character').replace(/[^a-z0-9]/gi, '_').toLowerCase() + '.json';
-            var blob = new Blob([data], { type: 'application/json' });
-            var a = document.createElement('a');
+            const char = JSON.parse(data);
+            const filename = (char.name || 'character').replace(/[^a-z0-9]/gi, '_').toLowerCase() + '.json';
+            const blob = new Blob([data], { type: 'application/json' });
+            const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
             a.download = filename;
             a.click();
@@ -592,27 +1113,29 @@
         }
 
         function importCharacter(event) {
-            var file = event.target.files[0];
+            const file = event.target.files[0];
             if (!file) return;
-            var reader = new FileReader();
+            const reader = new FileReader();
             reader.onload = function(e) {
                 try {
-                    var data = JSON.parse(e.target.result);
-                    if (!data.name && !data.class) { alert("This doesn't look like a valid character file."); return; }
+                    const data = JSON.parse(e.target.result);
+                    if (!data.name && !data.class) { alert('This doesn\'t look like a valid character file.'); return; }
                     localStorage.setItem('dndCharacter', JSON.stringify(data));
                     loadCharacter();
-                    alert('Imported ' + (data.name || 'character') + ' successfully!');
+                    alert(`Imported ${data.name || 'character'} successfully!`);
                 } catch (err) {
                     alert('Error reading file: ' + err.message);
                 }
             };
             reader.readAsText(file);
-            event.target.value = '';
+            event.target.value = ''; // reset file input
         }
 
-        // == Save / Load ==
+        // ═══════════════════════════════════════════════════════════════════
+        //  Save / Load
+        // ═══════════════════════════════════════════════════════════════════
         function saveCharacter(silent) {
-            var character = {
+            const character = {
                 name: document.getElementById('charName').value,
                 species: document.getElementById('species').value,
                 class: document.getElementById('class').value,
@@ -641,12 +1164,12 @@
                     passivePerceptionOverride: document.getElementById('passive-perception-override').value
                 },
                 deathSaves: {
-                    successes: Array.from(document.querySelectorAll('input[data-type="success"]')).map(function(cb) { return cb.checked; }),
-                    failures: Array.from(document.querySelectorAll('input[data-type="failure"]')).map(function(cb) { return cb.checked; })
+                    successes: Array.from(document.querySelectorAll('input[data-type="success"]')).map(cb => cb.checked),
+                    failures: Array.from(document.querySelectorAll('input[data-type="failure"]')).map(cb => cb.checked)
                 },
                 proficiencies: {
-                    saves: Array.from(document.querySelectorAll('input[data-save]')).map(function(cb) { return { ability: cb.dataset.save, proficient: cb.checked }; }),
-                    skills: Array.from(document.querySelectorAll('input[data-skill]')).map(function(cb) { return { index: cb.dataset.skill, proficient: cb.checked }; }),
+                    saves: Array.from(document.querySelectorAll('input[data-save]')).map(cb => ({ ability: cb.dataset.save, proficient: cb.checked })),
+                    skills: Array.from(document.querySelectorAll('input[data-skill]')).map(cb => ({ index: cb.dataset.skill, proficient: cb.checked })),
                     armor: {
                         light: document.getElementById('prof-light-armor').checked,
                         medium: document.getElementById('prof-medium-armor').checked,
@@ -662,18 +1185,22 @@
                     ep: document.getElementById('coin-ep').value, gp: document.getElementById('coin-gp').value,
                     pp: document.getElementById('coin-pp').value
                 },
-                conditions: Array.from(document.querySelectorAll('.condition-check')).map(function(cb) { return { condition: cb.dataset.condition, active: cb.checked }; }),
+                conditions: Array.from(document.querySelectorAll('.condition-check')).map(cb => ({ condition: cb.dataset.condition, active: cb.checked })),
                 notes: document.getElementById('notes').value,
-                inventory: getInventoryData()
+                spells: {
+                    knownSpells: window.currentSpells.knownSpells,
+                    preparedSpells: window.currentSpells.preparedSpells,
+                    spellSlots: window.currentSpells.spellSlots
+                }
             };
             localStorage.setItem('dndCharacter', JSON.stringify(character));
             if (!silent) alert('Character saved!');
         }
 
         function loadCharacter() {
-            var saved = localStorage.getItem('dndCharacter');
+            const saved = localStorage.getItem('dndCharacter');
             if (!saved) return;
-            var character = JSON.parse(saved);
+            const character = JSON.parse(saved);
 
             document.getElementById('charName').value = character.name || '';
             document.getElementById('species').value = character.species || character.race || '';
@@ -685,13 +1212,13 @@
             document.getElementById('xp').value = character.xp || 0;
             document.getElementById('size').value = character.size || 'Medium';
 
-            Object.keys(character.abilities).forEach(function(ability) {
+            Object.keys(character.abilities).forEach(ability => {
                 document.getElementById(ability).value = character.abilities[ability];
-                document.getElementById(ability + '-display').textContent = character.abilities[ability];
+                document.getElementById(`${ability}-display`).textContent = character.abilities[ability];
             });
 
             document.getElementById('current-hp').value = character.combat.currentHP || character.combat.hp || 10;
-            var maxHP = character.combat.maxHP || character.combat.hp || 10;
+            const maxHP = character.combat.maxHP || character.combat.hp || 10;
             document.getElementById('max-hp').value = maxHP;
             document.getElementById('max-hp-display').textContent = maxHP;
             document.getElementById('temp-hp').value = character.combat.tempHP || 0;
@@ -708,12 +1235,12 @@
             if (character.combat.exhaustion > 0) toggleExhaustion(character.combat.exhaustion);
 
             if (character.deathSaves) {
-                character.deathSaves.successes.forEach(function(checked, index) { document.querySelector('input[data-type="success"][data-index="' + index + '"]').checked = checked; });
-                character.deathSaves.failures.forEach(function(checked, index) { document.querySelector('input[data-type="failure"][data-index="' + index + '"]').checked = checked; });
+                character.deathSaves.successes.forEach((checked, index) => { document.querySelector(`input[data-type="success"][data-index="${index}"]`).checked = checked; });
+                character.deathSaves.failures.forEach((checked, index) => { document.querySelector(`input[data-type="failure"][data-index="${index}"]`).checked = checked; });
             }
 
-            character.proficiencies.saves.forEach(function(save) { document.querySelector('input[data-save="' + save.ability + '"]').checked = save.proficient; });
-            character.proficiencies.skills.forEach(function(skill) { document.querySelector('input[data-skill="' + skill.index + '"]').checked = skill.proficient; });
+            character.proficiencies.saves.forEach(save => { document.querySelector(`input[data-save="${save.ability}"]`).checked = save.proficient; });
+            character.proficiencies.skills.forEach(skill => { document.querySelector(`input[data-skill="${skill.index}"]`).checked = skill.proficient; });
 
             if (character.proficiencies.armor) {
                 document.getElementById('prof-light-armor').checked = character.proficiencies.armor.light || false;
@@ -734,19 +1261,19 @@
             }
 
             if (character.conditions) {
-                character.conditions.forEach(function(cond) {
-                    var checkbox = document.querySelector('.condition-check[data-condition="' + cond.condition + '"]');
+                character.conditions.forEach(cond => {
+                    const checkbox = document.querySelector(`.condition-check[data-condition="${cond.condition}"]`);
                     if (checkbox) checkbox.checked = cond.active;
                 });
             }
 
             if (character.notes) document.getElementById('notes').value = character.notes;
 
-            // Load inventory
-            if (character.inventory) {
-                loadInventoryData(character.inventory);
-                renderInventory();
-                recalcFromEquipment();
+            // Load spells
+            if (character.spells) {
+                window.currentSpells.knownSpells = character.spells.knownSpells || [];
+                window.currentSpells.preparedSpells = character.spells.preparedSpells || [];
+                window.currentSpells.spellSlots = character.spells.spellSlots || window.currentSpells.spellSlots;
             }
 
             updateModifiers();
@@ -755,20 +1282,12 @@
 
         // Event listeners
         document.getElementById('level').addEventListener('input', updateProficiencyBonus);
+        document.getElementById('class').addEventListener('input', updateSpellSlots);
 
-        /document.addEventListener('click', function(e) {
-            if (!e.target.closest('.equip-search-wrap') && !e.target.closest('.equip-results') && !e.target.closest('.equip-filter-row')) {
-                hideEquipResults();
-            }
-        });
-        
         // Initialize
         updateModifiers();
         updateProficiencyBonus();
         loadCharacter();
-        initEquipmentBrowser();
     </script>
-    
-    <script src="js/data/class-features.js"></script>
 </body>
 </html>
