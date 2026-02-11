@@ -2040,8 +2040,7 @@ const SPELLS = [
         classes: ['Bard', 'Cleric', 'Paladin'],
         source: 'PHB 2024',
         desc: 'Create zone in 15-ft-radius sphere. Creatures make CHA save. Affected creature can\'t speak deliberate lie. Can be evasive but must be truthful. You know if creature succeeds on save.'
-    }
-];
+    },
 
     // ═══════════════════════════════════════════════════════════════
     //  3RD LEVEL SPELLS
