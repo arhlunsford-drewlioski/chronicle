@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/sheet.css">
     <script src="js/data/spells.js"></script>
+    <link rel="stylesheet" href="css/level-up.css">
 </head>
 <body>
     <div class="sheet">
@@ -19,6 +20,7 @@
             <button class="btn-export" onclick="exportCharacter()">Export JSON</button>
             <button class="btn-import" onclick="document.getElementById('import-file').click()">Import JSON</button>
             <input type="file" id="import-file" accept=".json" style="display:none" onchange="importCharacter(event)">
+            <button class="btn-builder" onclick="openLevelUpModal()" style="background:linear-gradient(135deg,#1e3a8a,#1e40af);border-color:#1e3a8a">⬆ Level Up</button>
         </div>
         
         <!-- Character Info -->
@@ -1495,5 +1497,61 @@
         updateProficiencyBonus();
         loadCharacter();
     </script>
+    <!-- Level-Up Modal -->
+<div class="levelup-overlay hidden" id="levelup-overlay">
+    <div class="levelup-modal">
+        <div class="levelup-header">
+            <div class="levelup-title">Level Up</div>
+            <div class="levelup-subtitle" id="levelup-subtitle">Advancing to Level X</div>
+        </div>
+
+        <!-- Step 1: HP -->
+        <div class="levelup-step active" id="step-hp">
+            <div class="step-section">
+                <div class="step-label">Hit Points</div>
+                <div class="step-description">Choose how to determine your new maximum HP.</div>
+                <div class="hp-options" id="levelup-hp-options"></div>
+            </div>
+        </div>
+
+        <!-- Step 2: ASI/Feat -->
+        <div class="levelup-step" id="step-asi">
+            <div class="step-section">
+                <div class="step-label">Ability Score Improvement</div>
+                <div class="step-description">You can increase ability scores or take a feat.</div>
+                <div class="asi-options" id="asi-type-options"></div>
+                <div class="asi-selectors" id="asi-selectors"></div>
+            </div>
+        </div>
+
+        <!-- Step 3: New Features -->
+        <div class="levelup-step" id="step-features">
+            <div class="step-section">
+                <div class="step-label">New Features</div>
+                <div class="step-description">You gain the following class features at this level.</div>
+                <div class="features-list" id="features-content"></div>
+            </div>
+        </div>
+
+        <!-- Step 4: Summary -->
+        <div class="levelup-step" id="step-summary">
+            <div class="step-section">
+                <div class="step-label">Summary</div>
+                <div class="step-description">Review your level-up changes.</div>
+                <div class="levelup-summary" id="levelup-summary-content"></div>
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="levelup-buttons">
+            <button class="levelup-btn levelup-btn-cancel" onclick="closeLevelUpModal()">Cancel</button>
+            <button class="levelup-btn levelup-btn-back" id="levelup-btn-back" onclick="prevLevelUpStep()">Back</button>
+            <button class="levelup-btn levelup-btn-next" id="levelup-btn-next" onclick="nextLevelUpStep()">Continue</button>
+            <button class="levelup-btn levelup-btn-finish" id="levelup-btn-finish" onclick="finishLevelUp()" style="display:none">Level Up!</button>
+        </div>
+    </div>
+</div>
+    <script src="js/data/class-features.js"></script>
+<script src="js/level-up.js"></script>
 </body>
 </html>
