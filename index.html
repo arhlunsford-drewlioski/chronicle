@@ -440,7 +440,7 @@
                     <h3 style="font-family: var(--font-heading); font-size: 16px; color: var(--brown-dark); margin-bottom: 12px;">Spellbook</h3>
                     
                     <!-- Search & Filters -->
-                    <div style="display: grid; grid-template-columns: 1fr auto auto; gap: 10px; margin-bottom: 15px;">
+                    <div style="display: grid; grid-template-columns: 1fr auto auto auto; gap: 10px; margin-bottom: 15px;">
                         <input type="text" id="spell-search" placeholder="Search spells..." style="padding: 8px 12px; border: 2px solid var(--brown-light); border-radius: 4px; font-size: 14px;">
                         <select id="spell-level-filter" style="padding: 8px 12px; border: 2px solid var(--brown-light); border-radius: 4px; font-size: 14px;">
                             <option value="">All Levels</option>
@@ -466,6 +466,7 @@
                             <option value="Necromancy">Necromancy</option>
                             <option value="Transmutation">Transmutation</option>
                         </select>
+                        <button onclick="openSpellBrowser()" style="padding: 8px 16px; background: linear-gradient(135deg, var(--green-primary), var(--green-dark)); color: var(--parchment-light); border: 2px solid var(--green-dark); border-radius: 4px; font-family: var(--font-heading); font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap;">+ Add Spell</button>
                     </div>
                     
                     <!-- Spell List -->
@@ -556,6 +557,71 @@
         </div>
 
         <button class="save-button" onclick="saveCharacter()">Save Character</button>
+    </div>
+
+    <!-- Spell Browser Modal -->
+    <div id="spell-browser-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; padding: 20px; overflow-y: auto;">
+        <div style="max-width: 900px; margin: 40px auto; background: linear-gradient(to bottom, var(--parchment-light), var(--parchment-mid)); border: 3px solid var(--brown-primary); border-radius: 12px; padding: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.5);">
+            
+            <!-- Header -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid var(--brown-primary);">
+                <h2 style="font-family: var(--font-heading); font-size: 24px; color: var(--brown-dark); margin: 0;">Add Spells to Spellbook</h2>
+                <button onclick="closeSpellBrowser()" style="background: none; border: none; font-size: 28px; color: var(--brown-dark); cursor: pointer; line-height: 1;">&times;</button>
+            </div>
+
+            <!-- Class Filter -->
+            <div style="margin-bottom: 15px;">
+                <label style="font-family: var(--font-heading); font-size: 12px; color: var(--brown-dark); font-weight: 600; margin-bottom: 6px; display: block;">FILTER BY CLASS</label>
+                <select id="modal-class-filter" onchange="filterModalSpells()" style="width: 100%; padding: 10px; border: 2px solid var(--brown-light); border-radius: 4px; font-size: 14px;">
+                    <option value="">All Classes</option>
+                    <option value="Bard">Bard</option>
+                    <option value="Cleric">Cleric</option>
+                    <option value="Druid">Druid</option>
+                    <option value="Paladin">Paladin</option>
+                    <option value="Ranger">Ranger</option>
+                    <option value="Sorcerer">Sorcerer</option>
+                    <option value="Warlock">Warlock</option>
+                    <option value="Wizard">Wizard</option>
+                </select>
+            </div>
+
+            <!-- Search & Filters -->
+            <div style="display: grid; grid-template-columns: 1fr auto auto; gap: 10px; margin-bottom: 15px;">
+                <input type="text" id="modal-spell-search" placeholder="Search spells..." oninput="filterModalSpells()" style="padding: 10px; border: 2px solid var(--brown-light); border-radius: 4px; font-size: 14px;">
+                <select id="modal-level-filter" onchange="filterModalSpells()" style="padding: 10px; border: 2px solid var(--brown-light); border-radius: 4px; font-size: 14px;">
+                    <option value="">All Levels</option>
+                    <option value="0">Cantrips</option>
+                    <option value="1">1st Level</option>
+                    <option value="2">2nd Level</option>
+                    <option value="3">3rd Level</option>
+                    <option value="4">4th Level</option>
+                    <option value="5">5th Level</option>
+                    <option value="6">6th Level</option>
+                    <option value="7">7th Level</option>
+                    <option value="8">8th Level</option>
+                    <option value="9">9th Level</option>
+                </select>
+                <select id="modal-school-filter" onchange="filterModalSpells()" style="padding: 10px; border: 2px solid var(--brown-light); border-radius: 4px; font-size: 14px;">
+                    <option value="">All Schools</option>
+                    <option value="Abjuration">Abjuration</option>
+                    <option value="Conjuration">Conjuration</option>
+                    <option value="Divination">Divination</option>
+                    <option value="Enchantment">Enchantment</option>
+                    <option value="Evocation">Evocation</option>
+                    <option value="Illusion">Illusion</option>
+                    <option value="Necromancy">Necromancy</option>
+                    <option value="Transmutation">Transmutation</option>
+                </select>
+            </div>
+
+            <!-- Spell Browser List -->
+            <div id="modal-spell-list" style="max-height: 500px; overflow-y: auto; border: 2px solid var(--brown-light); border-radius: 8px; padding: 15px; background: rgba(255,255,255,0.3);"></div>
+
+            <!-- Footer -->
+            <div style="margin-top: 20px; text-align: right;">
+                <button onclick="closeSpellBrowser()" style="padding: 12px 24px; background: linear-gradient(135deg, var(--brown-primary), var(--brown-darker)); color: var(--parchment-light); border: 2px solid var(--brown-dark); border-radius: 6px; font-family: var(--font-heading); font-size: 14px; font-weight: 600; cursor: pointer;">Done</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -826,15 +892,17 @@
                 spells.forEach(spell => {
                     const isPrepared = window.currentSpells.preparedSpells.includes(spell.name);
                     const isCantrip = spell.level === 0;
+                    const desc = spell.description || spell.desc || '';
                     
                     html += `
                         <div class="spell-card ${isPrepared ? 'prepared' : ''}" data-spell="${spell.name}">
-                            <div class="spell-card-header" onclick="toggleSpellDetails('${spell.name}')">
+                            <div class="spell-card-header">
                                 ${!isCantrip ? `<input type="checkbox" class="spell-prepare-check" 
                                     ${isPrepared ? 'checked' : ''} 
-                                    onclick="event.stopPropagation(); togglePrepared('${spell.name}')" />` : ''}
-                                <div class="spell-card-title">${spell.name}</div>
+                                    onclick="event.stopPropagation(); togglePrepared('${spell.name.replace(/'/g, "\\\'")}')" />` : ''}
+                                <div class="spell-card-title" onclick="toggleSpellDetails('${spell.name.replace(/'/g, "\\\'")}')" style="cursor: pointer; flex: 1;">${spell.name}</div>
                                 <div class="spell-card-school">${spell.school}</div>
+                                <button onclick="removeSpellFromSpellbook('${spell.name.replace(/'/g, "\\\'")}')" style="background: none; border: none; color: #999; cursor: pointer; font-size: 18px; padding: 0 6px; margin-left: 8px;" title="Remove spell">×</button>
                             </div>
                             <div class="spell-card-details" style="display: none;">
                                 <div class="spell-meta">
@@ -843,7 +911,8 @@
                                     <span><strong>Components:</strong> ${spell.components}</span>
                                     <span><strong>Duration:</strong> ${spell.duration}</span>
                                 </div>
-                                <div class="spell-description">${spell.description}</div>
+                                <div class="spell-description">${desc}</div>
+                                <div style="margin-top: 8px; font-size: 11px; color: var(--brown-primary); font-weight: 600;">${spell.source || ''}</div>
                             </div>
                         </div>
                     `;
@@ -1283,6 +1352,137 @@
         // Event listeners
         document.getElementById('level').addEventListener('input', updateProficiencyBonus);
         document.getElementById('class').addEventListener('input', updateSpellSlots);
+
+        // ═══════════════════════════════════════════════════════════════════
+        //  SPELL BROWSER MODAL FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════════
+
+        function openSpellBrowser() {
+            document.getElementById('spell-browser-modal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            renderModalSpells();
+        }
+
+        function closeSpellBrowser() {
+            document.getElementById('spell-browser-modal').style.display = 'none';
+            document.body.style.overflow = '';
+            renderSpellbook();
+        }
+
+        function renderModalSpells() {
+            const container = document.getElementById('modal-spell-list');
+            if (!container) return;
+            
+            const searchTerm = (document.getElementById('modal-spell-search')?.value || '').toLowerCase();
+            const classFilter = document.getElementById('modal-class-filter')?.value || '';
+            const levelFilter = document.getElementById('modal-level-filter')?.value || '';
+            const schoolFilter = document.getElementById('modal-school-filter')?.value || '';
+            
+            let filteredSpells = SPELLS.filter(spell => {
+                const alreadyKnown = window.currentSpells.knownSpells.some(s => s.name === spell.name);
+                if (alreadyKnown) return false;
+                
+                if (searchTerm && !spell.name.toLowerCase().includes(searchTerm) && 
+                    !(spell.desc || '').toLowerCase().includes(searchTerm)) {
+                    return false;
+                }
+                
+                if (classFilter && !spell.classes.includes(classFilter)) {
+                    return false;
+                }
+                
+                if (levelFilter !== '' && spell.level !== parseInt(levelFilter)) {
+                    return false;
+                }
+                
+                if (schoolFilter && spell.school !== schoolFilter) {
+                    return false;
+                }
+                
+                return true;
+            });
+            
+            const byLevel = {};
+            for (let i = 0; i <= 9; i++) byLevel[i] = [];
+            
+            filteredSpells.forEach(spell => {
+                if (spell.level >= 0 && spell.level <= 9) {
+                    byLevel[spell.level].push(spell);
+                }
+            });
+            
+            let html = '';
+            
+            for (let level = 0; level <= 9; level++) {
+                const spells = byLevel[level];
+                if (spells.length === 0) continue;
+                
+                const levelName = level === 0 ? 'Cantrips' : `Level ${level}`;
+                
+                html += `<div style="margin-bottom: 20px;">
+                    <h4 style="font-family: var(--font-heading); font-size: 14px; color: var(--brown-dark); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid var(--brown-light);">${levelName}</h4>`;
+                
+                spells.forEach(spell => {
+                    html += `
+                        <div style="background: linear-gradient(135deg, #fff9f0, #f5ede0); border: 2px solid var(--brown-light); border-radius: 6px; padding: 12px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+                            <div style="flex: 1;">
+                                <div style="font-family: var(--font-heading); font-size: 13px; font-weight: 700; color: var(--brown-dark); margin-bottom: 2px;">${spell.name}</div>
+                                <div style="font-size: 11px; color: #666;">
+                                    <span style="font-style: italic;">${spell.school}</span> • 
+                                    <span>${spell.classes.join(', ')}</span> • 
+                                    <span style="color: var(--brown-primary); font-weight: 600;">${spell.source}</span>
+                                </div>
+                            </div>
+                            <button onclick="addSpellToSpellbook('${spell.name.replace(/'/g, "\\\'")}')" style="padding: 6px 14px; background: linear-gradient(135deg, var(--green-primary), var(--green-dark)); color: white; border: none; border-radius: 4px; font-family: var(--font-heading); font-size: 11px; font-weight: 600; cursor: pointer; white-space: nowrap;">+ Add</button>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+            }
+            
+            if (!html) {
+                html = '<p style="color: #999; font-style: italic; text-align: center; padding: 40px;">No spells found matching your filters.</p>';
+            }
+            
+            container.innerHTML = html;
+        }
+
+        function filterModalSpells() {
+            renderModalSpells();
+        }
+
+        function addSpellToSpellbook(spellName) {
+            const spell = SPELLS.find(s => s.name === spellName);
+            if (!spell) return;
+            
+            if (window.currentSpells.knownSpells.some(s => s.name === spellName)) {
+                return;
+            }
+            
+            window.currentSpells.knownSpells.push(spell);
+            
+            if (spell.level === 0 && !window.currentSpells.preparedSpells.includes(spellName)) {
+                window.currentSpells.preparedSpells.push(spellName);
+            }
+            
+            renderModalSpells();
+            saveCharacter(true);
+        }
+
+        function removeSpellFromSpellbook(spellName) {
+            if (!confirm(`Remove ${spellName} from your spellbook?`)) return;
+            
+            window.currentSpells.knownSpells = window.currentSpells.knownSpells.filter(s => s.name !== spellName);
+            
+            const prepIndex = window.currentSpells.preparedSpells.indexOf(spellName);
+            if (prepIndex > -1) {
+                window.currentSpells.preparedSpells.splice(prepIndex, 1);
+            }
+            
+            renderSpellbook();
+            saveCharacter(true);
+        }
 
         // Initialize
         updateModifiers();
