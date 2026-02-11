@@ -1373,6 +1373,12 @@
             const container = document.getElementById('modal-spell-list');
             if (!container) return;
             
+            // Check if SPELLS database is loaded
+            if (typeof SPELLS === 'undefined' || !SPELLS || SPELLS.length === 0) {
+                container.innerHTML = '<p style="color: #d9534f; text-align: center; padding: 40px;"><strong>Error:</strong> Spell database not loaded. Make sure <code>js/data/spells.js</code> is uploaded and the script tag is in your HTML head.</p>';
+                return;
+            }
+            
             const searchTerm = (document.getElementById('modal-spell-search')?.value || '').toLowerCase();
             const classFilter = document.getElementById('modal-class-filter')?.value || '';
             const levelFilter = document.getElementById('modal-level-filter')?.value || '';
